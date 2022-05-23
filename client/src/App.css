@@ -1,24 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 :root {
   /* Colors */
   --steelblue: rgb(0, 140, 255);
   --indigo: #6610f2;
-  --yellow: rgb(255, 193, 7);
-  --lightYellow: rgb(255, 193, 7, 0.05);
+  --yellow: rgb(229, 236, 119);
+  --lightYellow: rgb(251, 252, 238);
   --lightTeal: rgb(32, 201, 151, 0.05);
   --white: #fff;
-  --gray: #e0e0e0;
-  --gray-dark: #58626d;
+  --gray: #f5f5f5;
+  --gray-dark: #4b545e;
+  --danger: rgb(230, 105, 105);
   --secondary: #20c997;
-  --primary: rgb(5, 197, 255);
-  --lightBlue: rgb(5, 197, 255, 0.05);
+  --primary: #05c5ff;
+  --lightBlue: rgb(230, 244, 255);
   --light: #f4f4f4;
   --dark: #343a40;
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Lato", sans-serif;
   color: var(--gray-dark);
-
+  background-color: var(--gray);
+}
+/* .container {
+  max-width: 60%;
+} */
+.navbarBg {
+  background-color: var(--gray);
+}
+.myPr5 {
+  padding-right: 3rem;
 }
 
 .small-text {
@@ -55,21 +66,45 @@ a:hover {
   color: var(--light);
 }
 
+.btnRound {
+  border-radius: 50px;
+  padding: 20px;
+  background-color: white;
+}
+
+.myInput {
+  border: none;
+  border-bottom: 0.5px solid rgb(219, 218, 218);
+  border-radius: 5px;
+  padding: 5px 20px;
+  color: var(--dark);
+}
+
 .myRounded {
   border-radius: 20px;
 }
 
+.myHover:hover {
+  transform: scale(0.2);
+}
+nav {
+  height: 10vh;
+}
 .navbar img {
   width: 50px;
   height: 50px;
   margin-right: 1rem;
 }
 
+.margin0 {
+  margin: 0;
+}
+
 .btn-outline-success:hover {
   background-color: var(--gray);
   opacity: 0.7;
 }
-.secondary{
+.secondary {
   border: none;
   background-color: var(--secondary);
 }
@@ -89,27 +124,37 @@ a:hover {
   background-color: var(--lightBlue);
 }
 
-.bgLightTeal {
-  border: none;
-  background-color: var(--lightTeal);
-}
+/* .myShadow {
+  -webkit-box-shadow: 0px 0px 10px 0.1px var(--primary);
+  box-shadow: 0px 0px 25px -19px var(--primary);
+} */
 
 .bgLightYellow {
   border: none;
   background-color: var(--lightYellow);
 }
-
+.mySuccess {
+  background-color: var(--secondary);
+}
 .myDanger {
   border: none;
   background-color: var(--danger);
 }
 
-.myInput {
+.noBorder {
   border: none;
+}
+.left {
+  position: absolute;
+  left: 80%;
 }
 
 .myVh {
   min-height: 100vh;
+}
+
+.mr-1 {
+  margin-right: 1rem;
 }
 
 .myRangeWidth {
@@ -128,6 +173,51 @@ a:hover {
   color: var(--yellow);
 }
 
+.textRed {
+  color: var(--danger);
+}
+
+.textLink {
+  color: #0564d1;
+}
+.textLink:hover {
+  opacity: 0.7;
+}
+
 .lrgIcon {
-  font-size: 20px;
+  font-size: 22px;
+}
+
+.home {
+  height: 90vh;
+}
+
+.alert {
+  position: absolute;
+  padding: 1rem;
+  right: 5%;
+  max-width: 30%;
+  top: 70vh;
+  z-index: 100;
+  color: #f4f4f4;
+}
+
+/* .homeImg {
+  position: absolute;
+  width: 40%;
+  top: 15%;
+  left: 30%;
+  opacity: 0.15;
+  background-image: url("./components/img/footer.png") no-repeat center center
+    center/cover;
+} */
+
+@media screen and (max-width: 985px) {
+  .navbar ul {
+    padding: 2rem;
+    text-align: left;
+  }
+  .hideElement {
+    display: none;
+  }
 }

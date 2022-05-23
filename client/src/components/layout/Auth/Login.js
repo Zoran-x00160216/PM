@@ -1,28 +1,60 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { login } from "../../../actions/auth";
+import { setText } from "../../../actions/text";
+import PropTypes from "prop-types";
 
-const Login = () => {
+const Login = ({ login, isAuthenticated, setText }) => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  // const [textPs, setTextPs] = useState("");
+
+  const { email, password } = formData;
+
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    login(email, password);
+  };
+
+  // Navigate to vault if logged in
+  if (isAuthenticated) {
+    setText(password);
+    return <Navigate to="/vault" />;
+  }
+
   return (
-    <main className="bg-light">
-      <div className="container m-2">
-        <div className="vh-100 row d-flex flex-wrap justify-content-center align-content-center">
+    <main>
+      <div className="container">
+        <div className="vh-100 row fs-6 d-flex flex-wrap justify-content-center align-content-center m-2">
           <div className="col-md-5 mb-3">
-            <h2 className="fw-bold">
+            <h4 className="fw-bold">
               Secure your passwords with Password Manager
-            </h2>
+            </h4>
           </div>
           <div className="col-md-10 d-flex justify-content-center align-content-center ">
             <div className="shadow-sm p-5 bg-body myRounded">
-              <form>
+              <form onSubmit={(e) => onSubmit(e)}>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Email address
                   </label>
                   <input
                     type="email"
-                    className="form-control myBtn"
+                    autoComplete="username"
+                    className="form-control myRounded"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
+                    name="email"
+                    value={email}
+                    onChange={(e) => onChange(e)}
+                    required
                   ></input>
                   <div id="emailHelp" className="form-text">
                     We'll never share your email with anyone else.
@@ -34,19 +66,14 @@ const Login = () => {
                   </label>
                   <input
                     type="password"
-                    className="form-control myBtn"
+                    autoComplete="current-password"
+                    className="form-control myRounded"
                     id="exampleInputPassword1"
+                    name="password"
+                    value={password}
+                    onChange={(e) => onChange(e)}
+                    required
                   ></input>
-                </div>
-                <div className="mb-3 form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="exampleCheck1"
-                  ></input>
-                  <label className="form-check-label" htmlFor="exampleCheck1">
-                    Check me out
-                  </label>
                 </div>
                 <button
                   type="submit"
@@ -56,7 +83,7 @@ const Login = () => {
                 </button>
                 <div className="large-text mt-3">
                   <Link to="/register">
-                    <strong>Register</strong>
+                    <strong>Sign In</strong>
                   </Link>
                 </div>
               </form>
@@ -68,4 +95,14 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  setText: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login, setText })(Login);
