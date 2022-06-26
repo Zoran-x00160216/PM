@@ -3,18 +3,19 @@
   /* Colors */
   --steelblue: rgb(0, 140, 255);
   --indigo: #6610f2;
-  --yellow: rgb(229, 236, 119);
+  --yellow: #e5ec77;
   --lightYellow: rgb(251, 252, 238);
   --lightTeal: rgb(32, 201, 151, 0.05);
   --white: #fff;
   --gray: #f5f5f5;
   --gray-dark: #4b545e;
-  --danger: rgb(230, 105, 105);
+  --danger: #e66969;
   --secondary: #20c997;
   --primary: #05c5ff;
   --lightBlue: rgb(230, 244, 255);
   --light: #f4f4f4;
   --dark: #343a40;
+  --coral: #ff7f50;
 }
 
 body {
@@ -60,10 +61,15 @@ a:hover {
 }
 
 .myBtn {
+  width: 100px;
   border: 0.5px solid var(--gray);
   border-radius: 20px;
   padding: 5px 20px;
   color: var(--light);
+}
+
+.searchWidth {
+  width: 200px;
 }
 
 .btnRound {
@@ -101,7 +107,7 @@ nav {
 }
 
 .btn-outline-success:hover {
-  background-color: var(--gray);
+  background-color: var(--gray-dark);
   opacity: 0.7;
 }
 .secondary {
@@ -154,7 +160,7 @@ nav {
 }
 
 .mr-1 {
-  margin-right: 1rem;
+  margin-right: 0.7rem;
 }
 
 .myRangeWidth {
@@ -185,7 +191,8 @@ nav {
 }
 
 .lrgIcon {
-  font-size: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .home {

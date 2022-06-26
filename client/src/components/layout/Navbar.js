@@ -6,9 +6,11 @@ import { logout } from "../../actions/auth";
 import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/js/dist/collapse";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 // import "bootstrap/js/src/collapse";
 
-const NavbarComp = ({ auth: { isAuthenticated, loading }, logout }) => {
+const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
   const privateLink = (
     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item">
@@ -17,19 +19,29 @@ const NavbarComp = ({ auth: { isAuthenticated, loading }, logout }) => {
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/vault" className="nav-link active" aria-current="page">
+        <Link to="/vault" className="nav-link" aria-current="page">
           Vault
         </Link>
       </li>
       <li className="nav-item">
-        <a onClick={logout} className="nav-link" href="#!">
-          Logout
-          <i className="bi bi-box-arrow-left textPrimary p-2"></i>
-        </a>
-      </li>
-      <li className="nav-item">
         <Link to="/about" className="nav-link">
           About
+        </Link>
+      </li>
+      {tier !== "admin" ? null : (
+        <li className="nav-item">
+          <Link to="/adminDashboard" className="nav-link">
+            Dashboard
+          </Link>
+        </li>
+      )}
+      <li className="nav-item">
+        <Link onClick={logout} className="nav-link" to="#!">
+          <FontAwesomeIcon
+            icon={faRightToBracket}
+            className="textPrimary mr-1"
+          />
+          Logout
         </Link>
       </li>
     </ul>
@@ -44,13 +56,13 @@ const NavbarComp = ({ auth: { isAuthenticated, loading }, logout }) => {
       </li>
 
       <li className="nav-item">
-        <Link to="/login" className="nav-link active" aria-current="page">
-          login
+        <Link to="/login" className="nav-link" aria-current="page">
+          Login
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/register" className="nav-link active" aria-current="page">
-          register
+        <Link to="/register" className="nav-link" aria-current="page">
+          Register
         </Link>
       </li>
       <li className="nav-item">
@@ -88,7 +100,7 @@ const NavbarComp = ({ auth: { isAuthenticated, loading }, logout }) => {
           )}
           <form className="d-flex">
             <input
-              className="form-control me-2 shadow myBtn"
+              className="form-control me-2 shadow myBtn searchWidth"
               type="search"
               placeholder="Search..."
               aria-label="Search"

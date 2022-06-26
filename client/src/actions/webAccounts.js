@@ -4,7 +4,7 @@ import { GET_WEB_ACCOUNTS, ERROR_WEB_ACCOUNTS } from "./type";
 import CryptoJS from "crypto-js";
 
 // Get web accounts
-export const getWebAccounts = (text) => async (dispatch) => {
+export const getWebAccounts = text => async dispatch => {
   // console.log(text);
   try {
     const res = await axios.get("http://localhost:5000/api/webAccounts");
@@ -20,21 +20,20 @@ export const getWebAccounts = (text) => async (dispatch) => {
 
     dispatch({
       type: GET_WEB_ACCOUNTS,
-      payload: data,
+      payload: data
     });
   } catch (err) {
     dispatch({
       type: ERROR_WEB_ACCOUNTS,
       payload: {
-        msg: err.response,
-        status: err.response.status,
-      },
+        msg: err.response
+      }
     });
   }
 };
 
 // Create or update profile
-export const createWebAccount = (formData, text) => async (dispatch) => {
+export const createWebAccount = (formData, text) => async dispatch => {
   try {
     // encrypt password
     let data = formData;
@@ -43,8 +42,8 @@ export const createWebAccount = (formData, text) => async (dispatch) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     };
     const res = await axios.post(
       "http://localhost:5000/api/webAccounts",
@@ -54,7 +53,7 @@ export const createWebAccount = (formData, text) => async (dispatch) => {
 
     dispatch({
       type: GET_WEB_ACCOUNTS,
-      payload: res.data,
+      payload: res.data
     });
 
     dispatch(setAlert("Account Created", "mySuccess"));
@@ -68,14 +67,14 @@ export const createWebAccount = (formData, text) => async (dispatch) => {
       type: ERROR_WEB_ACCOUNTS,
       payload: {
         msg: err.response,
-        status: err.response.status,
-      },
+        status: err.response.status
+      }
     });
   }
 };
 
 // Update profile
-export const editWebAccount = (formData, text) => async (dispatch) => {
+export const editWebAccount = (formData, text) => async dispatch => {
   try {
     // encrypt password
     let data = formData;
@@ -85,8 +84,8 @@ export const editWebAccount = (formData, text) => async (dispatch) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     };
     // console.log(data);
 
@@ -98,7 +97,7 @@ export const editWebAccount = (formData, text) => async (dispatch) => {
 
     dispatch({
       type: GET_WEB_ACCOUNTS,
-      payload: res.data,
+      payload: res.data
     });
     dispatch(setAlert("Account Updated", "mySuccess"));
   } catch (err) {
@@ -110,14 +109,14 @@ export const editWebAccount = (formData, text) => async (dispatch) => {
       type: ERROR_WEB_ACCOUNTS,
       payload: {
         msg: err.response,
-        status: err.response.status,
-      },
+        status: err.response.status
+      }
     });
   }
 };
 
 // Delete profile
-export const deleteWebAccount = (formData) => async (dispatch) => {
+export const deleteWebAccount = formData => async dispatch => {
   try {
     // console.log(formData._id);
     const res = await axios.delete(
@@ -127,7 +126,7 @@ export const deleteWebAccount = (formData) => async (dispatch) => {
 
     dispatch({
       type: GET_WEB_ACCOUNTS,
-      payload: res.data,
+      payload: res.data
     });
 
     dispatch(setAlert("Account Deleted", "mySuccess"));
@@ -140,8 +139,8 @@ export const deleteWebAccount = (formData) => async (dispatch) => {
       type: ERROR_WEB_ACCOUNTS,
       payload: {
         msg: err.response,
-        status: err.response.status,
-      },
+        status: err.response.status
+      }
     });
   }
 };

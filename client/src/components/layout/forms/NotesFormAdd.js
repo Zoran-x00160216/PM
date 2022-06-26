@@ -14,24 +14,24 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
     name: "",
     note: "",
     folder: "",
-    favorite: false,
+    favorite: false
   });
 
   const { name, note, folder, favorite } = formData;
 
   const navigate = useNavigate();
 
-  const onChange = (e) => {
+  const onChange = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = (e) => {
+  const handleSwitch = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     createNote(formData, txt.txt);
   };
@@ -55,12 +55,12 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                     type="button"
                     className="btn-close"
                     aria-label="Close"
-                    onClick={(e) => {
+                    onClick={e => {
                       navigate("/notes");
                     }}
                   ></button>
                 </div>
-                <form onSubmit={(e) => onSubmit(e)}>
+                <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
                     <div>
                       <label
@@ -75,7 +75,7 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                           className="form-control myInput"
                           name="name"
                           value={name}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           required
                         ></input>
                       </div>
@@ -89,7 +89,7 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                         id="message-text"
                         name="note"
                         value={note}
-                        onChange={(e) => onChange(e)}
+                        onChange={e => onChange(e)}
                       ></textarea>
                     </div>
                     <div className="row">
@@ -105,7 +105,7 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                           className="form-control myInput"
                           name="folder"
                           value={folder}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-6">
@@ -122,10 +122,10 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                             role="switch"
                             name="favorite"
                             value={favorite}
-                            onChange={(e) => {
+                            onChange={e => {
                               handleSwitch(e);
                             }}
-                            checked={favorite}
+                            aria-checked={favorite}
                           ></input>
                         </div>
                       </div>
@@ -134,7 +134,7 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                       <button
                         type="button"
                         className="btn m-1 btn-outline-success shadow myBtn secondary"
-                        onClick={(e) => {
+                        onClick={e => {
                           navigate("/vault");
                         }}
                       >
@@ -163,14 +163,14 @@ NotesFormAdd.propType = {
   createNote: PropTypes.func.isRequired,
   // alert: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired,
-  notes: PropTypes.object.isRequired,
+  notes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   // alert: state.alert,
   text: state.text,
-  notes: state.notes,
+  notes: state.notes
 });
 export default connect(mapStateToProps, {
-  createNote,
+  createNote
 })(NotesFormAdd);

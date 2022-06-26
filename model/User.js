@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -11,13 +11,16 @@ const UserSchema = new mongoose.Schema({
   },
   tier: {
     type: String,
-    required: true
+    required: true,
+  },
+  lastLogin: {
+    type: Date,
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-
-module.exports = User = new mongoose.model('User', UserSchema);
+module.exports = User = new mongoose.model("User", UserSchema);

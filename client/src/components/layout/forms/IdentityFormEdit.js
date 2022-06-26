@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
 import { connect } from "react-redux";
 import { deleteIdentity, editIdentity } from "../../../actions/identity";
+import { formatDate } from "../../../utility/formatDate";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +14,7 @@ const IdentityFormEdit = ({
   editIdentity,
   deleteIdentity,
   identity: { loading, identity },
-  text: { txt },
+  text: { txt }
 }) => {
   const params = useParams();
   const navigate = useNavigate();
@@ -33,6 +34,8 @@ const IdentityFormEdit = ({
     postalCode: "",
     folder: "",
     favorite: false,
+    updated: "",
+    date: ""
   });
   const {
     name,
@@ -48,17 +51,19 @@ const IdentityFormEdit = ({
     postalCode,
     folder,
     favorite,
+    updated,
+    date
   } = formData;
 
   let account = [];
   Array.isArray(identity) &&
-    identity.map((item) => {
+    identity.map(item => {
       if (params.id === item._id) {
-        Object.keys(item).forEach(function () {
+        Object.keys(item).forEach(function() {
           account.push(item);
         });
-        return item;
       }
+      return item;
     });
   useEffect(() => {
     // console.log(account);
@@ -83,20 +88,22 @@ const IdentityFormEdit = ({
         loading || !account[0].postalCode ? "" : account[0].postalCode,
       folder: loading || !account[0].folder ? "" : account[0].folder,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
+      updated: formatDate(account[0].updated),
+      date: formatDate(account[0].date)
     });
   }, [loading]);
 
-  const onChange = (e) => {
+  const onChange = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = (e) => {
+  const handleSwitch = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     edit ? deleteIdentity(formData) : editIdentity(formData, txt.txt);
   };
@@ -120,12 +127,12 @@ const IdentityFormEdit = ({
                     type="button"
                     className="btn-close"
                     aria-label="Close"
-                    onClick={(e) => {
+                    onClick={e => {
                       navigate("/identity");
                     }}
                   ></button>
                 </div>
-                <form onSubmit={(e) => onSubmit(e)}>
+                <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
                     <div className="row">
                       <div className="col-md-6">
@@ -140,7 +147,7 @@ const IdentityFormEdit = ({
                           className="form-control myInput"
                           name="name"
                           value={name}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           required
                         ></input>
                       </div>
@@ -156,7 +163,7 @@ const IdentityFormEdit = ({
                           className="form-control myInput"
                           name="email"
                           value={email}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                     </div>
@@ -174,7 +181,7 @@ const IdentityFormEdit = ({
                             className="form-control myInput vw-90"
                             name="PPS"
                             value={PPS}
-                            onChange={(e) => onChange(e)}
+                            onChange={e => onChange(e)}
                           ></input>
                         </div>
                         <CopyToClipboard text={PPS}>
@@ -199,7 +206,7 @@ const IdentityFormEdit = ({
                             className="form-control myInput vw-90"
                             name="passportNum"
                             value={passportNum}
-                            onChange={(e) => onChange(e)}
+                            onChange={e => onChange(e)}
                           ></input>
                         </div>
                         <CopyToClipboard text={passportNum}>
@@ -224,7 +231,7 @@ const IdentityFormEdit = ({
                             className="form-control myInput vw-90"
                             name="drivingLicense"
                             value={drivingLicense}
-                            onChange={(e) => onChange(e)}
+                            onChange={e => onChange(e)}
                           ></input>
                         </div>
                         <CopyToClipboard text={drivingLicense}>
@@ -248,7 +255,7 @@ const IdentityFormEdit = ({
                           className="form-control myInput"
                           name="phoneHome"
                           value={phoneHome}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-6">
@@ -263,7 +270,7 @@ const IdentityFormEdit = ({
                           className="form-control myInput"
                           name="phoneMobile"
                           value={phoneMobile}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                     </div>
@@ -279,7 +286,7 @@ const IdentityFormEdit = ({
                         className="form-control myInput"
                         name="addressStreet"
                         value={addressStreet}
-                        onChange={(e) => onChange(e)}
+                        onChange={e => onChange(e)}
                       ></input>
                     </div>
                     <div className="row">
@@ -295,7 +302,7 @@ const IdentityFormEdit = ({
                           className="form-control myInput"
                           name="country"
                           value={country}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-4">
@@ -310,7 +317,7 @@ const IdentityFormEdit = ({
                           className="form-control myInput"
                           name="city"
                           value={city}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-4">
@@ -325,7 +332,7 @@ const IdentityFormEdit = ({
                           className="form-control myInput"
                           name="postalCode"
                           value={postalCode}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                     </div>
@@ -342,7 +349,7 @@ const IdentityFormEdit = ({
                           className="form-control myInput"
                           name="folder"
                           value={folder}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-6">
@@ -359,10 +366,10 @@ const IdentityFormEdit = ({
                             role="switch"
                             name="favorite"
                             value={favorite}
-                            onChange={(e) => {
+                            onChange={e => {
                               handleSwitch(e);
                             }}
-                            checked={favorite}
+                            aria-checked={favorite}
                           ></input>
                         </div>
                       </div>
@@ -386,7 +393,7 @@ const IdentityFormEdit = ({
                       <button
                         type="button"
                         className="btn m-1 btn-outline-success shadow myBtn secondary"
-                        onClick={(e) => {
+                        onClick={e => {
                           navigate("/identity");
                         }}
                       >
@@ -402,6 +409,12 @@ const IdentityFormEdit = ({
                     </div>
                   </div>
                 </form>
+                <div className="m-3 fs-6">
+                  <span className="small">
+                    Created: {date}
+                    <br></br>Last update: {updated}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -417,13 +430,13 @@ IdentityFormEdit.propTypes = {
   identity: PropTypes.object.isRequired,
   edit: PropTypes.bool,
   alert: PropTypes.array.isRequired,
-  text: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   alert: state.alert,
   identity: state.identity,
-  text: state.text,
+  text: state.text
 });
 export default connect(mapStateToProps, { editIdentity, deleteIdentity })(
   IdentityFormEdit

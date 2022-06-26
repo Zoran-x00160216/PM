@@ -21,6 +21,7 @@ router.post("/", async (req, res) => {
     expiryYear: req.body.expiryYear,
     folder: req.body.folder,
     favorite: req.body.favorite,
+    updated: new Date(),
   };
   // Validate data
   const { error } = crediCardValidation(data);
@@ -58,6 +59,7 @@ router.put("/", async (req, res) => {
     expiryYear: req.body.expiryYear,
     folder: req.body.folder,
     favorite: req.body.favorite,
+    updated: new Date(),
   };
 
   // Validate data
@@ -65,18 +67,7 @@ router.put("/", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    const creditCard = await CreditCard.updateOne(
-      { _id: req.body._id },
-      {
-        user_id: req.user._id,
-        name: req.body.name,
-        number: req.body.number,
-        expiryMonth: req.body.expiryMonth,
-        expiryYear: req.body.expiryYear,
-        folder: req.body.folder,
-        favorite: req.body.favorite,
-      }
-    );
+    const creditCard = await CreditCard.updateOne({ _id: req.body._id }, data);
     res.json(creditCard);
   } catch (error) {
     res.send(error);

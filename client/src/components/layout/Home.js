@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
-import home from "../../img/home.png";
 
 const Home = ({ isAuthenticated }) => {
   if (isAuthenticated) {
-    <Navigate to="/vault"></Navigate>;
+    useNavigate("/vault");
   }
   return (
     <main className="home">
@@ -45,11 +44,11 @@ const Home = ({ isAuthenticated }) => {
 };
 
 Home.propTypes = {
-  isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps)(Home);

@@ -23,6 +23,7 @@ router.post("/", async (req, res) => {
     folder: req.body.folder,
     favorite: req.body.favorite,
     note: req.body.note,
+    updated: new Date(),
   };
   // Validate data
   const { error } = webAccountValidation(data);
@@ -61,6 +62,7 @@ router.put("/", async (req, res) => {
     folder: req.body.folder,
     favorite: req.body.favorite,
     note: req.body.note,
+    updated: new Date(),
   };
   console.log(data);
 

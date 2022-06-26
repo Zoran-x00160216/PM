@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
 import { connect } from "react-redux";
 import { deleteNote, editNote } from "../../../actions/notes";
+import { formatDate } from "../../../utility/formatDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,7 +13,7 @@ const NotesFormEdit = ({
   editNote,
   deleteNote,
   notes: { loading, notes },
-  text: { txt },
+  text: { txt }
 }) => {
   const params = useParams();
   const navigate = useNavigate();
@@ -25,18 +26,20 @@ const NotesFormEdit = ({
     note: "",
     folder: "",
     favorite: false,
+    updated: "",
+    date: ""
   });
 
-  const { name, note, folder, favorite } = formData;
+  const { name, note, folder, favorite, updated, date } = formData;
   let account = [];
   Array.isArray(notes) &&
-    notes.map((note) => {
+    notes.map(note => {
       if (params.id === note._id) {
-        Object.keys(note).forEach(function () {
+        Object.keys(note).forEach(function() {
           account.push(note);
         });
-        return note;
       }
+      return note;
     });
   useEffect(() => {
     // console.log(account);
@@ -47,20 +50,22 @@ const NotesFormEdit = ({
       note: loading || !account[0].note ? "" : account[0].note,
       folder: loading || !account[0].folder ? "" : account[0].folder,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
+      updated: formatDate(account[0].updated),
+      date: formatDate(account[0].date)
     });
   }, [loading]);
 
-  const onChange = (e) => {
+  const onChange = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = (e) => {
+  const handleSwitch = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     edit ? deleteNote(formData) : editNote(formData, txt.txt);
   };
@@ -84,12 +89,12 @@ const NotesFormEdit = ({
                     type="button"
                     className="btn-close"
                     aria-label="Close"
-                    onClick={(e) => {
+                    onClick={e => {
                       navigate("/notes");
                     }}
                   ></button>
                 </div>
-                <form onSubmit={(e) => onSubmit(e)}>
+                <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
                     <div className="mb-1">
                       <label className="col-form-label">Name:</label>
@@ -99,7 +104,7 @@ const NotesFormEdit = ({
                           className="form-control myInput"
                           name="name"
                           value={name}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           required
                         ></input>
                       </div>
@@ -114,7 +119,7 @@ const NotesFormEdit = ({
                         id="message-text"
                         name="note"
                         value={note}
-                        onChange={(e) => onChange(e)}
+                        onChange={e => onChange(e)}
                       ></textarea>
                     </div>
                     <div className="row">
@@ -125,7 +130,7 @@ const NotesFormEdit = ({
                           className="form-control myInput"
                           name="folder"
                           value={folder}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-6">
@@ -137,10 +142,10 @@ const NotesFormEdit = ({
                             role="switch"
                             name="favorite"
                             value={favorite}
-                            onChange={(e) => {
+                            onChange={e => {
                               handleSwitch(e);
                             }}
-                            checked={favorite}
+                            aria-checked={favorite}
                           ></input>
                         </div>
                       </div>
@@ -164,7 +169,7 @@ const NotesFormEdit = ({
                       <button
                         type="button"
                         className="btn m-1 btn-outline-success shadow myBtn secondary"
-                        onClick={(e) => {
+                        onClick={e => {
                           navigate("/notes");
                         }}
                       >
@@ -180,6 +185,12 @@ const NotesFormEdit = ({
                     </div>
                   </div>
                 </form>
+                <div className="m-3 fs-6">
+                  <span className="small">
+                    Created: {date}
+                    <br></br>Last update: {updated}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -195,13 +206,13 @@ NotesFormEdit.propTypes = {
   notes: PropTypes.object.isRequired,
   edit: PropTypes.bool,
   alert: PropTypes.array.isRequired,
-  text: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   alert: state.alert,
   notes: state.notes,
-  text: state.text,
+  text: state.text
 });
 
 export default connect(mapStateToProps, { editNote, deleteNote })(

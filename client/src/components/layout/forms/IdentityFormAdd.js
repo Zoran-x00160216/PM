@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const IdentityFormAdd = ({
   createIdentity,
   identity: { identity },
-  text: { txt },
+  text: { txt }
 }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -24,7 +24,7 @@ const IdentityFormAdd = ({
     city: "",
     postalCode: "",
     folder: "",
-    favorite: false,
+    favorite: false
   });
 
   const {
@@ -40,24 +40,23 @@ const IdentityFormAdd = ({
     city,
     postalCode,
     folder,
-    favorite,
+    favorite
   } = formData;
 
   const navigate = useNavigate();
 
-  const onChange = (e) => {
+  const onChange = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = (e) => {
+  const handleSwitch = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
-    console.log(formData);
     createIdentity(formData, txt.txt);
   };
 
@@ -79,12 +78,12 @@ const IdentityFormAdd = ({
                     type="button"
                     className="btn-close"
                     aria-label="Close"
-                    onClick={(e) => {
+                    onClick={e => {
                       navigate("/identity");
                     }}
                   ></button>
                 </div>
-                <form onSubmit={(e) => onSubmit(e)}>
+                <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
                     <div className="row">
                       <div className="col-md-6">
@@ -99,7 +98,7 @@ const IdentityFormAdd = ({
                           className="form-control myInput"
                           name="name"
                           value={name}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           required
                         ></input>
                       </div>
@@ -115,7 +114,7 @@ const IdentityFormAdd = ({
                           className="form-control myInput"
                           name="email"
                           value={email}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                     </div>
@@ -132,7 +131,7 @@ const IdentityFormAdd = ({
                           className="form-control myInput"
                           name="PPS"
                           value={PPS}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-6">
@@ -147,7 +146,7 @@ const IdentityFormAdd = ({
                           className="form-control myInput"
                           name="passportNum"
                           value={passportNum}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                     </div>
@@ -163,7 +162,7 @@ const IdentityFormAdd = ({
                         className="form-control myInput"
                         name="drivingLicense"
                         value={drivingLicense}
-                        onChange={(e) => onChange(e)}
+                        onChange={e => onChange(e)}
                       ></input>
                     </div>
                     <div className="row">
@@ -179,7 +178,7 @@ const IdentityFormAdd = ({
                           className="form-control myInput"
                           name="phoneHome"
                           value={phoneHome}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-6">
@@ -194,7 +193,7 @@ const IdentityFormAdd = ({
                           className="form-control myInput"
                           name="phoneMobile"
                           value={phoneMobile}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                     </div>
@@ -210,7 +209,7 @@ const IdentityFormAdd = ({
                         className="form-control myInput"
                         name="addressStreet"
                         value={addressStreet}
-                        onChange={(e) => onChange(e)}
+                        onChange={e => onChange(e)}
                       ></input>
                     </div>
                     <div className="row">
@@ -226,7 +225,7 @@ const IdentityFormAdd = ({
                           className="form-control myInput"
                           name="country"
                           value={country}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-4">
@@ -241,7 +240,7 @@ const IdentityFormAdd = ({
                           className="form-control myInput"
                           name="city"
                           value={city}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-4">
@@ -256,7 +255,7 @@ const IdentityFormAdd = ({
                           className="form-control myInput"
                           name="postalCode"
                           value={postalCode}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                     </div>
@@ -273,7 +272,7 @@ const IdentityFormAdd = ({
                           className="form-control myInput"
                           name="folder"
                           value={folder}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="col-md-6">
@@ -290,10 +289,10 @@ const IdentityFormAdd = ({
                             role="switch"
                             name="favorite"
                             value={favorite}
-                            onChange={(e) => {
+                            onChange={e => {
                               handleSwitch(e);
                             }}
-                            checked={favorite}
+                            aria-checked={favorite}
                           ></input>
                         </div>
                       </div>
@@ -303,7 +302,7 @@ const IdentityFormAdd = ({
                     <button
                       type="button"
                       className="btn m-1 btn-outline-success shadow myBtn secondary"
-                      onClick={(e) => {
+                      onClick={e => {
                         navigate("/identity");
                       }}
                     >
@@ -331,14 +330,14 @@ IdentityFormAdd.propType = {
   createIdentity: PropTypes.func.isRequired,
   // alert: PropTypes.object.isRequired,
   identity: PropTypes.object.isRequired,
-  text: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   // alert: state.alert,
   identity: state.identity,
-  text: state.text,
+  text: state.text
 });
 export default connect(mapStateToProps, {
-  createIdentity,
+  createIdentity
 })(IdentityFormAdd);

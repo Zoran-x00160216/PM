@@ -29,7 +29,6 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
       // const hash = await bcrypt.hash(password, salt);
       register({ email, password, tier });
     }
-    console.log(password);
   };
 
   // Navigate to if register in
@@ -50,19 +49,19 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
             <div className="shadow-sm p-5 bg-body myRounded">
               <form className="myForm" onSubmit={(e) => onSubmit(e)}>
                 <div className="mb-3">
-                  {/* <AlertComponent /> */}
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Email address
                   </label>
                   <input
-                    type="text"
+                    type="email"
+                    autoComplete="username"
                     className="form-control myRounded"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                     name="email"
                     value={email}
                     onChange={(e) => onChange(e)}
-                    // required
+                    required
                   ></input>
                   <div id="emailHelp" className="form-text">
                     We'll never share your email with anyone else.
@@ -74,6 +73,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
                   </label>
                   <input
                     type="password"
+                    autoComplete="current-password"
                     className="form-control myRounded"
                     id="exampleInputPassword1"
                     name="password"
@@ -88,6 +88,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
                   </label>
                   <input
                     type="password"
+                    autoComplete="current-password"
                     className="form-control myRounded"
                     id="exampleInputPassword2"
                     name="password2"

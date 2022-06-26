@@ -29,6 +29,7 @@ router.post("/", async (req, res) => {
     postalCode: req.body.postalCode,
     folder: req.body.folder,
     favorite: req.body.favorite,
+    updated: new Date(),
   };
 
   try {
@@ -76,6 +77,7 @@ router.put("/", async (req, res) => {
     postalCode: req.body.postalCode,
     folder: req.body.folder,
     favorite: req.body.favorite,
+    updated: new Date(),
   };
 
   try {

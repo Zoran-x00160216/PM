@@ -17,7 +17,7 @@ const setLowerCase = (isLowerCase) => {
 
 const setSymbols = (isSymbol) => {
   if (isSymbol) {
-    characters += "!@#$%^&*()<>,.?/[]{}-=_+|/";
+    characters += "!@#$%^";
   }
   return "";
 };

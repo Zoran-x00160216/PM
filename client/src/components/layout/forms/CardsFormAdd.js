@@ -13,24 +13,24 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
     expiryMonth: "",
     expiryYear: "",
     folder: "",
-    favorite: false,
+    favorite: false
   });
 
   const { name, number, expiryMonth, expiryYear, folder, favorite } = formData;
 
   const navigate = useNavigate();
 
-  const onChange = (e) => {
+  const onChange = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = (e) => {
+  const handleSwitch = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     createCard(formData, txt.txt);
   };
@@ -53,12 +53,12 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                     type="button"
                     className="btn-close"
                     aria-label="Close"
-                    onClick={(e) => {
+                    onClick={e => {
                       navigate("/cards");
                     }}
                   ></button>
                 </div>
-                <form onSubmit={(e) => onSubmit(e)}>
+                <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
                     <div className="mb-1">
                       <label
@@ -73,7 +73,7 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                           className="form-control myInput"
                           name="name"
                           value={name}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           required
                         ></input>
                       </div>
@@ -91,7 +91,7 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                           className="form-control myInput"
                           name="number"
                           value={number}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           minLength="14"
                           maxLength="14"
                           required
@@ -112,7 +112,7 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                           id="inputGroupSelect01"
                           name="expiryMonth"
                           value={expiryMonth}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           required
                         >
                           <option selected></option>
@@ -143,7 +143,7 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                           id="inputGroupSelect02"
                           name="expiryYear"
                           value={expiryYear}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           required
                         >
                           <option selected></option>
@@ -169,7 +169,7 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                           className="form-control myInput"
                           name="folder"
                           value={folder}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="mb-1 col-md-6">
@@ -186,10 +186,10 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                             role="switch"
                             name="favorite"
                             value={favorite}
-                            onChange={(e) => {
+                            onChange={e => {
                               handleSwitch(e);
                             }}
-                            checked={favorite}
+                            aria-checked={favorite}
                           ></input>
                         </div>
                       </div>
@@ -198,7 +198,7 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                       <button
                         type="button"
                         className="btn m-1 btn-outline-success shadow myBtn secondary"
-                        onClick={(e) => {
+                        onClick={e => {
                           navigate("/vault");
                         }}
                       >
@@ -227,14 +227,14 @@ CardsFormAdd.propType = {
   createCard: PropTypes.func.isRequired,
   // alert: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired,
-  cards: PropTypes.object.isRequired,
+  cards: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   alert: state.alert,
   text: state.text,
-  cards: state.cards,
+  cards: state.cards
 });
 export default connect(mapStateToProps, {
-  createCard,
+  createCard
 })(CardsFormAdd);

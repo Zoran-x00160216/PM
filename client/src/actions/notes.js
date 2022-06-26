@@ -4,7 +4,7 @@ import { GET_NOTES, ERROR_NOTES } from "./type";
 import CryptoJS from "crypto-js";
 
 // Get web accounts
-export const getNotes = (text) => async (dispatch) => {
+export const getNotes = text => async dispatch => {
   try {
     const res = await axios.get("http://localhost:5000/api/secretNotes");
     let data = res.data;
@@ -18,21 +18,21 @@ export const getNotes = (text) => async (dispatch) => {
 
     dispatch({
       type: GET_NOTES,
-      payload: data,
+      payload: data
     });
   } catch (err) {
     dispatch({
       type: ERROR_NOTES,
       payload: {
-        msg: err.response,
+        msg: err.response
         // status: err.response.status,
-      },
+      }
     });
   }
 };
 
 // Create or update profile
-export const createNote = (formData, text) => async (dispatch) => {
+export const createNote = (formData, text) => async dispatch => {
   try {
     // encrypt note
     let data = formData;
@@ -41,8 +41,8 @@ export const createNote = (formData, text) => async (dispatch) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     };
     const res = await axios.post(
       "http://localhost:5000/api/secretNotes",
@@ -52,12 +52,13 @@ export const createNote = (formData, text) => async (dispatch) => {
 
     dispatch({
       type: GET_NOTES,
-      payload: res.data,
+      payload: res.data
     });
 
     dispatch(setAlert("Note Created", "mySuccess"));
   } catch (err) {
     if (err) {
+      console.log(err);
       dispatch(setAlert(err.response.data, "myDanger"));
     }
 
@@ -65,14 +66,14 @@ export const createNote = (formData, text) => async (dispatch) => {
       type: ERROR_NOTES,
       payload: {
         msg: err.response,
-        status: err.response.status,
-      },
+        status: err.response.status
+      }
     });
   }
 };
 
 // Update profile
-export const editNote = (formData, text) => async (dispatch) => {
+export const editNote = (formData, text) => async dispatch => {
   try {
     // encrypt note
     let data = formData;
@@ -81,8 +82,8 @@ export const editNote = (formData, text) => async (dispatch) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     };
 
     const res = await axios.put(
@@ -92,7 +93,7 @@ export const editNote = (formData, text) => async (dispatch) => {
     );
     dispatch({
       type: GET_NOTES,
-      payload: res.data,
+      payload: res.data
     });
 
     dispatch(setAlert("Note Updated", "mySuccess"));
@@ -105,14 +106,14 @@ export const editNote = (formData, text) => async (dispatch) => {
       type: ERROR_NOTES,
       payload: {
         msg: err.response,
-        status: err.response.status,
-      },
+        status: err.response.status
+      }
     });
   }
 };
 
 // Delete profile
-export const deleteNote = (formData) => async (dispatch) => {
+export const deleteNote = formData => async dispatch => {
   try {
     // const config = {
     //   headers: {
@@ -127,7 +128,7 @@ export const deleteNote = (formData) => async (dispatch) => {
 
     dispatch({
       type: GET_NOTES,
-      payload: res.data,
+      payload: res.data
     });
 
     dispatch(setAlert("Note Deleted", "mySuccess"));
@@ -140,8 +141,8 @@ export const deleteNote = (formData) => async (dispatch) => {
       type: ERROR_NOTES,
       payload: {
         msg: err.response,
-        status: err.response.status,
-      },
+        status: err.response.status
+      }
     });
   }
 };

@@ -5,7 +5,7 @@ import { login } from "../../../actions/auth";
 import { setText } from "../../../actions/text";
 import PropTypes from "prop-types";
 
-const Login = ({ login, isAuthenticated, setText }) => {
+const Login = ({ login, isAuthenticated, tier, setText }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,10 +23,14 @@ const Login = ({ login, isAuthenticated, setText }) => {
     login(email, password);
   };
 
-  // Navigate to vault if logged in
+  // Navigate to dashboard, vault for user or admin dashboard for admin
   if (isAuthenticated) {
     setText(password);
-    return <Navigate to="/vault" />;
+    if (tier === "admin") {
+      return <Navigate to="/adminDashboard" />;
+    } else {
+      return <Navigate to="/vault" />;
+    }
   }
 
   return (
@@ -99,10 +103,12 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
   setText: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  tier: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  tier: state.auth.tier,
 });
 
 export default connect(mapStateToProps, { login, setText })(Login);

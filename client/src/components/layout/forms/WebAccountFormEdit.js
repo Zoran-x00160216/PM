@@ -2,10 +2,11 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
-// import PasswordGen from "../../password/PasswordGen";
+import PasswordGen from "../../password/PasswordGen";
 import { connect } from "react-redux";
 import { deleteWebAccount, editWebAccount } from "../../../actions/webAccounts";
-// import { generatePassword } from "../../../utility/passwordGenerator";
+import { generatePassword } from "../../../utility/passwordGenerator";
+import { formatDate } from "../../../utility/formatDate";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,16 +14,16 @@ import {
   faTrashCan,
   faArrowRotateLeft,
   faEye,
-  faGear,
+  faGear
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const WebAccountFormEdit = ({
   editWebAccount,
   deleteWebAccount,
-  // generatePassword,
+  generatePassword,
   webAccounts: { loading, webAccounts },
-  text: { txt },
+  text: { txt }
 }) => {
   const params = useParams();
   const navigate = useNavigate();
@@ -34,13 +35,13 @@ const WebAccountFormEdit = ({
   const [passwordShown, setPasswordShown] = useState(false);
 
   // state for password generator toggle
-  // const [passwordGen, setPasswordGen] = useState(false);
-  // const [passProps, setPassProp] = useState({
-  //   uppercase: true,
-  //   lowercase: true,
-  //   symbols: true,
-  //   numbers: true,
-  // });
+  const [passwordGen, setPasswordGen] = useState(false);
+  const [passProps, setPassProp] = useState({
+    uppercase: true,
+    lowercase: true,
+    symbols: true,
+    numbers: true
+  });
 
   // state for data
   const [formData, setFormData] = useState({
@@ -53,20 +54,32 @@ const WebAccountFormEdit = ({
     folder: "",
     favorite: false,
     note: "",
+    updated: "",
+    date: ""
   });
 
-  const { name, username, password, uri, folder, favorite, note } = formData;
+  const {
+    name,
+    username,
+    password,
+    uri,
+    folder,
+    favorite,
+    note,
+    updated,
+    date
+  } = formData;
 
   // loop over all login accounts and store in var one matching param id
   let account = [];
   Array.isArray(webAccounts) &&
-    webAccounts.map((webAccount) => {
+    webAccounts.map(webAccount => {
       if (params.id === webAccount._id) {
-        Object.keys(webAccount).forEach(function () {
+        Object.keys(webAccount).forEach(function() {
           account.push(webAccount);
         });
-        return webAccount;
       }
+      return webAccount;
     });
 
   useEffect(() => {
@@ -80,23 +93,25 @@ const WebAccountFormEdit = ({
       folder: loading || !account[0].folder ? "" : account[0].folder,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       note: loading || !account[0].note ? "" : account[0].note,
+      updated: formatDate(account[0].updated),
+      date: formatDate(account[0].date)
     });
   }, [loading]);
 
   // save input in the formdata state
-  const onChange = (e) => {
+  const onChange = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // handles switch state
-  const handleSwitch = (e) => {
+  const handleSwitch = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
   // check if edit is false or true and submit accordingly true=delete
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     edit ? deleteWebAccount(formData) : editWebAccount(formData, txt.txt);
   };
@@ -107,9 +122,9 @@ const WebAccountFormEdit = ({
   }
 
   // toggle password generator
-  // const togglePasswordGen = () => {
-  //   setPasswordGen(!passwordGen);
-  // };
+  const togglePasswordGen = () => {
+    setPasswordGen(!passwordGen);
+  };
 
   // Password toggle handler
   const togglePassword = () => {
@@ -118,11 +133,11 @@ const WebAccountFormEdit = ({
     setPasswordShown(!passwordShown);
   };
 
-  // const getPassword = () => {
-  //   const newPassword = generatePassword(passProps, 15);
-  //   console.log(newPassword);
-  //   setFormData({ ...formData, password: newPassword });
-  // };
+  const getPassword = () => {
+    const newPassword = generatePassword(passProps, 15);
+    console.log(newPassword);
+    setFormData({ ...formData, password: newPassword });
+  };
 
   return (
     <Fragment>
@@ -139,12 +154,12 @@ const WebAccountFormEdit = ({
                     type="button"
                     className="btn-close"
                     aria-label="Close"
-                    onClick={(e) => {
+                    onClick={e => {
                       navigate("/vault");
                     }}
                   ></button>
                 </div>
-                <form onSubmit={(e) => onSubmit(e)}>
+                <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
                     <div className="mb-1">
                       <label
@@ -159,7 +174,7 @@ const WebAccountFormEdit = ({
                           className="form-control myInput"
                           name="name"
                           value={name}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           required
                         ></input>
                       </div>
@@ -180,7 +195,7 @@ const WebAccountFormEdit = ({
                             autoComplete="username"
                             name="username"
                             value={username}
-                            onChange={(e) => onChange(e)}
+                            onChange={e => onChange(e)}
                             required
                           ></input>
                         </div>
@@ -209,7 +224,7 @@ const WebAccountFormEdit = ({
                             autoComplete="current-password"
                             name="password"
                             value={password}
-                            onChange={(e) => onChange(e)}
+                            onChange={e => onChange(e)}
                             minLength="14"
                             required
                           ></input>
@@ -219,26 +234,26 @@ const WebAccountFormEdit = ({
                           onClick={togglePassword}
                           className="lrgIcon cursor mr-1 textPrimary"
                         />
-                        {/* <FontAwesomeIcon
+                        <FontAwesomeIcon
                           icon={faArrowRotateLeft}
                           className="lrgIcon cursor mr-1 textPrimary"
-                          onClick={(e) => getPassword(e)}
-                        /> */}
-                        {/* <FontAwesomeIcon
+                          onClick={e => getPassword(e)}
+                        />
+                        <FontAwesomeIcon
                           icon={faGear}
                           className="lrgIcon cursor mr-1 textPrimary"
                           data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
                           onClick={togglePasswordGen}
-                        /> */}
-                        {/* <PasswordGen
+                        />
+                        <PasswordGen
                           className="modal fade"
                           id="exampleModal"
                           tabindex="-1"
                           aria-labelledby="exampleModalLabel"
                           aria-hidden="true"
-                        /> */}
-                        {/* {passwordGen ? <PasswordGen /> : null} */}
+                        />
+                        {passwordGen ? <PasswordGen /> : null}
                         <CopyToClipboard text={password}>
                           <FontAwesomeIcon
                             icon={faCopy}
@@ -261,7 +276,7 @@ const WebAccountFormEdit = ({
                             className="form-control myInput"
                             name="uri"
                             value={uri}
-                            onChange={(e) => onChange(e)}
+                            onChange={e => onChange(e)}
                           ></input>
                         </div>
                         <div className="cursor">
@@ -287,7 +302,7 @@ const WebAccountFormEdit = ({
                           className="form-control myInput"
                           name="folder"
                           value={folder}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="mb-1 col-md-6 form-check form-switch">
@@ -304,10 +319,10 @@ const WebAccountFormEdit = ({
                             role="switch"
                             name="favorite"
                             value={favorite}
-                            onChange={(e) => {
+                            onChange={e => {
                               handleSwitch(e);
                             }}
-                            checked={favorite}
+                            aria-checked={favorite}
                           ></input>
                         </div>
                       </div>
@@ -321,7 +336,7 @@ const WebAccountFormEdit = ({
                         id="message-text"
                         name="note"
                         value={note}
-                        onChange={(e) => onChange(e)}
+                        onChange={e => onChange(e)}
                       ></textarea>
                     </div>
                   </div>
@@ -343,7 +358,7 @@ const WebAccountFormEdit = ({
                       <button
                         type="button"
                         className="btn m-1 btn-outline-success shadow myBtn secondary"
-                        onClick={(e) => {
+                        onClick={e => {
                           navigate("/vault");
                         }}
                       >
@@ -359,6 +374,12 @@ const WebAccountFormEdit = ({
                     </div>
                   </div>
                 </form>
+                <div className="m-3 fs-6">
+                  <span className="small">
+                    Created: {date}
+                    <br></br>Last update: {updated}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -372,18 +393,19 @@ WebAccountFormEdit.propTypes = {
   editWebAccount: PropTypes.func.isRequired,
   deleteWebAccount: PropTypes.func.isRequired,
   webAccounts: PropTypes.object.isRequired,
-  // generatePassword: PropTypes.func.isRequired,
+  generatePassword: PropTypes.func.isRequired,
   edit: PropTypes.bool,
   alert: PropTypes.array.isRequired,
-  text: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   alert: state.alert,
   webAccounts: state.webAccounts,
-  text: state.text,
+  text: state.text
 });
 
-export default connect(mapStateToProps, { editWebAccount, deleteWebAccount })(
-  WebAccountFormEdit
-);
+export default connect(mapStateToProps, {
+  editWebAccount,
+  deleteWebAccount
+})(WebAccountFormEdit);

@@ -6,6 +6,7 @@ import webAccounts from "./webAccounts";
 import cards from "./cards";
 import notes from "./notes";
 import identity from "./identity";
+import users from "./users";
 
 export default combineReducers({
   alert,
@@ -15,4 +16,5 @@ export default combineReducers({
   cards,
   notes,
   identity,
+  users,
 });

@@ -46,3 +46,9 @@ export const CLEAR_CARDS = "CLEAR_CARDS";
 export const EDIT_CARDS = "EDIT_CARDS";
 
 export const RESET = "RESET";
+
+// reducers/users
+export const GET_USERS = "GET_USERS";
+export const EDIT_USERS = "EDIT_USERS";
+export const ERROR_USERS = "ERROR_USERS";
+export const CLEAR_USERS = "CLEAR_USERS";

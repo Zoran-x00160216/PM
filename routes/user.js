@@ -39,7 +39,10 @@ router.post("/register", async (req, res) => {
       email: req.body.email,
       password: hash,
       tier: req.body.tier,
+      lastLogin: new Date(),
     });
+
+    console.log(user);
 
     await user.save();
 
@@ -75,6 +78,12 @@ router.post("/login", async (req, res) => {
     const validPasswd = await bcrypt.compare(req.body.password, user.password);
     if (!validPasswd) return res.status(400).send("Invalid email or password");
 
+    const date = new Date();
+    const account = await User.updateOne(
+      { _id: user._id },
+      { $set: { lastLogin: date } }
+    );
+
     // Create and assign JWT
     jwt.sign(
       { _id: user._id, tier: user.tier },
@@ -82,7 +91,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: 3600 },
       (err, token) => {
         if (err) throw err;
-        res.send({ token });
+        res.send({ token, tier: user.tier });
       }
     );
   } catch (error) {

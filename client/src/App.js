@@ -3,6 +3,8 @@ import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // Routes
 import PrivateRoute from "./components/routing/PrivateRoute";
+import PrivateRouteAdmin from "./components/routing/PrivateRouteAdmin";
+
 import Home from "./components/layout/Home";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -20,7 +22,10 @@ import NotesFormEdit from "./components/layout/forms/NotesFormEdit";
 import Cards from "./components/layout/subComponets/Cards";
 import CardsFormAdd from "./components/layout/forms/CardsFormAdd";
 import CardsFormEdit from "./components/layout/forms/CardsFormEdit";
-// import PasswordGen from "./components/password/PasswordGen";
+import AlertComponent from "./components/layout/AlertComponent";
+import AdminDashboard from "./components/layout/admin/AdminDashboard";
+import Users from "./components/layout/admin/Users";
+
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utility/setAuthToken";
 // Redux
@@ -29,7 +34,6 @@ import store from "./store";
 // Css
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import AlertComponent from "./components/layout/AlertComponent";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -49,7 +53,12 @@ const App = ({ logout }) => {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/register" element={<Register />} />
-            {/* <Route exact path="/password" element={<PasswordGen />} /> */}
+            <Route element={<PrivateRouteAdmin />}>
+              <Route path="/adminDashboard" element={<AdminDashboard />} />
+            </Route>
+            <Route element={<PrivateRouteAdmin />}>
+              <Route path="/admin/users" element={<Users />} />
+            </Route>
             <Route element={<PrivateRoute />}>
               <Route path="/vault" element={<Vault />} />
             </Route>

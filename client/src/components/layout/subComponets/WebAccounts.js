@@ -20,7 +20,6 @@ const WebAccounts = ({
     getWebAccounts(txt.txt);
   }, [loading, getWebAccounts, txt.txt]);
 
-  // const accountsArray = webAccounts.webAccounts;
   const accounts =
     Array.isArray(webAccounts) &&
     webAccounts.map((webAccount) => {
@@ -114,13 +113,13 @@ const WebAccounts = ({
 
 WebAccounts.propTypes = {
   getWebAccounts: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  // auth: PropTypes.object.isRequired,
   webAccounts: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+  // auth: state.auth,
   webAccounts: state.webAccounts,
   text: state.text,
 });

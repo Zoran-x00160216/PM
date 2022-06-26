@@ -22,7 +22,6 @@ export default function (state = initialState, action) {
         notes: payload,
         loading: false,
       };
-    // case POST_WEB_ACCOUNT:
     case EDIT_NOTES:
       return {
         ...state,

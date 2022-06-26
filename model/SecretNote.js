@@ -22,6 +22,10 @@ const SecretNoteSchema = new mongoose.Schema({
     type: Boolean,
     required: false,
   },
+  updated: {
+    type: Date,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,

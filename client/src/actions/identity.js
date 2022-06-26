@@ -27,7 +27,7 @@ export const getIdentity = () => async (dispatch) => {
 // Create or update profile
 export const createIdentity = (formData, text) => async (dispatch) => {
   try {
-    console.log(text, formData);
+    // console.log(text, formData);
     // encrypt identity details
     let data = formData;
     console.log(data);

@@ -39,6 +39,10 @@ const WebAccountSchema = new mongoose.Schema({
     required: false,
     max: 500,
   },
+  updated: {
+    type: Date,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,

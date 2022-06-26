@@ -13,13 +13,13 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log(req.body, req.user);
   const data = {
     user_id: req.user._id,
     name: req.body.name,
     note: req.body.note,
     folder: req.body.folder,
     favorite: req.body.favorite,
+    updated: new Date(),
   };
   // console.log(data);
 
@@ -54,22 +54,14 @@ router.put("/", async (req, res) => {
     note: req.body.note,
     folder: req.body.folder,
     favorite: req.body.favorite,
+    updated: new Date(),
   };
   // Validate Data
   const { error } = secretNoteValidation(data);
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    const secretNote = await SecretNote.updateOne(
-      { _id: req.body._id },
-      {
-        user_id: req.user._id,
-        name: req.body.name,
-        note: req.body.note,
-        folder: req.body.folder,
-        favorite: req.body.favorite,
-      }
-    );
+    const secretNote = await SecretNote.updateOne({ _id: req.body._id }, data);
     res.json(secretNote);
   } catch (error) {
     res.send(error);

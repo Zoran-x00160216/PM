@@ -11,6 +11,7 @@ const webAccountValidation = (data) => {
     folder: Joi.string().empty(""),
     favorite: Joi.boolean(),
     note: Joi.string().empty("").max(500),
+    updated: Joi.date().empty(""),
   });
   return ValidationSchema.validate(data);
 };
@@ -22,9 +23,10 @@ const crediCardValidation = (data) => {
     name: Joi.string().required(),
     number: Joi.string().required().min(14).max(64),
     expiryMonth: Joi.string().required().min(1).max(2),
-    expiryYear: Joi.string().required().min(2).max(2),
+    expiryYear: Joi.string().required().min(4).max(4),
     folder: Joi.string().empty(""),
     favorite: Joi.boolean(),
+    updated: Joi.date().empty(""),
   });
   return ValidationSchema.validate(data);
 };
@@ -46,6 +48,7 @@ const identityValidation = (data) => {
     postalCode: Joi.string().empty(""),
     folder: Joi.string().empty(""),
     favorite: Joi.boolean(),
+    updated: Joi.date().empty(""),
   });
   return ValidationSchema.validate(data);
 };
@@ -58,6 +61,7 @@ const secretNoteValidation = (data) => {
     note: Joi.string().required(),
     folder: Joi.string().empty(""),
     favorite: Joi.boolean(),
+    updated: Joi.date().empty(""),
   });
   return ValidationSchema.validate(data);
 };

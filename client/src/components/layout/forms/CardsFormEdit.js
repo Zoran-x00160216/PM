@@ -2,9 +2,9 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
-import AlertComponent from "../AlertComponent";
 import { connect } from "react-redux";
 import { deleteCard, editCard } from "../../../actions/cards";
+import { formatDate } from "../../../utility/formatDate";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faTrashCan, faEye } from "@fortawesome/free-solid-svg-icons";
@@ -14,7 +14,7 @@ const CardsFormEdit = ({
   editCard,
   deleteCard,
   cards: { loading, cards },
-  text: { txt },
+  text: { txt }
 }) => {
   const params = useParams();
   const navigate = useNavigate();
@@ -28,23 +28,32 @@ const CardsFormEdit = ({
     expiryMonth: "",
     expiryYear: "",
     folder: "",
-    favorite: false,
+    favorite: false
   });
 
-  const { name, number, expiryMonth, expiryYear, folder, favorite } = formData;
+  const {
+    name,
+    number,
+    expiryMonth,
+    expiryYear,
+    folder,
+    favorite,
+    updated,
+    date
+  } = formData;
 
   // state for password toggle
   const [passwordShown, setPasswordShown] = useState(false);
 
   let account = [];
   Array.isArray(cards) &&
-    cards.map((card) => {
+    cards.map(card => {
       if (params.id === card._id) {
-        Object.keys(card).forEach(function () {
+        Object.keys(card).forEach(function() {
           account.push(card);
         });
-        return card;
       }
+      return card;
     });
   useEffect(() => {
     // console.log(account);
@@ -59,20 +68,22 @@ const CardsFormEdit = ({
         loading || !account[0].expiryYear ? "" : account[0].expiryYear,
       folder: loading || !account[0].folder ? "" : account[0].folder,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
+      updated: formatDate(account[0].updated),
+      date: formatDate(account[0].date)
     });
   }, [loading]);
 
-  const onChange = (e) => {
+  const onChange = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = (e) => {
+  const handleSwitch = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     edit ? deleteCard(formData) : editCard(formData, txt.txt);
   };
@@ -102,12 +113,12 @@ const CardsFormEdit = ({
                     type="button"
                     className="btn-close"
                     aria-label="Close"
-                    onClick={(e) => {
+                    onClick={e => {
                       navigate("/cards");
                     }}
                   ></button>
                 </div>
-                <form onSubmit={(e) => onSubmit(e)}>
+                <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
                     <div className="mb-1">
                       <label
@@ -122,7 +133,7 @@ const CardsFormEdit = ({
                           className="form-control myInput"
                           name="name"
                           value={name}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           required
                         ></input>
                       </div>
@@ -142,7 +153,7 @@ const CardsFormEdit = ({
                             id="recipient-username"
                             name="number"
                             value={number}
-                            onChange={(e) => onChange(e)}
+                            onChange={e => onChange(e)}
                             required
                           ></input>
                         </div>
@@ -173,21 +184,22 @@ const CardsFormEdit = ({
                           id="inputGroupSelect01"
                           name="expiryMonth"
                           value={expiryMonth}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                           required
                         >
-                          <option value="1">01</option>
-                          <option value="2">02</option>
-                          <option value="3">03</option>
-                          <option value="4">04</option>
-                          <option value="5">05</option>
-                          <option value="6">06</option>
-                          <option value="7">07</option>
-                          <option value="8">08</option>
-                          <option value="9">09</option>
-                          <option value="10">10</option>
-                          <option value="11">11</option>
-                          <option value="12">12</option>
+                          <option selected></option>
+                          <option value="1">01/January</option>
+                          <option value="2">02/February</option>
+                          <option value="3">03/March</option>
+                          <option value="4">04/April</option>
+                          <option value="5">05/May</option>
+                          <option value="6">06/June</option>
+                          <option value="7">07/July</option>
+                          <option value="8">08/August</option>
+                          <option value="9">09/September</option>
+                          <option value="10">10/October</option>
+                          <option value="11">11/November</option>
+                          <option value="12">12/December</option>
                         </select>
                       </div>
                       <div className="col-md-6">
@@ -197,13 +209,23 @@ const CardsFormEdit = ({
                         >
                           Expiry Year:
                         </label>
-                        <input
+                        <select
                           type="number"
                           className="form-control myInput"
+                          id="inputGroupSelect02"
                           name="expiryYear"
                           value={expiryYear}
-                          onChange={(e) => onChange(e)}
-                        ></input>
+                          onChange={e => onChange(e)}
+                          required
+                        >
+                          <option selected></option>
+                          <option value="2022">2022</option>
+                          <option value="2023">2023</option>
+                          <option value="2024">2024</option>
+                          <option value="2025">2025</option>
+                          <option value="2026">2026</option>
+                          <option value="2027">2027</option>
+                        </select>
                       </div>
                     </div>
                     <div className="row">
@@ -219,7 +241,7 @@ const CardsFormEdit = ({
                           className="form-control myInput"
                           name="folder"
                           value={folder}
-                          onChange={(e) => onChange(e)}
+                          onChange={e => onChange(e)}
                         ></input>
                       </div>
                       <div className="mb-1 col-md-6">
@@ -236,10 +258,10 @@ const CardsFormEdit = ({
                             role="switch"
                             name="favorite"
                             value={favorite}
-                            onChange={(e) => {
+                            onChange={e => {
                               handleSwitch(e);
                             }}
-                            checked={favorite}
+                            aria-checked={favorite}
                           ></input>
                         </div>
                       </div>
@@ -263,7 +285,7 @@ const CardsFormEdit = ({
                       <button
                         type="button"
                         className="btn m-1 btn-outline-success shadow myBtn secondary"
-                        onClick={(e) => {
+                        onClick={e => {
                           navigate("/cards");
                         }}
                       >
@@ -279,6 +301,12 @@ const CardsFormEdit = ({
                     </div>
                   </div>
                 </form>
+                <div className="m-3 fs-6">
+                  <span className="small">
+                    Created: {date}
+                    <br></br>Last update: {updated}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -294,13 +322,13 @@ CardsFormEdit.propTypes = {
   cards: PropTypes.object.isRequired,
   edit: PropTypes.bool,
   alert: PropTypes.array.isRequired,
-  text: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   alert: state.alert,
   cards: state.cards,
-  text: state.text,
+  text: state.text
 });
 
 export default connect(mapStateToProps, { editCard, deleteCard })(
