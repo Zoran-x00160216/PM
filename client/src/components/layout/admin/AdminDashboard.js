@@ -59,7 +59,7 @@ const AdminDashboard = ({
         <div className="row">
           <AdminSidebar handleLink={"adminDashboard"} />
 
-          <div className="col-sm-9 mt-3">
+          <div className="col-sm-9 mt-1">
             <div className="row">
               <PieChartComponent
                 setText={"Basic vs Premium"}

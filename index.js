@@ -28,12 +28,7 @@ app.get("/", (req, res) => res.send("API Running"));
 
 // Route Middlewares
 app.use("/api/user", require("./routes/user"));
-app.use(
-  "/api/webAccounts",
-  verify,
-  verifyAdmin,
-  require("./routes/webAccounts")
-);
+app.use("/api/webAccounts", verify, require("./routes/webAccounts"));
 app.use("/api/creditCards", verify, require("./routes/creditCards"));
 app.use("/api/identity", verify, require("./routes/identity"));
 app.use("/api/secretNotes", verify, require("./routes/secretNotes"));

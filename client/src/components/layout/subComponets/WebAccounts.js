@@ -14,15 +14,15 @@ import "bootstrap/js/src/dropdown";
 const WebAccounts = ({
   getWebAccounts,
   webAccounts: { loading, webAccounts },
-  text: { txt },
+  text: { txt }
 }) => {
   useEffect(() => {
     getWebAccounts(txt.txt);
-  }, [loading, getWebAccounts, txt.txt]);
+  }, [getWebAccounts, txt.txt]);
 
   const accounts =
     Array.isArray(webAccounts) &&
-    webAccounts.map((webAccount) => {
+    webAccounts.map(webAccount => {
       const linkWithParam = `/webAccount/edit/${webAccount._id}`;
 
       return (
@@ -115,13 +115,13 @@ WebAccounts.propTypes = {
   getWebAccounts: PropTypes.func.isRequired,
   // auth: PropTypes.object.isRequired,
   webAccounts: PropTypes.object.isRequired,
-  text: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   // auth: state.auth,
   webAccounts: state.webAccounts,
-  text: state.text,
+  text: state.text
 });
 
 export default connect(mapStateToProps, { getWebAccounts })(WebAccounts);

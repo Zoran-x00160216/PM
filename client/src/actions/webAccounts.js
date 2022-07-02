@@ -10,6 +10,7 @@ export const getWebAccounts = text => async dispatch => {
     const res = await axios.get("http://localhost:5000/api/webAccounts");
 
     let data = res.data;
+    // console.log(data);
     // Decrypt
     for (let d = 0; d < data.length; d++) {
       let bytes = CryptoJS.AES.decrypt(data[d].password, text);
@@ -78,7 +79,6 @@ export const editWebAccount = (formData, text) => async dispatch => {
   try {
     // encrypt password
     let data = formData;
-    console.log(data);
     const encrypted = CryptoJS.AES.encrypt(data.password, text).toString();
     data.password = encrypted;
 

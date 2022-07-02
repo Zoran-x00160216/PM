@@ -125,19 +125,18 @@ nav {
   background-color: var(--yellow);
 }
 
-.bgLightBlue {
+/* .bgLightBlue {
   border: none;
   background-color: var(--lightBlue);
-}
+} */
 
 /* .myShadow {
   -webkit-box-shadow: 0px 0px 10px 0.1px var(--primary);
   box-shadow: 0px 0px 25px -19px var(--primary);
 } */
 
-.bgLightYellow {
-  border: none;
-  background-color: var(--lightYellow);
+.myYellow {
+  background-color: var(--yellow);
 }
 .mySuccess {
   background-color: var(--secondary);

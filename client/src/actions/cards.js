@@ -4,7 +4,7 @@ import { GET_CARDS, ERROR_CARDS } from "./type";
 import CryptoJS from "crypto-js";
 
 // Get web accounts
-export const getCards = (text) => async (dispatch) => {
+export const getCards = text => async dispatch => {
   try {
     const res = await axios.get("http://localhost:5000/api/creditCards");
 
@@ -19,21 +19,21 @@ export const getCards = (text) => async (dispatch) => {
 
     dispatch({
       type: GET_CARDS,
-      payload: data,
+      payload: data
     });
   } catch (err) {
     dispatch({
       type: ERROR_CARDS,
       payload: {
-        msg: err.response,
-        status: err.response.status,
-      },
+        msg: err.response
+        // status: err.response.status,
+      }
     });
   }
 };
 
 // Create or update profile
-export const createCard = (formData, text) => async (dispatch) => {
+export const createCard = (formData, text) => async dispatch => {
   try {
     // encrypt password
     let data = formData;
@@ -42,8 +42,8 @@ export const createCard = (formData, text) => async (dispatch) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     };
     const res = await axios.post(
       "http://localhost:5000/api/creditCards",
@@ -53,7 +53,7 @@ export const createCard = (formData, text) => async (dispatch) => {
 
     dispatch({
       type: GET_CARDS,
-      payload: res.data,
+      payload: res.data
     });
 
     dispatch(setAlert("Account Created", "mySuccess"));
@@ -66,14 +66,14 @@ export const createCard = (formData, text) => async (dispatch) => {
       type: ERROR_CARDS,
       payload: {
         msg: err.response,
-        status: err.response.status,
-      },
+        status: err.response.status
+      }
     });
   }
 };
 
 // Update profile
-export const editCard = (formData, text) => async (dispatch) => {
+export const editCard = (formData, text) => async dispatch => {
   try {
     // encrypt card number
     let data = formData;
@@ -82,8 +82,8 @@ export const editCard = (formData, text) => async (dispatch) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     };
 
     const res = await axios.put(
@@ -94,7 +94,7 @@ export const editCard = (formData, text) => async (dispatch) => {
 
     dispatch({
       type: GET_CARDS,
-      payload: res.data,
+      payload: res.data
     });
 
     dispatch(setAlert("Account Updated", "mySuccess"));
@@ -107,14 +107,14 @@ export const editCard = (formData, text) => async (dispatch) => {
       type: ERROR_CARDS,
       payload: {
         msg: err.response,
-        status: err.response.status,
-      },
+        status: err.response.status
+      }
     });
   }
 };
 
 // Delete profile
-export const deleteCard = (formData) => async (dispatch) => {
+export const deleteCard = formData => async dispatch => {
   try {
     // console.log(formData._id);
     const res = await axios.delete(
@@ -124,7 +124,7 @@ export const deleteCard = (formData) => async (dispatch) => {
 
     dispatch({
       type: GET_CARDS,
-      payload: res.data,
+      payload: res.data
     });
 
     dispatch(setAlert("Account Deleted", "mySuccess"));
@@ -137,8 +137,8 @@ export const deleteCard = (formData) => async (dispatch) => {
       type: ERROR_CARDS,
       payload: {
         msg: err.response,
-        status: err.response.status,
-      },
+        status: err.response.status
+      }
     });
   }
 };

@@ -1,15 +1,16 @@
 import React, { useState, useRef } from "react";
-
 import "./Display.css";
 import { Container } from "../container/Container";
 import Button from "../container/button/Button";
 import Tooltip from "../container/tooltip/Tooltip";
 import {
   generatePassword,
-  copyToClipBoard,
+  copyToClipBoard
 } from "../../../utility/passwordGenerator";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
 
-const Display = () => {
+const Display = ({ setPassInput, setModal }) => {
   const [password, setPassword] = useState("");
   const [rangeValue, setRange] = useState();
   const [passwordProps, setPasswordProps] = useState();
@@ -18,7 +19,7 @@ const Display = () => {
   const passwordRef = useRef(null);
   let pwdDescription = "";
 
-  const generateNewPassword = () => {
+  const generateNewPassword = ({ setPassInput }) => {
     const pwd =
       rangeValue > 3
         ? generatePassword(passwordProps, rangeValue)
@@ -26,7 +27,7 @@ const Display = () => {
     setPassword(pwd);
   };
 
-  const copyClipBoard = (e) => {
+  const copyClipBoard = e => {
     e.preventDefault();
     copyToClipBoard(passwordRef.current);
     setTooltip(true);
@@ -35,11 +36,11 @@ const Display = () => {
     }, 2000);
   };
 
-  const onSelectTag = (e) => {
+  const onSelectTag = e => {
     setType(e.target.value);
   };
 
-  const setBackgroundColor = (password) => {
+  const setBackgroundColor = password => {
     if (password && password.length >= 14 && password.length <= 20) {
       pwdDescription = "Strong password";
       return "#05c5ff";
@@ -91,9 +92,14 @@ const Display = () => {
             />
             <Button
               className="generate-btn"
-              iconClass="fas fa-sync-alt"
+              // iconClass="fas fa-sync-alt"
               handleClick={() => generateNewPassword()}
-            />
+            >
+              <FontAwesomeIcon
+                icon={faArrowRotateLeft}
+                className="lrgIcon cursor mr-1"
+              />
+            </Button>
 
             <Tooltip
               message="Copied"
@@ -110,17 +116,19 @@ const Display = () => {
         setRange={setRange}
         setPasswordProps={setPasswordProps}
         passwordRef={passwordRef}
+        setPassInput={setPassInput}
+        setModal={setModal}
       />
     </>
   );
 };
 
-const selectTagStyle = {
-  backgroundColor: "inherit",
-  color: "#506175",
-  width: "80%",
-  height: "auto",
-  marginLeft: "-4px",
-};
+// const selectTagStyle = {
+//   backgroundColor: "inherit",
+//   color: "#506175",
+//   width: "80%",
+//   height: "auto",
+//   marginLeft: "-4px"
+// };
 
 export default Display;

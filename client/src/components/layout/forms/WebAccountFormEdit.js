@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
@@ -21,12 +21,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const WebAccountFormEdit = ({
   editWebAccount,
   deleteWebAccount,
-  generatePassword,
   webAccounts: { loading, webAccounts },
   text: { txt }
 }) => {
   const params = useParams();
   const navigate = useNavigate();
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const [pass, setPass] = useState();
 
   // state for edit or delete toggle if true delete
   const [edit, setEdit] = useState(false);
@@ -36,6 +39,7 @@ const WebAccountFormEdit = ({
 
   // state for password generator toggle
   const [passwordGen, setPasswordGen] = useState(false);
+
   const [passProps, setPassProp] = useState({
     uppercase: true,
     lowercase: true,
@@ -93,8 +97,9 @@ const WebAccountFormEdit = ({
       folder: loading || !account[0].folder ? "" : account[0].folder,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       note: loading || !account[0].note ? "" : account[0].note,
-      updated: formatDate(account[0].updated),
-      date: formatDate(account[0].date)
+      updated:
+        loading || !account[0].updated ? "" : formatDate(account[0].updated),
+      date: loading || !account[0].date ? "" : formatDate(account[0].date)
     });
   }, [loading]);
 
@@ -122,9 +127,8 @@ const WebAccountFormEdit = ({
   }
 
   // toggle password generator
-  const togglePasswordGen = () => {
-    setPasswordGen(!passwordGen);
-  };
+  const togglePasswordGen = () =>
+    !passwordGen ? setPasswordGen(true) : setPasswordGen(false);
 
   // Password toggle handler
   const togglePassword = () => {
@@ -137,6 +141,12 @@ const WebAccountFormEdit = ({
     const newPassword = generatePassword(passProps, 15);
     console.log(newPassword);
     setFormData({ ...formData, password: newPassword });
+  };
+
+  const setPassInput = (pass, e) => {
+    e.preventDefault();
+    setFormData({ ...formData, password: pass.value });
+    setOpenModal(false);
   };
 
   return (
@@ -242,18 +252,16 @@ const WebAccountFormEdit = ({
                         <FontAwesomeIcon
                           icon={faGear}
                           className="lrgIcon cursor mr-1 textPrimary"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
-                          onClick={togglePasswordGen}
+                          onClick={() => {
+                            setOpenModal(true);
+                          }}
                         />
-                        <PasswordGen
-                          className="modal fade"
-                          id="exampleModal"
-                          tabindex="-1"
-                          aria-labelledby="exampleModalLabel"
-                          aria-hidden="true"
-                        />
-                        {passwordGen ? <PasswordGen /> : null}
+                        {openModal && (
+                          <PasswordGen
+                            setModal={setOpenModal}
+                            setPassInput={setPassInput}
+                          />
+                        )}
                         <CopyToClipboard text={password}>
                           <FontAwesomeIcon
                             icon={faCopy}
@@ -393,7 +401,6 @@ WebAccountFormEdit.propTypes = {
   editWebAccount: PropTypes.func.isRequired,
   deleteWebAccount: PropTypes.func.isRequired,
   webAccounts: PropTypes.object.isRequired,
-  generatePassword: PropTypes.func.isRequired,
   edit: PropTypes.bool,
   alert: PropTypes.array.isRequired,
   text: PropTypes.object.isRequired
