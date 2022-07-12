@@ -17,7 +17,7 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
 
   const accounts =
     Array.isArray(identity) &&
-    identity.map((i) => {
+    identity.map(i => {
       const linkWithParam = `/identity/edit/${i._id}`;
 
       return (
@@ -119,7 +119,7 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
         <div className="row">
           <Sidebar />
           <div className="col-sm-6 mt-3">
-            <div className="m-2 p-3 shadow-sm mb-5 bg-body myRounded">
+            <div className="m-2 p-3 shadow-sm mb-5 bgCards myRounded">
               <div className="col">
                 <div className="p-2 hstack gap-5 border-bottom mb-4">
                   <div className="me-auto vw-90">
@@ -147,12 +147,12 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
 Identity.propTypes = {
   getIdentity: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  identity: PropTypes.object.isRequired,
+  identity: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth,
-  identity: state.identity,
+  identity: state.identity
 });
 
 export default connect(mapStateToProps, { getIdentity })(Identity);

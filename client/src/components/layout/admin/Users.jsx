@@ -1,15 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import AdminSidebar from "../admin/AdminSidebar";
+import AdminSidebar from "./AdminSidebar";
 import { connect } from "react-redux";
 import { getUsers, deleteUser } from "../../../actions/admin";
 import { formatDate, getDateDiff } from "../../../utility/formatDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Modal.css";
-import ModalConfirm from "./ModalConfirm";
+import "../../modal//Modal.css";
+import ModalConfirm from "../../modal/ModalConfirm";
 
 const Users = ({
   getUsers,
@@ -103,7 +103,7 @@ const Users = ({
         <div className="row">
           <AdminSidebar handleLink={"users"} />
           <div className="col-sm-6 mt-3">
-            <div className="m-2 p-3 shadow-sm mb-5  bg-body myRounded">
+            <div className="m-2 p-3 shadow-sm mb-5  bgCards myRounded">
               <div className="col">
                 <div className="p-2 hstack gap-5 border-bottom mb-4">
                   <div className="me-auto vw-90">

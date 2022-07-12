@@ -18,7 +18,7 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
   // const accountsArray = webAccounts.webAccounts;
   const accounts =
     Array.isArray(cards) &&
-    cards.map((card) => {
+    cards.map(card => {
       const linkWithParam = `/cards/edit/${card._id}`;
       return (
         <div
@@ -79,7 +79,7 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
         <div className="row">
           <Sidebar />
           <div className="col-sm-6 mt-3">
-            <div className="m-2 p-3 shadow-sm mb-5 bg-body myRounded">
+            <div className="m-2 p-3 shadow-sm mb-5 bgCards myRounded">
               <div className="col">
                 <div className="p-2 hstack gap-5 border-bottom mb-4">
                   <div className="me-auto vw-90">
@@ -108,13 +108,13 @@ Cards.propTypes = {
   getCards: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   cards: PropTypes.object.isRequired,
-  text: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth,
   cards: state.cards,
-  text: state.text,
+  text: state.text
 });
 
 export default connect(mapStateToProps, { getCards })(Cards);

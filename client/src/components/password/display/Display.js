@@ -1,43 +1,34 @@
 import React, { useState, useRef } from "react";
 import "./Display.css";
 import { Container } from "../container/Container";
-import Button from "../container/button/Button";
-import Tooltip from "../container/tooltip/Tooltip";
+// import Button from "../container/button/Button";
+// import Tooltip from "../container/tooltip/Tooltip";
 import {
-  generatePassword,
-  copyToClipBoard
+  generatePassword
+  // copyToClipBoard
 } from "../../../utility/passwordGenerator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleCheck,
+  faCircleExclamation,
+  faRotate
+} from "@fortawesome/free-solid-svg-icons";
 
 const Display = ({ setPassInput, setModal }) => {
   const [password, setPassword] = useState("");
   const [rangeValue, setRange] = useState();
   const [passwordProps, setPasswordProps] = useState();
-  const [tooltip, setTooltip] = useState(false);
-  const [type, setType] = useState("password");
+  // const [tooltip, setTooltip] = useState(false);
+  // const [type, setType] = useState("password");
   const passwordRef = useRef(null);
   let pwdDescription = "";
 
-  const generateNewPassword = ({ setPassInput }) => {
+  const generateNewPassword = () => {
     const pwd =
       rangeValue > 3
         ? generatePassword(passwordProps, rangeValue)
         : generatePassword(passwordProps, 3);
     setPassword(pwd);
-  };
-
-  const copyClipBoard = e => {
-    e.preventDefault();
-    copyToClipBoard(passwordRef.current);
-    setTooltip(true);
-    setTimeout(() => {
-      setTooltip(false);
-    }, 2000);
-  };
-
-  const onSelectTag = e => {
-    setType(e.target.value);
   };
 
   const setBackgroundColor = password => {
@@ -49,7 +40,7 @@ const Display = ({ setPassInput, setModal }) => {
       return "#20c997";
     } else {
       pwdDescription = "Bad password";
-      return "#cb473e";
+      return "#e66969";
     }
   };
 
@@ -57,7 +48,7 @@ const Display = ({ setPassInput, setModal }) => {
     <>
       <div className="row">
         <div
-          className="col-9 password-display-container"
+          className="col-9 password-display-container text-light fw-bold"
           style={{ backgroundColor: setBackgroundColor(password) }}
         >
           <div style={{ width: "100%" }}>
@@ -72,46 +63,38 @@ const Display = ({ setPassInput, setModal }) => {
             </div>
 
             <div className="password-description">
-              {password && password.length > 14 ? (
+              {password && password.length > 12 ? (
                 <>
-                  <i className="fas fa-check-circle"></i> {pwdDescription}
+                  <FontAwesomeIcon
+                    icon={faCircleCheck}
+                    className="mr-1 fw-bold"
+                  />
+                  {pwdDescription}
                 </>
               ) : (
                 <>
-                  <i className="fas fa-exclamation-circle"></i> {pwdDescription}
+                  <FontAwesomeIcon
+                    icon={faCircleExclamation}
+                    className="mr-1 fw-bold"
+                  />
+                  {pwdDescription}
                 </>
               )}
             </div>
           </div>
 
           <div className="password-display-icons">
-            <Button
-              className="copy-btn"
-              iconClass="far fa-copy"
-              handleClick={copyClipBoard}
-            />
-            <Button
-              className="generate-btn"
-              // iconClass="fas fa-sync-alt"
-              handleClick={() => generateNewPassword()}
-            >
-              <FontAwesomeIcon
-                icon={faArrowRotateLeft}
-                className="lrgIcon cursor mr-1"
-              />
-            </Button>
-
-            <Tooltip
-              message="Copied"
-              position="left"
-              displayTooltip={tooltip}
-            />
+            <FontAwesomeIcon
+              icon={faRotate}
+              className="lrgIcon cursor mr-1 text-light"
+              onClick={generateNewPassword}
+            ></FontAwesomeIcon>
           </div>
         </div>
       </div>
 
       <Container
-        type={type}
+        // type={type}
         setPassword={setPassword}
         setRange={setRange}
         setPasswordProps={setPasswordProps}
@@ -122,13 +105,5 @@ const Display = ({ setPassInput, setModal }) => {
     </>
   );
 };
-
-// const selectTagStyle = {
-//   backgroundColor: "inherit",
-//   color: "#506175",
-//   width: "80%",
-//   height: "auto",
-//   marginLeft: "-4px"
-// };
 
 export default Display;

@@ -88,7 +88,7 @@ const WebAccounts = ({
   return (
     <Fragment>
       <div className="col-sm-6 mt-3">
-        <div className="m-2 p-3 shadow-sm mb-5 bg-body myRounded">
+        <div className="m-2 p-3 shadow-sm mb-5 bgCards myRounded">
           <div className="col">
             <div className="p-2 hstack gap-5 border-bottom mb-4">
               <div className="me-auto vw-90">

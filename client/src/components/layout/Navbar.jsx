@@ -74,7 +74,7 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
   );
 
   return (
-    <nav className="navbar sticky-top navbar-expand-lg navbar-light navbarBg">
+    <nav className="navbar sticky-top navbar-expand-lg navbar-light  bgBody">
       <div className="container fs-6">
         <img src={logo} className="rounded float-start" alt="PM"></img>
         <p className="navbar-brand me-auto mb-2 mb-lg-0 myPr5">
@@ -120,11 +120,11 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
 
 NavbarComp.protoType = {
   login: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
+const mapStateToProps = state => ({
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { logout })(NavbarComp);

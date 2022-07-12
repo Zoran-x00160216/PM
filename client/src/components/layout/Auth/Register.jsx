@@ -5,21 +5,26 @@ import { setAlert } from "../../../actions/alert";
 import { register } from "../../../actions/auth";
 import { setText } from "../../../actions/text";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const Register = ({ setAlert, register, isAuthenticated, setText }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     password2: "",
-    tier: "basic",
+    tier: "basic"
   });
+
+  // state for password toggle
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const { email, password, password2, tier } = formData;
 
-  const onChange = (e) =>
+  const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
       setAlert("Passwords do not match", "myDanger");
@@ -36,6 +41,13 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
     return <Navigate to="/vault" />;
   }
 
+  // Password toggle handler
+  const togglePassword = () => {
+    // When the handler is invoked
+    // inverse the boolean state of passwordShown
+    setPasswordShown(!passwordShown);
+  };
+
   return (
     <main>
       <div className="container">
@@ -47,62 +59,73 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
           </div>
           <div className="col-md-10 d-flex justify-content-center align-content-center ">
             <div className="shadow-sm p-5 bg-body myRounded">
-              <form className="myForm" onSubmit={(e) => onSubmit(e)}>
+              <form className="myForm" onSubmit={e => onSubmit(e)}>
                 <div className="mb-3">
-                  <label htmlFor="exampleInputEmail1" className="form-label">
-                    Email address
-                  </label>
                   <input
                     type="email"
                     autoComplete="username"
                     className="form-control myRounded"
                     id="exampleInputEmail1"
+                    placeholder="Email"
                     aria-describedby="emailHelp"
                     name="email"
                     value={email}
-                    onChange={(e) => onChange(e)}
+                    onChange={e => onChange(e)}
                     required
                   ></input>
                   <div id="emailHelp" className="form-text">
                     We'll never share your email with anyone else.
                   </div>
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="exampleInputPassword1" className="form-label">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    autoComplete="current-password"
-                    className="form-control myRounded"
-                    id="exampleInputPassword1"
-                    name="password"
-                    value={password}
-                    onChange={(e) => onChange(e)}
-                    // required
-                  ></input>
+                <div className="d-flex">
+                  <div className="mb-3 mr-1 flex-grow-1">
+                    <input
+                      type={passwordShown ? "text" : "password"}
+                      autoComplete="current-password"
+                      className="form-control myRounded vw-90"
+                      id="exampleInputPassword1"
+                      name="password"
+                      value={password}
+                      onChange={e => onChange(e)}
+                      required
+                      placeholder="Master Password"
+                    ></input>
+                  </div>
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    onClick={togglePassword}
+                    className="lrgIcon cursor mt-2 textPrimary"
+                  />
+                </div>
+                <div className="d-flex">
+                  <div className="mr-1 flex-grow-1">
+                    <input
+                      type={passwordShown ? "text" : "password"}
+                      autoComplete="current-password"
+                      className="form-control myRounded vw-90"
+                      id="exampleInputPassword1"
+                      name="password2"
+                      value={password2}
+                      onChange={e => onChange(e)}
+                      required
+                      placeholder="Confirm Master Password"
+                    ></input>
+                  </div>
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    onClick={togglePassword}
+                    className="lrgIcon cursor mt-2 textPrimary"
+                  />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="exampleInputPassword1" className="form-label">
-                    Password2
-                  </label>
-                  <input
-                    type="password"
-                    autoComplete="current-password"
-                    className="form-control myRounded"
-                    id="exampleInputPassword2"
-                    name="password2"
-                    value={password2}
-                    onChange={(e) => onChange(e)}
-                    // required
-                  ></input>
+                  <button
+                    type="submit"
+                    className="mt-4 shadow myBtn primary longBtn"
+                  >
+                    Sign In
+                  </button>
                 </div>
-                <button
-                  type="submit"
-                  className="btn btn-outline-success shadow myBtn  primary fs-5"
-                >
-                  Sign In
-                </button>
+
                 <div className="large-text mt-3">
                   <Link to="/login">
                     <strong>Login</strong>
@@ -121,11 +144,11 @@ Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   setText: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps, { setAlert, register, setText })(

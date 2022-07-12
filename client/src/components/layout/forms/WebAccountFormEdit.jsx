@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useMemo } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
@@ -29,23 +29,18 @@ const WebAccountFormEdit = ({
 
   const [openModal, setOpenModal] = useState(false);
 
-  const [pass, setPass] = useState();
-
   // state for edit or delete toggle if true delete
   const [edit, setEdit] = useState(false);
 
   // state for password toggle
   const [passwordShown, setPasswordShown] = useState(false);
 
-  // state for password generator toggle
-  const [passwordGen, setPasswordGen] = useState(false);
-
-  const [passProps, setPassProp] = useState({
+  const passProps = {
     uppercase: true,
     lowercase: true,
     symbols: true,
     numbers: true
-  });
+  };
 
   // state for data
   const [formData, setFormData] = useState({
@@ -126,20 +121,14 @@ const WebAccountFormEdit = ({
     navigate("/vault");
   }
 
-  // toggle password generator
-  const togglePasswordGen = () =>
-    !passwordGen ? setPasswordGen(true) : setPasswordGen(false);
-
   // Password toggle handler
   const togglePassword = () => {
-    // When the handler is invoked
     // inverse the boolean state of passwordShown
     setPasswordShown(!passwordShown);
   };
 
   const getPassword = () => {
     const newPassword = generatePassword(passProps, 15);
-    console.log(newPassword);
     setFormData({ ...formData, password: newPassword });
   };
 
@@ -157,7 +146,7 @@ const WebAccountFormEdit = ({
           <div className="row">
             <Sidebar className="hideElement" />
             <div className="col-sm-6 mt-3">
-              <div className="m-2 p-2 shadow-sm mb-5 bg-body myRounded">
+              <div className="m-2 p-2 shadow-sm mb-5 bgCards myRounded">
                 <div className="modal-header">
                   <h5 className="modal-title textPrimary">Edit</h5>
                   <button

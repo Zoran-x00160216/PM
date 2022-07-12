@@ -2,17 +2,18 @@ import {
   GET_WEB_ACCOUNTS,
   ERROR_WEB_ACCOUNTS,
   CLEAR_WEB_ACCOUNTS,
-  EDIT_WEB_ACCOUNT,
+  EDIT_WEB_ACCOUNTS
 } from "../actions/type";
 
 const initialState = {
   webAccounts: [],
   editAccount: {},
+  status: 0,
   loading: true,
-  error: {},
+  error: {}
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -20,25 +21,27 @@ export default function (state = initialState, action) {
       return {
         ...state,
         webAccounts: payload,
-        loading: false,
+        loading: false
       };
-    case EDIT_WEB_ACCOUNT:
+    case EDIT_WEB_ACCOUNTS:
       return {
         ...state,
         loading: false,
-        editAccount: payload,
+        editAccount: payload
       };
     case ERROR_WEB_ACCOUNTS:
       return {
         ...state,
         error: payload,
-        loading: false,
+        loading: false
       };
     case CLEAR_WEB_ACCOUNTS:
       return {
         ...state,
         webAccounts: [],
-        loading: false,
+        editAccount: {},
+        error: {},
+        loading: false
       };
     default:
       return state;

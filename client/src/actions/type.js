@@ -24,7 +24,7 @@ export const LOGOUT = "LOGOUT";
 // reducers/webAccounts.js
 export const GET_WEB_ACCOUNTS = "GET_WEB_ACCOUNTS";
 export const ERROR_WEB_ACCOUNTS = "ERROR_WEB_ACCOUNTS";
-export const EDIT_WEB_ACCOUNT = "EDIT_WEB_ACCOUNT";
+export const EDIT_WEB_ACCOUNTS = "EDIT_WEB_ACCOUNTS";
 export const CLEAR_WEB_ACCOUNTS = "CLEAR_WEB_ACCOUNTS";
 
 // reducers/personalDetails

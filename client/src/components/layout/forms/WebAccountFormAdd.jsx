@@ -2,21 +2,27 @@ import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
+import PasswordGen from "../../password/PasswordGen";
 import AlertComponent from "../AlertComponent";
+// import StripeComponent from "../stripePayment/StripeComponent";
+import StripeContainer from "../../stripePayment/StripeContainer";
 import { connect } from "react-redux";
+// import { checkOut } from "../../../actions/checkout";
+import { generatePassword } from "../../../utility/passwordGenerator";
 import { createWebAccount } from "../../../actions/webAccounts";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCopy,
+  faEye,
   faArrowRotateLeft,
-  faEye
+  faGear
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const WebAccountFormAdd = ({
   createWebAccount,
-  webAccounts: { webAccounts },
+  webAccounts: { editAccount },
   text: { txt }
 }) => {
   const [formData, setFormData] = useState({
@@ -30,6 +36,16 @@ const WebAccountFormAdd = ({
   });
 
   const { name, username, password, uri, folder, favorite, note } = formData;
+
+  const [openModal, setOpenModal] = useState(false);
+  const [openStripe, setOpenStripe] = useState(false);
+
+  const passProps = {
+    uppercase: true,
+    lowercase: true,
+    symbols: true,
+    numbers: true
+  };
 
   // state for password toggle
   const [passwordShown, setPasswordShown] = useState(false);
@@ -50,10 +66,9 @@ const WebAccountFormAdd = ({
   };
 
   const navigate = useNavigate();
-  if (webAccounts.status === 200) {
+  if (editAccount.status === 200) {
     navigate("/vault");
   }
-
   // Password toggle handler
   const togglePassword = () => {
     // When the handler is invoked
@@ -61,15 +76,46 @@ const WebAccountFormAdd = ({
     setPasswordShown(!passwordShown);
   };
 
+  const getPassword = () => {
+    const newPassword = generatePassword(passProps, 15);
+    setFormData({ ...formData, password: newPassword });
+  };
+
+  const setPassInput = (pass, e) => {
+    e.preventDefault();
+    setFormData({ ...formData, password: pass.value });
+    setOpenModal(false);
+  };
+  // const checkOutStripe = () => {
+  //   checkOut();
+  //   // const url = checkOut();
+  //   // navigate(url);
+  // };
+
   return (
     <Fragment>
       <main>
         <AlertComponent />
+        {openStripe ? (
+          <StripeContainer />
+        ) : (
+          <>
+            <h3>$10.00</h3>
+            <button
+              type="button"
+              className="btn m-1 btn-outline-success shadow myBtn secondary"
+              onClick={() => setOpenStripe(true)}
+            >
+              Purchase Spatula
+            </button>
+          </>
+        )}
+        {/* {openStripe && <StripeComponent setStripe={setOpenStripe} />} */}
         <div className="container myVh">
           <div className="row">
             <Sidebar className="hideElement" />
             <div className="col-sm-6 mt-3">
-              <div className="m-2 p-2 shadow-sm mb-5 bg-body myRounded">
+              <div className="m-2 p-2 shadow-sm mb-5 bgCards myRounded">
                 <div className="modal-header">
                   <h5 className="modal-title textPrimary">Add</h5>
                   <button
@@ -80,6 +126,13 @@ const WebAccountFormAdd = ({
                       navigate("/vault");
                     }}
                   ></button>
+                  {/* <button
+                    type="button"
+                    className="btn m-1 btn-outline-success shadow myBtn secondary"
+                    onClick={() => checkOutStripe()}
+                  >
+                    Close
+                  </button> */}
                 </div>
                 <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
@@ -159,7 +212,21 @@ const WebAccountFormAdd = ({
                         <FontAwesomeIcon
                           icon={faArrowRotateLeft}
                           className="lrgIcon cursor mr-1 textPrimary"
+                          onClick={e => getPassword(e)}
                         />
+                        <FontAwesomeIcon
+                          icon={faGear}
+                          className="lrgIcon cursor mr-1 textPrimary"
+                          onClick={() => {
+                            setOpenModal(true);
+                          }}
+                        />
+                        {openModal && (
+                          <PasswordGen
+                            setModal={setOpenModal}
+                            setPassInput={setPassInput}
+                          />
+                        )}
                         <CopyToClipboard text={password}>
                           <FontAwesomeIcon
                             icon={faCopy}

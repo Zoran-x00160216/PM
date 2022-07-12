@@ -17,17 +17,22 @@ app.use((req, res, next) => {
 // support url encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
-// Simple Usage (Enable All CORS Requests)
-app.use(cors());
-app.options("http://localhost:3000", cors()); // include before other routes
+// Enable CORS Requests only from localhost:3000
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+  })
+);
+// app.options("http://localhost:3000", cors()); // include before other routes
 
 // Init Middleware
 app.use(express.json({ extended: false }));
 
-app.get("/", (req, res) => res.send("API Running"));
+// app.get("/", (req, res) => res.send("API Running"));
 
 // Route Middlewares
 app.use("/api/user", require("./routes/user"));
+app.use("/api/createPaymentIntent", require("./routes/createPaymentIntent"));
 app.use("/api/webAccounts", verify, require("./routes/webAccounts"));
 app.use("/api/creditCards", verify, require("./routes/creditCards"));
 app.use("/api/identity", verify, require("./routes/identity"));

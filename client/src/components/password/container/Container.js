@@ -8,7 +8,6 @@ import {
   setPasswordLength,
   copyToClipBoard
 } from "../../../utility/passwordGenerator";
-import { set } from "mongoose";
 
 const CHECKBOX_LIST = [
   {
@@ -58,8 +57,8 @@ const Container = props => {
   const [checked, setChecked] = useState(false);
   const [checkedName, setCheckedName] = useState("");
   const [minMaxValue, setMinMaxValue] = useState({
-    min: 14,
-    max: 40
+    min: 8,
+    max: 30
   });
 
   const { uppercase, lowercase, symbols, numbers } = checkbox;
@@ -98,8 +97,8 @@ const Container = props => {
         checkedName: "",
         checked: false,
         isChecked: checkbox.isChecked,
-        min: 14,
-        max: 40,
+        min: 8,
+        max: 30,
         length: 15
       };
       checkBoxProperties(checkboxProps);
@@ -220,7 +219,7 @@ const Container = props => {
           <div className="col-sm-4">
             <Button
               className="btn m-1 btn-outline-success shadow myBtn primary"
-              label="Save"
+              label="Select"
               handleClick={e => setPassInput(passwordRef.current, e)}
             />
           </div>

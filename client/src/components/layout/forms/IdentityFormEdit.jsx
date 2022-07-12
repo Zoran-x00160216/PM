@@ -120,7 +120,7 @@ const IdentityFormEdit = ({
           <div className="row">
             <Sidebar className="hideElement" />
             <div className="col-sm-6 mt-3">
-              <div className="m-2 p-2 shadow-sm mb-5 bg-body myRounded">
+              <div className="m-2 p-2 shadow-sm mb-5 bgCards myRounded">
                 <div className="modal-header">
                   <h5 className="modal-title textPrimary">Add</h5>
                   <button

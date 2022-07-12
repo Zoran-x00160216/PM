@@ -1,12 +1,18 @@
 import axios from "axios";
 import { setAlert } from "./alert";
-import { GET_WEB_ACCOUNTS, ERROR_WEB_ACCOUNTS } from "./type";
+import {
+  GET_WEB_ACCOUNTS,
+  EDIT_WEB_ACCOUNTS,
+  ERROR_WEB_ACCOUNTS
+} from "./type";
 import CryptoJS from "crypto-js";
 
 // Get web accounts
 export const getWebAccounts = text => async dispatch => {
   // console.log(text);
   try {
+    const url = process.env.SERVER_URL;
+    console.log(url);
     const res = await axios.get("http://localhost:5000/api/webAccounts");
 
     let data = res.data;
@@ -51,9 +57,10 @@ export const createWebAccount = (formData, text) => async dispatch => {
       data,
       config
     );
+    console.log(res.data.status);
 
     dispatch({
-      type: GET_WEB_ACCOUNTS,
+      type: EDIT_WEB_ACCOUNTS,
       payload: res.data
     });
 

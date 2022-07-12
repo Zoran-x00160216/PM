@@ -3,20 +3,21 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
 import { connect } from "react-redux";
-import { createCard } from "../../../actions/cards";
+import { createNote } from "../../../actions/notes";
+// import { CopyToClipboard } from "react-copy-to-clipboard";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCopy, faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
+const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
   const [formData, setFormData] = useState({
     name: "",
-    number: "",
-    expiryMonth: "",
-    expiryYear: "",
+    note: "",
     folder: "",
     favorite: false
   });
 
-  const { name, number, expiryMonth, expiryYear, folder, favorite } = formData;
+  const { name, note, folder, favorite } = formData;
 
   const navigate = useNavigate();
 
@@ -32,21 +33,22 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    createCard(formData, txt.txt);
+    createNote(formData, txt.txt);
   };
 
-  if (cards.status === 200) {
-    navigate("/cards");
+  if (notes.status === 200) {
+    navigate("/notes");
   }
 
   return (
     <Fragment>
       <main>
+        {/* <AlertComponent /> */}
         <div className="container myVh">
           <div className="row">
             <Sidebar className="hideElement" />
             <div className="col-sm-6 mt-3">
-              <div className="m-2 p-2 myShadow mb-5 bg-body myRounded">
+              <div className="m-2 p-2 shadow-sm mb-5 bgCards myRounded">
                 <div className="modal-header">
                   <h5 className="modal-title textPrimary">Add</h5>
                   <button
@@ -54,13 +56,13 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                     className="btn-close"
                     aria-label="Close"
                     onClick={e => {
-                      navigate("/cards");
+                      navigate("/notes");
                     }}
                   ></button>
                 </div>
                 <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
-                    <div className="mb-1">
+                    <div>
                       <label
                         htmlFor="recipient-name"
                         className="col-form-label"
@@ -78,86 +80,20 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                         ></input>
                       </div>
                     </div>
-                    <div className="mb-1">
-                      <label
-                        htmlFor="recipient-name"
-                        className="col-form-label"
-                      >
-                        Number:
+                    <div>
+                      <label htmlFor="message-text" className="col-form-label">
+                        Note:
                       </label>
-                      <div className="d-flex">
-                        <input
-                          type="text"
-                          className="form-control myInput"
-                          name="number"
-                          value={number}
-                          onChange={e => onChange(e)}
-                          minLength="14"
-                          maxLength="14"
-                          required
-                        ></input>
-                      </div>
+                      <textarea
+                        className="form-control myInput"
+                        id="message-text"
+                        name="note"
+                        value={note}
+                        onChange={e => onChange(e)}
+                      ></textarea>
                     </div>
-                    <div className="row mb-1">
+                    <div className="row">
                       <div className="col-md-6">
-                        <label
-                          htmlFor="recipient-name"
-                          className="col-form-label"
-                        >
-                          Expiry Month:
-                        </label>
-                        <select
-                          type="number"
-                          className="form-control myInput"
-                          id="inputGroupSelect01"
-                          name="expiryMonth"
-                          value={expiryMonth}
-                          onChange={e => onChange(e)}
-                          required
-                        >
-                          <option selected></option>
-                          <option value="1">01/January</option>
-                          <option value="2">02/February</option>
-                          <option value="3">03/March</option>
-                          <option value="4">04/April</option>
-                          <option value="5">05/May</option>
-                          <option value="6">06/June</option>
-                          <option value="7">07/July</option>
-                          <option value="8">08/August</option>
-                          <option value="9">09/September</option>
-                          <option value="10">10/October</option>
-                          <option value="11">11/November</option>
-                          <option value="12">12/December</option>
-                        </select>
-                      </div>
-                      <div className="col-md-6">
-                        <label
-                          htmlFor="recipient-name"
-                          className="col-form-label"
-                        >
-                          Expiry Year:
-                        </label>
-                        <select
-                          type="number"
-                          className="form-control myInput"
-                          id="inputGroupSelect02"
-                          name="expiryYear"
-                          value={expiryYear}
-                          onChange={e => onChange(e)}
-                          required
-                        >
-                          <option selected></option>
-                          <option value="2022">2022</option>
-                          <option value="2023">2023</option>
-                          <option value="2024">2024</option>
-                          <option value="2025">2025</option>
-                          <option value="2026">2026</option>
-                          <option value="2027">2027</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="row mb-3">
-                      <div className="mb-1 col-md-6">
                         <label
                           htmlFor="recipient-name"
                           className="col-form-label"
@@ -172,7 +108,7 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                           onChange={e => onChange(e)}
                         ></input>
                       </div>
-                      <div className="mb-1 col-md-6">
+                      <div className="col-md-6">
                         <label
                           htmlFor="recipient-name"
                           className="col-form-label"
@@ -223,18 +159,18 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
   );
 };
 
-CardsFormAdd.propType = {
-  createCard: PropTypes.func.isRequired,
+NotesFormAdd.propType = {
+  createNote: PropTypes.func.isRequired,
   // alert: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired,
-  cards: PropTypes.object.isRequired
+  notes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  alert: state.alert,
+  // alert: state.alert,
   text: state.text,
-  cards: state.cards
+  notes: state.notes
 });
 export default connect(mapStateToProps, {
-  createCard
-})(CardsFormAdd);
+  createNote
+})(NotesFormAdd);

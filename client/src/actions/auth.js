@@ -13,11 +13,12 @@ import {
   CLEAR_CARDS,
   CLEAR_NOTES,
   CLEAR_IDENTITY,
+  CLEAR_USERS
 } from "./type";
 import setAuthToken from "../utility/setAuthToken";
 
 // Load User
-export const loadUser = () => async (dispatch) => {
+export const loadUser = () => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -27,58 +28,56 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({
       type: USER_LOADED,
-      payload: res.data,
+      payload: res.data
     });
   } catch (error) {
     dispatch({
-      type: AUTH_ERROR,
+      type: AUTH_ERROR
     });
   }
 };
 
 // Reg User
-export const register =
-  ({ email, password, tier }) =>
-  async (dispatch) => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const body = JSON.stringify({ email, password, tier });
-
-      const res = await axios.post(
-        "http://localhost:5000/api/user/register",
-        body,
-        config
-      );
-
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data,
-      });
-
-      dispatch(loadUser());
-    } catch (err) {
-      if (err) {
-        dispatch(setAlert(err.response.data, "myDanger"));
-      }
-
-      dispatch({
-        type: REGISTER_FAIL,
-      });
-    }
-  };
-
-// Reg User
-export const login = (email, password) => async (dispatch) => {
+export const register = ({ email, password, tier }) => async dispatch => {
   try {
     const config = {
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
+    };
+
+    const body = JSON.stringify({ email, password, tier });
+
+    const res = await axios.post(
+      "http://localhost:5000/api/user/register",
+      body,
+      config
+    );
+
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data
+    });
+
+    dispatch(loadUser());
+  } catch (err) {
+    if (err) {
+      dispatch(setAlert(err.response.data, "myDanger"));
+    }
+
+    dispatch({
+      type: REGISTER_FAIL
+    });
+  }
+};
+
+// Reg User
+export const login = (email, password) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
     };
     const body = JSON.stringify({ email, password });
 
@@ -90,27 +89,29 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data,
+      payload: res.data
     });
 
     dispatch(loadUser());
   } catch (err) {
     if (err) {
-      dispatch(setAlert(err.response.data, "myDanger"));
+      // console.log(err.response.data);
+      dispatch(setAlert("server error", "myDanger"));
     }
 
     dispatch({
-      type: LOGIN_FAIL,
+      type: LOGIN_FAIL
     });
   }
 };
 
 // Logout user
-export const logout = () => (dispatch) => {
+export const logout = () => dispatch => {
   dispatch({ type: CLEAR_WEB_ACCOUNTS });
   dispatch({ type: CLEAR_TEXT });
   dispatch({ type: CLEAR_NOTES });
   dispatch({ type: CLEAR_CARDS });
   dispatch({ type: CLEAR_IDENTITY });
+  dispatch({ type: CLEAR_USERS });
   dispatch({ type: LOGOUT });
 };

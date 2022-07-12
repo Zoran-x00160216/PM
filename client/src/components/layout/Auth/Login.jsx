@@ -4,21 +4,26 @@ import { connect } from "react-redux";
 import { login } from "../../../actions/auth";
 import { setText } from "../../../actions/text";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const Login = ({ login, isAuthenticated, tier, setText }) => {
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
+    password: ""
   });
+
+  // state for password toggle
+  const [passwordShown, setPasswordShown] = useState(false);
 
   // const [textPs, setTextPs] = useState("");
 
   const { email, password } = formData;
 
-  const onChange = (e) =>
+  const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     login(email, password);
   };
@@ -33,6 +38,13 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
     }
   }
 
+  // Password toggle handler
+  const togglePassword = () => {
+    // When the handler is invoked
+    // inverse the boolean state of passwordShown
+    setPasswordShown(!passwordShown);
+  };
+
   return (
     <main>
       <div className="container">
@@ -44,11 +56,8 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
           </div>
           <div className="col-md-10 d-flex justify-content-center align-content-center ">
             <div className="shadow-sm p-5 bg-body myRounded">
-              <form onSubmit={(e) => onSubmit(e)}>
+              <form onSubmit={e => onSubmit(e)}>
                 <div className="mb-3">
-                  <label htmlFor="exampleInputEmail1" className="form-label">
-                    Email address
-                  </label>
                   <input
                     type="email"
                     autoComplete="username"
@@ -57,34 +66,43 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
                     aria-describedby="emailHelp"
                     name="email"
                     value={email}
-                    onChange={(e) => onChange(e)}
+                    placeholder="Email"
+                    onChange={e => onChange(e)}
                     required
                   ></input>
                   <div id="emailHelp" className="form-text">
                     We'll never share your email with anyone else.
                   </div>
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="exampleInputPassword1" className="form-label">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    autoComplete="current-password"
-                    className="form-control myRounded"
-                    id="exampleInputPassword1"
-                    name="password"
-                    value={password}
-                    onChange={(e) => onChange(e)}
-                    required
-                  ></input>
+                <div className="d-flex">
+                  <div className="mr-1 flex-grow-1">
+                    <input
+                      type={passwordShown ? "text" : "password"}
+                      autoComplete="current-password"
+                      className="form-control myRounded vw-90"
+                      id="exampleInputPassword1"
+                      name="password"
+                      value={password}
+                      onChange={e => onChange(e)}
+                      required
+                      placeholder="Master Password"
+                    ></input>
+                  </div>
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    onClick={togglePassword}
+                    className="lrgIcon cursor mt-2 textPrimary"
+                  />
                 </div>
-                <button
-                  type="submit"
-                  className="btn btn-outline-success shadow myBtn  primary fs-5"
-                >
-                  Login
-                </button>
+                <div>
+                  <button
+                    type="submit"
+                    className="mt-4 shadow myBtn longBtn primary"
+                  >
+                    Login
+                  </button>
+                </div>
+
                 <div className="large-text mt-3">
                   <Link to="/register">
                     <strong>Sign In</strong>
@@ -103,12 +121,12 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
   setText: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-  tier: PropTypes.string.isRequired,
+  tier: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
-  tier: state.auth.tier,
+  tier: state.auth.tier
 });
 
 export default connect(mapStateToProps, { login, setText })(Login);

@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import AdminSidebar from "../admin/AdminSidebar";
+import AdminSidebar from "./AdminSidebar";
 import PieChartComponent from "./PieChartComponent";
 import { connect } from "react-redux";
 import {
@@ -64,22 +64,22 @@ const AdminDashboard = ({
               <PieChartComponent
                 setText={"Basic vs Premium"}
                 data={allUsers}
-                colors={["#05c5ff", "#20c997"]}
+                colors={["#059bffd7", "#1fbb8c"]}
               />
               <PieChartComponent
                 setText={"Sum of all entries per category"}
                 data={allEntries}
-                colors={["#05c5ff", "#20c997", "#e66969", "#ff7f50"]}
+                colors={["#059bffd7", "#1fbb8c", "#e66969", "#ff7f50"]}
               />
               <PieChartComponent
                 setText={"Basic - all entries per category"}
                 data={allEntriesBasic}
-                colors={["#05c5ff", "#20c997", "#e66969", "#ff7f50"]}
+                colors={["#059bffd7", "#1fbb8c", "#e66969", "#ff7f50"]}
               />
               <PieChartComponent
                 setText={"Premium - all entries per category"}
                 data={allEntriesPremium}
-                colors={["#05c5ff", "#20c997", "#e66969", "#ff7f50"]}
+                colors={["#059bffd7", "#1fbb8c", "#e66969", "#ff7f50"]}
               />
             </div>
           </div>

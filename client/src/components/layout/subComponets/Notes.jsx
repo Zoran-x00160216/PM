@@ -18,7 +18,7 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
   // const accountsArray = webAccounts.webAccounts;
   const accounts =
     Array.isArray(notes) &&
-    notes.map((n) => {
+    notes.map(n => {
       const linkWithParam = `/notes/edit/${n._id}`;
 
       return (
@@ -75,7 +75,7 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
         <div className="row">
           <Sidebar />
           <div className="col-sm-6 mt-3">
-            <div className="m-2 p-3 shadow-sm mb-5  bg-body myRounded">
+            <div className="m-2 p-3 shadow-sm mb-5 bgCards myRounded">
               <div className="col">
                 <div className="p-2 hstack gap-5 border-bottom mb-4">
                   <div className="me-auto vw-90">
@@ -104,13 +104,13 @@ Notes.propTypes = {
   getNotes: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   notes: PropTypes.object.isRequired,
-  text: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth,
   notes: state.notes,
-  text: state.text,
+  text: state.text
 });
 
 export default connect(mapStateToProps, { getNotes })(Notes);

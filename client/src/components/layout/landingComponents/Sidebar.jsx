@@ -4,7 +4,7 @@ const Sidebar = () => {
   return (
     <div className="col-sm-4 mt-2">
       <div className="col">
-        <div className="m-3 shadow-sm bg-body myRounded">
+        <div className="m-3 shadow-sm bgCards myRounded">
           <ul className="pt-4 pb-4">
             <li>
               <a href="./">
@@ -32,7 +32,7 @@ const Sidebar = () => {
             </li>
           </ul>
         </div>
-        <div className="m-3 mt-5 shadow-sm bg-body myRounded">
+        <div className="m-3 mt-5 shadow-sm bgCards myRounded">
           <ul className="pt-4 pb-4">
             <li>
               <a href="./">

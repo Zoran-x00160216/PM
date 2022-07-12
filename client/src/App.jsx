@@ -25,8 +25,7 @@ import CardsFormEdit from "./components/layout/forms/CardsFormEdit";
 import AlertComponent from "./components/layout/AlertComponent";
 import AdminDashboard from "./components/layout/admin/AdminDashboard";
 import Users from "./components/layout/admin/Users";
-
-import { loadUser } from "./actions/auth";
+import { loadUser, logout } from "./actions/auth";
 import setAuthToken from "./utility/setAuthToken";
 // Redux
 import { Provider } from "react-redux";
@@ -34,13 +33,15 @@ import store from "./store";
 // Css
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import StripeContainer from "./components/stripePayment/StripeContainer";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
-const App = ({ logout }) => {
+const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
+    window.onload = () => store.dispatch(logout());
   }, []);
 
   return (
@@ -52,6 +53,7 @@ const App = ({ logout }) => {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
+            <Route exact path="stripeContainer" element={<StripeContainer />} />
             <Route exact path="/register" element={<Register />} />
             <Route element={<PrivateRouteAdmin />}>
               <Route path="/adminDashboard" element={<AdminDashboard />} />

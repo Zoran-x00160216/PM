@@ -2,17 +2,17 @@ import {
   GET_USERS,
   EDIT_USERS,
   ERROR_USERS,
-  CLEAR_USERS,
+  CLEAR_USERS
 } from "../actions/type";
 
 const initialState = {
   users: [],
   editUsers: [],
   loading: true,
-  error: {},
+  error: {}
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -20,25 +20,25 @@ export default function (state = initialState, action) {
       return {
         ...state,
         users: payload,
-        loading: false,
+        loading: false
       };
     case EDIT_USERS:
       return {
         ...state,
         loading: false,
-        editUsers: payload,
+        editUsers: payload
       };
     case ERROR_USERS:
       return {
         ...state,
         error: payload,
-        loading: false,
+        loading: false
       };
     case CLEAR_USERS:
       return {
         ...state,
         users: [],
-        loading: false,
+        loading: false
       };
     default:
       return state;

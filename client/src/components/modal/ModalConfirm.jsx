@@ -4,7 +4,7 @@ import "./Modal.css";
 
 const ModalConfirm = ({ setModal, setText, editUser }) => {
   return (
-    <div className="modalBackground">
+    <div className="modalBackground bgCards">
       <div className="modalContainer">
         <div className="titleCloseBtn">
           {/* <button
@@ -43,7 +43,7 @@ const ModalConfirm = ({ setModal, setText, editUser }) => {
 };
 ModalConfirm.propTypes = {
   setModal: PropTypes.func.isRequired,
-  setText: PropTypes.string.isRequired,
+  setText: PropTypes.string.isRequired
 };
 
 export default ModalConfirm;

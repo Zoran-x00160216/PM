@@ -32,7 +32,7 @@ const PieChartComponent = ({ setText, data, colors }) => {
   };
   return (
     <div className="col-sm-6 mt-3 mr-auto">
-      <div className="m-3 p-5 shadow-sm mb-1 bg-body myRounded">
+      <div className="m-3 p-5 shadow-sm mb-1 bgCards myRounded">
         <div className="text-center border-bottom">
           <h5>{setText}</h5>
         </div>

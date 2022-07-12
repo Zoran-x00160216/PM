@@ -5,16 +5,20 @@ import { connect } from "react-redux";
 
 const PrivateRouteAdmin = ({ auth: { isAuthenticated, loading, tier } }) => {
   // console.log(loading, isAuthenticated, tier);
-  return tier !== "admin" && !loading ? <Navigate to="/login" /> : <Outlet />;
+  return tier !== "admin" && !isAuthenticated ? (
+    <Navigate to="/login" />
+  ) : (
+    <Outlet />
+  );
 };
 
 PrivateRouteAdmin.propTypes = {
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
   // component: PropTypes.elementType.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
+const mapStateToProps = state => ({
+  auth: state.auth
 });
 
 export default connect(mapStateToProps)(PrivateRouteAdmin);

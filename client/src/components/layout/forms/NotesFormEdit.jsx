@@ -1,25 +1,59 @@
-import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { Fragment, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
 import { connect } from "react-redux";
-import { createNote } from "../../../actions/notes";
-// import { CopyToClipboard } from "react-copy-to-clipboard";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCopy, faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import { deleteNote, editNote } from "../../../actions/notes";
+import { formatDate } from "../../../utility/formatDate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
+const NotesFormEdit = ({
+  editNote,
+  deleteNote,
+  notes: { loading, notes },
+  text: { txt }
+}) => {
+  const params = useParams();
+  const navigate = useNavigate();
+  const [edit, setEdit] = useState(false);
+
   const [formData, setFormData] = useState({
+    _id: "",
+    user_id: "",
     name: "",
     note: "",
     folder: "",
-    favorite: false
+    favorite: false,
+    updated: "",
+    date: ""
   });
 
-  const { name, note, folder, favorite } = formData;
-
-  const navigate = useNavigate();
+  const { name, note, folder, favorite, updated, date } = formData;
+  let account = [];
+  Array.isArray(notes) &&
+    notes.map(note => {
+      if (params.id === note._id) {
+        Object.keys(note).forEach(function() {
+          account.push(note);
+        });
+      }
+      return note;
+    });
+  useEffect(() => {
+    // console.log(account);
+    setFormData({
+      _id: loading || !account[0]._id ? "" : account[0]._id,
+      user_id: loading || !account[0].user_id ? "" : account[0].user_id,
+      name: loading || !account[0].name ? "" : account[0].name,
+      note: loading || !account[0].note ? "" : account[0].note,
+      folder: loading || !account[0].folder ? "" : account[0].folder,
+      favorite: loading || !account[0].favorite ? false : account[0].favorite,
+      updated: formatDate(account[0].updated),
+      date: formatDate(account[0].date)
+    });
+  }, [loading]);
 
   const onChange = e => {
     e.preventDefault();
@@ -33,10 +67,10 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    createNote(formData, txt.txt);
+    edit ? deleteNote(formData) : editNote(formData, txt.txt);
   };
 
-  if (notes.status === 200) {
+  if (notes.acknowledged === true || notes.deletedCount === 1) {
     navigate("/notes");
   }
 
@@ -48,9 +82,9 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
           <div className="row">
             <Sidebar className="hideElement" />
             <div className="col-sm-6 mt-3">
-              <div className="m-2 p-2 shadow-sm mb-5 bg-body myRounded">
+              <div className="m-2 p-2 shadow-sm mb-5 bgCards myRounded">
                 <div className="modal-header">
-                  <h5 className="modal-title textPrimary">Add</h5>
+                  <h5 className="modal-title textPrimary">Edit</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -62,13 +96,8 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                 </div>
                 <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
-                    <div>
-                      <label
-                        htmlFor="recipient-name"
-                        className="col-form-label"
-                      >
-                        Name:
-                      </label>
+                    <div className="mb-1">
+                      <label className="col-form-label">Name:</label>
                       <div className="d-flex">
                         <input
                           type="text"
@@ -86,6 +115,7 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                       </label>
                       <textarea
                         className="form-control myInput"
+                        rows="10"
                         id="message-text"
                         name="note"
                         value={note}
@@ -94,12 +124,7 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                     </div>
                     <div className="row">
                       <div className="col-md-6">
-                        <label
-                          htmlFor="recipient-name"
-                          className="col-form-label"
-                        >
-                          Folder:
-                        </label>
+                        <label className="col-form-label">Folder:</label>
                         <input
                           type="text"
                           className="form-control myInput"
@@ -109,12 +134,7 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                         ></input>
                       </div>
                       <div className="col-md-6">
-                        <label
-                          htmlFor="recipient-name"
-                          className="col-form-label"
-                        >
-                          Favorites:
-                        </label>
+                        <label className="col-form-label">Favorites:</label>
                         <div className="form-check form-switch">
                           <input
                             className="form-check-input"
@@ -130,12 +150,27 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="d-flex justify-content-end mb-3">
+                  </div>
+                  <div className="d-flex justify-content-between mb-3">
+                    <div>
+                      <button
+                        type="submit"
+                        name="delete"
+                        className="noBorder m-2 bg-body"
+                        onClick={() => setEdit(true)}
+                      >
+                        <FontAwesomeIcon
+                          icon={faTrashCan}
+                          className="textRed lrgIcon"
+                        />
+                      </button>
+                    </div>
+                    <div>
                       <button
                         type="button"
                         className="btn m-1 btn-outline-success shadow myBtn secondary"
                         onClick={e => {
-                          navigate("/vault");
+                          navigate("/notes");
                         }}
                       >
                         Close
@@ -145,11 +180,17 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
                         name="update"
                         className="btn m-1 btn-outline-success shadow myBtn primary"
                       >
-                        Save
+                        Update
                       </button>
                     </div>
                   </div>
                 </form>
+                <div className="m-3 fs-6">
+                  <span className="small">
+                    Created: {date}
+                    <br></br>Last update: {updated}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -159,18 +200,21 @@ const NotesFormAdd = ({ createNote, notes: { notes }, text: { txt } }) => {
   );
 };
 
-NotesFormAdd.propType = {
-  createNote: PropTypes.func.isRequired,
-  // alert: PropTypes.object.isRequired,
-  text: PropTypes.object.isRequired,
-  notes: PropTypes.object.isRequired
+NotesFormEdit.propTypes = {
+  editNote: PropTypes.func.isRequired,
+  deleteNote: PropTypes.func.isRequired,
+  notes: PropTypes.object.isRequired,
+  edit: PropTypes.bool,
+  alert: PropTypes.array.isRequired,
+  text: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  // alert: state.alert,
-  text: state.text,
-  notes: state.notes
+  alert: state.alert,
+  notes: state.notes,
+  text: state.text
 });
-export default connect(mapStateToProps, {
-  createNote
-})(NotesFormAdd);
+
+export default connect(mapStateToProps, { editNote, deleteNote })(
+  NotesFormEdit
+);

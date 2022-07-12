@@ -2,9 +2,9 @@
   border-radius: 5px;
   display: flex;
   position: relative;
-  max-width: 100%;
+  width: 100%;
   height: 10%;
-  margin: 0 auto 10px;
+  margin: auto;
 }
 
 .password-display {
@@ -14,7 +14,7 @@
   color: white;
   font-size: 1.4rem;
   text-align: left;
-  padding-left: 5px;
+  /* padding-left: 5px; */
   height: 100%;
   line-height: 150px;
 }

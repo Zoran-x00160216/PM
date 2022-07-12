@@ -94,8 +94,8 @@ router.post("/login", async (req, res) => {
         res.send({ token, tier: user.tier });
       }
     );
-  } catch (error) {
-    res.status(500).send("Server not found");
+  } catch (e) {
+    res.status(500).send(e);
   }
 });
 
