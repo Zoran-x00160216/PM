@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import ModalConfirm from "../../modal/ModalConfirm";
 import { connect } from "react-redux";
 import { getWebAccounts } from "../../../actions/webAccounts";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -16,9 +17,25 @@ const WebAccounts = ({
   webAccounts: { loading, webAccounts },
   text: { txt }
 }) => {
+  const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false);
+
   useEffect(() => {
     getWebAccounts(txt.txt);
   }, [getWebAccounts, txt.txt]);
+
+  const checkPermission = () => {
+    if (webAccounts.length >= 7) {
+      setOpenModal(true);
+    } else {
+      navigate("/webAccount/add");
+    }
+  };
+  const openPayment = () => {
+    setOpenModal(false);
+    navigate("/stripeContainer");
+  };
+  console.log(webAccounts.length);
 
   const accounts =
     Array.isArray(webAccounts) &&
@@ -94,10 +111,19 @@ const WebAccounts = ({
               <div className="me-auto vw-90">
                 <h5>Web Accounts</h5>
               </div>
-              <Link to="/webAccount/add" className="cursor">
+              <div className="cursor" onClick={checkPermission}>
                 Add
                 <i className="bi bi-plus-circle textSecondary lrgIcon p-2"></i>
-              </Link>
+              </div>
+              {openModal && (
+                <ModalConfirm
+                  setModal={setOpenModal}
+                  setText={
+                    "You reach max number of login entries, to continue get premium account"
+                  }
+                  edit={openPayment}
+                />
+              )}
             </div>
             <div>
               <ul className="mt-3 p-1">

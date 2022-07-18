@@ -2,19 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Modal.css";
 
-const ModalConfirm = ({ setModal, setText, editUser }) => {
+const ModalConfirm = ({ setModal, setText, edit }) => {
   return (
-    <div className="modalBackground bgCards">
-      <div className="modalContainer">
-        <div className="titleCloseBtn">
-          {/* <button
+    <div className="modalBackground">
+      <div className="modalContainer bgCards">
+        {/* <div className="titleCloseBtn">
+          <button
             onClick={() => {
               setModal(false);
             }}
           >
             X
-          </button> */}
-        </div>
+          </button>
+        </div> */}
         <div>
           <p>{setText}</p>
         </div>
@@ -31,7 +31,7 @@ const ModalConfirm = ({ setModal, setText, editUser }) => {
           <button
             className="btn m-1 btn-outline-success shadow myBtn myDanger secondary"
             onClick={() => {
-              editUser();
+              edit();
             }}
           >
             Yes

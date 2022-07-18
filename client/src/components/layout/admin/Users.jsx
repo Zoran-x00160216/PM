@@ -2,14 +2,14 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import AdminSidebar from "./AdminSidebar";
+import ModalConfirm from "../../modal/ModalConfirm";
 import { connect } from "react-redux";
 import { getUsers, deleteUser } from "../../../actions/admin";
 import { formatDate, getDateDiff } from "../../../utility/formatDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../modal//Modal.css";
-import ModalConfirm from "../../modal/ModalConfirm";
+// import "../../modal//Modal.css";
 
 const Users = ({
   getUsers,
@@ -88,7 +88,7 @@ const Users = ({
               <ModalConfirm
                 setModal={setOpenModal}
                 setText={"Are you sure you want to delete user"}
-                editUser={() => {
+                edit={() => {
                   editUser(user._id);
                 }}
               />

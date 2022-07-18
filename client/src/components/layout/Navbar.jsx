@@ -105,10 +105,7 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
               placeholder="Search..."
               aria-label="Search"
             ></input>
-            <button
-              className="btn btn-outline-success shadow myBtn secondary"
-              type="submit"
-            >
+            <button className="shadow myBtn secondary" type="submit">
               Search
             </button>
           </form>

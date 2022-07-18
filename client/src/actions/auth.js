@@ -96,7 +96,7 @@ export const login = (email, password) => async dispatch => {
   } catch (err) {
     if (err) {
       // console.log(err.response.data);
-      dispatch(setAlert("server error", "myDanger"));
+      dispatch(setAlert(err.response.data, "myDanger"));
     }
 
     dispatch({

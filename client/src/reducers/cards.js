@@ -2,17 +2,18 @@ import {
   GET_CARDS,
   ERROR_CARDS,
   CLEAR_CARDS,
-  EDIT_CARDS,
+  EDIT_CARDS
 } from "../actions/type";
 
 const initialState = {
   cards: [],
   editCards: {},
   loading: true,
-  error: {},
+  status: 0,
+  error: {}
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -20,25 +21,25 @@ export default function (state = initialState, action) {
       return {
         ...state,
         cards: payload,
-        loading: false,
+        loading: false
       };
     case EDIT_CARDS:
       return {
         ...state,
         loading: false,
-        editCards: payload,
+        editCards: payload
       };
     case ERROR_CARDS:
       return {
         ...state,
         error: payload,
-        loading: false,
+        loading: false
       };
     case CLEAR_CARDS:
       return {
         ...state,
         cards: [],
-        loading: false,
+        loading: false
       };
     default:
       return state;

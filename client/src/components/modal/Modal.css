@@ -1,7 +1,7 @@
 .modalBackground {
   width: 100vw;
   height: 100vh;
-  background-color: rgba(200, 200, 200, 0.2);
+  background-color: rgba(200, 200, 200, 0.7);
   left: 0;
   top: 50px;
   position: fixed;
@@ -23,7 +23,7 @@
   z-index: 100;
 }
 
-.titleCloseBtn {
+/* .titleCloseBtn {
   display: flex;
   justify-content: flex-end;
   border-bottom: 0.5px solid rgb(219, 218, 218);
@@ -35,16 +35,16 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-}
+} */
 
-.modalContainer .body {
+/* .modalContainer .body {
   flex: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
 }
-
+*/
 .modalContainer .footer {
   display: flex;
   justify-content: center;

@@ -9,6 +9,7 @@ const initialState = {
   users: [],
   editUsers: [],
   loading: true,
+  status: 0,
   error: {}
 };
 

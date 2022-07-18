@@ -26,6 +26,8 @@ import AlertComponent from "./components/layout/AlertComponent";
 import AdminDashboard from "./components/layout/admin/AdminDashboard";
 import Users from "./components/layout/admin/Users";
 import { loadUser, logout } from "./actions/auth";
+import { getNotes } from "./actions/notes";
+import { getWebAccounts } from "./actions/webAccounts";
 import setAuthToken from "./utility/setAuthToken";
 // Redux
 import { Provider } from "react-redux";
@@ -41,7 +43,8 @@ if (localStorage.token) {
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
-    window.onload = () => store.dispatch(logout());
+    // window.onload = () => store.dispatch(logout());
+    window.onload = () => store.dispatch(getWebAccounts(), getNotes());
   }, []);
 
   return (
@@ -53,7 +56,11 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
-            <Route exact path="stripeContainer" element={<StripeContainer />} />
+            <Route
+              exact
+              path="/stripeContainer"
+              element={<StripeContainer />}
+            />
             <Route exact path="/register" element={<Register />} />
             <Route element={<PrivateRouteAdmin />}>
               <Route path="/adminDashboard" element={<AdminDashboard />} />

@@ -9,6 +9,7 @@ const initialState = {
   identity: [],
   editIdentity: {},
   loading: true,
+  status: 0,
   error: {}
 };
 

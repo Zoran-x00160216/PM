@@ -2,17 +2,18 @@ import {
   GET_NOTES,
   ERROR_NOTES,
   CLEAR_NOTES,
-  EDIT_NOTES,
+  EDIT_NOTES
 } from "../actions/type";
 
 const initialState = {
   notes: [],
   editNote: {},
   loading: true,
-  error: {},
+  status: 0,
+  error: {}
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -20,25 +21,25 @@ export default function (state = initialState, action) {
       return {
         ...state,
         notes: payload,
-        loading: false,
+        loading: false
       };
     case EDIT_NOTES:
       return {
         ...state,
         loading: false,
-        editNote: payload,
+        editNote: payload
       };
     case ERROR_NOTES:
       return {
         ...state,
         error: payload,
-        loading: false,
+        loading: false
       };
     case CLEAR_NOTES:
       return {
         ...state,
         notes: [],
-        loading: false,
+        loading: false
       };
     default:
       return state;

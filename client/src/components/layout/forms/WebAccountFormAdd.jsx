@@ -3,11 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
 import PasswordGen from "../../password/PasswordGen";
-import AlertComponent from "../AlertComponent";
-// import StripeComponent from "../stripePayment/StripeComponent";
-import StripeContainer from "../../stripePayment/StripeContainer";
 import { connect } from "react-redux";
-// import { checkOut } from "../../../actions/checkout";
 import { generatePassword } from "../../../utility/passwordGenerator";
 import { createWebAccount } from "../../../actions/webAccounts";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -25,6 +21,7 @@ const WebAccountFormAdd = ({
   webAccounts: { editAccount },
   text: { txt }
 }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -38,7 +35,6 @@ const WebAccountFormAdd = ({
   const { name, username, password, uri, folder, favorite, note } = formData;
 
   const [openModal, setOpenModal] = useState(false);
-  const [openStripe, setOpenStripe] = useState(false);
 
   const passProps = {
     uppercase: true,
@@ -65,7 +61,6 @@ const WebAccountFormAdd = ({
     createWebAccount(formData, txt.txt);
   };
 
-  const navigate = useNavigate();
   if (editAccount.status === 200) {
     navigate("/vault");
   }
@@ -86,31 +81,10 @@ const WebAccountFormAdd = ({
     setFormData({ ...formData, password: pass.value });
     setOpenModal(false);
   };
-  // const checkOutStripe = () => {
-  //   checkOut();
-  //   // const url = checkOut();
-  //   // navigate(url);
-  // };
 
   return (
     <Fragment>
       <main>
-        <AlertComponent />
-        {openStripe ? (
-          <StripeContainer />
-        ) : (
-          <>
-            <h3>$10.00</h3>
-            <button
-              type="button"
-              className="btn m-1 btn-outline-success shadow myBtn secondary"
-              onClick={() => setOpenStripe(true)}
-            >
-              Purchase Spatula
-            </button>
-          </>
-        )}
-        {/* {openStripe && <StripeComponent setStripe={setOpenStripe} />} */}
         <div className="container myVh">
           <div className="row">
             <Sidebar className="hideElement" />
@@ -126,13 +100,6 @@ const WebAccountFormAdd = ({
                       navigate("/vault");
                     }}
                   ></button>
-                  {/* <button
-                    type="button"
-                    className="btn m-1 btn-outline-success shadow myBtn secondary"
-                    onClick={() => checkOutStripe()}
-                  >
-                    Close
-                  </button> */}
                 </div>
                 <form onSubmit={e => onSubmit(e)}>
                   <div className="modal-body fs-6">
