@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Modal.css";
 
-const ModalConfirm = ({ setModal, setText, edit }) => {
+const ModalConfirm = ({ setModal, setText, edit, setColor, setBtnText }) => {
   return (
     <div className="modalBackground">
       <div className="modalContainer bgCards">
@@ -20,7 +20,7 @@ const ModalConfirm = ({ setModal, setText, edit }) => {
         </div>
         <div className="footer">
           <button
-            className="btn m-3 btn-outline-success shadow myBtn secondary"
+            className="btn m-3 btn-outline-success shadow myBtn bgGrey"
             onClick={() => {
               setModal(false);
             }}
@@ -29,12 +29,12 @@ const ModalConfirm = ({ setModal, setText, edit }) => {
             Cancel
           </button>
           <button
-            className="btn m-1 btn-outline-success shadow myBtn myDanger secondary"
+            className={`btn m-1 btn-outline-success shadow myBtn ${setColor}`}
             onClick={() => {
               edit();
             }}
           >
-            Yes
+            {setBtnText}
           </button>
         </div>
       </div>
@@ -43,7 +43,9 @@ const ModalConfirm = ({ setModal, setText, edit }) => {
 };
 ModalConfirm.propTypes = {
   setModal: PropTypes.func.isRequired,
-  setText: PropTypes.string.isRequired
+  setText: PropTypes.string.isRequired,
+  setBtnText: PropTypes.string.isRequired,
+  setColor: PropTypes.string.isRequired
 };
 
 export default ModalConfirm;

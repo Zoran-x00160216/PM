@@ -6,6 +6,8 @@ import {
   ERROR_WEB_ACCOUNTS
 } from "./type";
 import CryptoJS from "crypto-js";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Get web accounts
 export const getWebAccounts = text => async dispatch => {

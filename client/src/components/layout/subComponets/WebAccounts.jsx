@@ -15,7 +15,8 @@ import "bootstrap/js/src/dropdown";
 const WebAccounts = ({
   getWebAccounts,
   webAccounts: { loading, webAccounts },
-  text: { txt }
+  text: { txt },
+  auth: { tier, id }
 }) => {
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
@@ -25,17 +26,18 @@ const WebAccounts = ({
   }, [getWebAccounts, txt.txt]);
 
   const checkPermission = () => {
-    if (webAccounts.length >= 7) {
+    if (webAccounts.length >= 7 && tier === "basic") {
       setOpenModal(true);
     } else {
       navigate("/webAccount/add");
     }
   };
+  // console.log(webAccounts.length, tier, id);
+
   const openPayment = () => {
     setOpenModal(false);
     navigate("/stripeContainer");
   };
-  console.log(webAccounts.length);
 
   const accounts =
     Array.isArray(webAccounts) &&
@@ -66,25 +68,31 @@ const WebAccounts = ({
             ></FontAwesomeIcon>
 
             <ul
-              className="dropdown-menu noBorder shadow-sm myRounded"
+              className="dropdown-menu noBorder shadow-sm  myRounded"
               aria-labelledby="dropdownMenuButton1"
             >
               {webAccount.username === "" ? null : (
                 <li>
                   <CopyToClipboard text={webAccount.username}>
-                    <p className="dropdown-item fs-6 margin0">Copy Username</p>
+                    <p className="dropdown-item margin0 myDropdownTxtColor">
+                      Copy Username
+                    </p>
                   </CopyToClipboard>
                 </li>
               )}
               <li>
                 <CopyToClipboard text={webAccount.password}>
-                  <p className="dropdown-item fs-6 margin0">Copy Password</p>
+                  <p className="dropdown-item margin0 myDropdownTxtColor">
+                    Copy Password
+                  </p>
                 </CopyToClipboard>
               </li>
               {webAccount.uri === "" ? null : (
                 <li>
                   <CopyToClipboard text={webAccount.uri}>
-                    <p className="dropdown-item fs-6 margin0">Copy URL</p>
+                    <p className="dropdown-item margin0 myDropdownTxtColor">
+                      Copy URL
+                    </p>
                   </CopyToClipboard>
                 </li>
               )}
@@ -92,7 +100,7 @@ const WebAccounts = ({
                 <Link
                   to={linkWithParam}
                   key={webAccount._id}
-                  className="mb-2 dropdown-item fs-6 margin0"
+                  className="mb-2 dropdown-item margin0 myDropdownTxtColor"
                 >
                   Edit
                 </Link>
@@ -111,15 +119,17 @@ const WebAccounts = ({
               <div className="me-auto vw-90">
                 <h5>Web Accounts</h5>
               </div>
-              <div className="cursor" onClick={checkPermission}>
+              <div className="cursor" onClick={() => checkPermission()}>
                 Add
                 <i className="bi bi-plus-circle textSecondary lrgIcon p-2"></i>
               </div>
               {openModal && (
                 <ModalConfirm
                   setModal={setOpenModal}
+                  setBtnText={"contiune"}
+                  setColor={"primary"}
                   setText={
-                    "You reach max number of login entries, to continue get premium account"
+                    "You reached maximum number of login entries, to continue get premium account"
                   }
                   edit={openPayment}
                 />
@@ -139,13 +149,14 @@ const WebAccounts = ({
 
 WebAccounts.propTypes = {
   getWebAccounts: PropTypes.func.isRequired,
-  // auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   webAccounts: PropTypes.object.isRequired,
+  // user: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  // auth: state.auth,
+  auth: state.auth,
   webAccounts: state.webAccounts,
   text: state.text
 });

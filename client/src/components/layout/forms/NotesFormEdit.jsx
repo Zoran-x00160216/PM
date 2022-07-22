@@ -168,7 +168,7 @@ const NotesFormEdit = ({
                     <div>
                       <button
                         type="button"
-                        className="btn m-1 btn-outline-success shadow myBtn secondary"
+                        className="btn m-1 btn-outline-success shadow myBtn bgGrey"
                         onClick={e => {
                           navigate("/notes");
                         }}

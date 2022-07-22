@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { updateUser } from "../../actions/auth";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import StatusMessages, { useMessages } from "./StatusMessages";
 
-const CardForm = () => {
+const CardForm = ({ updateUser }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [messages, addMessage] = useMessages("");
   const [fullname, setFullname] = useState("");
-  const [paymentStatus, addPaymentStatus] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
@@ -61,7 +63,11 @@ const CardForm = () => {
       addMessage(stripeError.message);
       return;
     }
-
+    if (paymentIntent.status === "succeeded") {
+      updateUser("premium");
+      // setAlert("Congratulations, you upgraded to premium account", "mySuccess");
+      setTimeout(() => navigate("/vault"), 2000);
+    }
     // Show a success message to your customer
     // There's a risk of the customer closing the window before callback
     // execution. Set up a webhook or plugin to listen for the
@@ -69,15 +75,13 @@ const CardForm = () => {
     // post-payment actions.
     // addMessage(`Payment ${paymentIntent.status}: ${paymentIntent.id}`);
     addMessage(`Payment ${paymentIntent.status}, id: ${paymentIntent.id}`);
-    addPaymentStatus(paymentIntent.status);
+    // addPaymentStatus(paymentIntent.status);
   };
 
   const onChange = e => {
     e.preventDefault();
     setFullname(e.target.value);
   };
-
-  paymentStatus === "succeeded" && setTimeout(() => navigate("/vault"), 2000);
 
   return (
     <>
@@ -140,5 +144,12 @@ const CardForm = () => {
     </>
   );
 };
+CardForm.propTypes = {
+  updateUser: PropTypes.func.isRequired
+};
 
-export default CardForm;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { updateUser })(CardForm);

@@ -16,6 +16,7 @@ import {
   CLEAR_USERS
 } from "./type";
 import setAuthToken from "../utility/setAuthToken";
+import jwtDecode from "jwt-decode";
 
 // Load User
 export const loadUser = () => async dispatch => {
@@ -24,8 +25,8 @@ export const loadUser = () => async dispatch => {
   }
 
   try {
-    const res = await axios.get("http://localhost:5000/api/user/");
-
+    const res = await axios.get("http://localhost:5000/api/auth");
+    console.log(res.data.tier, res);
     dispatch({
       type: USER_LOADED,
       payload: res.data
@@ -49,10 +50,12 @@ export const register = ({ email, password, tier }) => async dispatch => {
     const body = JSON.stringify({ email, password, tier });
 
     const res = await axios.post(
-      "http://localhost:5000/api/user/register",
+      "http://localhost:5000/api/auth/register",
       body,
       config
     );
+
+    console.log(res.data);
 
     dispatch({
       type: REGISTER_SUCCESS,
@@ -61,6 +64,7 @@ export const register = ({ email, password, tier }) => async dispatch => {
 
     dispatch(loadUser());
   } catch (err) {
+    console.log(err);
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
     }
@@ -82,14 +86,19 @@ export const login = (email, password) => async dispatch => {
     const body = JSON.stringify({ email, password });
 
     const res = await axios.post(
-      "http://localhost:5000/api/user/login",
+      "http://localhost:5000/api/auth/login",
       body,
       config
     );
 
+    const token = res.data.token;
+    const tokenData = jwtDecode(token);
+    // console.log(tokenData);
+    const data = { token, tokenData };
+
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data
+      payload: data
     });
 
     dispatch(loadUser());
@@ -102,6 +111,32 @@ export const login = (email, password) => async dispatch => {
     dispatch({
       type: LOGIN_FAIL
     });
+  }
+};
+
+// Update user account
+export const updateUser = data => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    const body = JSON.stringify({ data });
+
+    const res = await axios.put(
+      "http://localhost:5000/api/updateUser",
+      body,
+      config
+    );
+    console.log(res);
+    setTimeout(() => dispatch(setAlert(res.data.message, "mySuccess")), 2000);
+    dispatch(loadUser());
+  } catch (err) {
+    if (err) {
+      // console.log(err.response.data);
+      dispatch(setAlert(err.res.data, "myDanger"));
+    }
   }
 };
 

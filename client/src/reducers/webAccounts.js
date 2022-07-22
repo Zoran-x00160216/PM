@@ -21,6 +21,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         webAccounts: payload,
+        editAccount: {},
         loading: false
       };
     case EDIT_WEB_ACCOUNTS:

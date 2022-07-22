@@ -13,7 +13,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = ({ auth: { tier } }) => {
-  console.log(tier);
   return (
     <div className="col-sm-4 mt-2 fs-6">
       <div className="col">

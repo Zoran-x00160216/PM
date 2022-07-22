@@ -197,7 +197,7 @@ const CardsFormAdd = ({ createCard, cards: { cards }, text: { txt } }) => {
                     <div className="d-flex justify-content-end mb-3">
                       <button
                         type="button"
-                        className="btn m-1 btn-outline-success shadow myBtn secondary"
+                        className="btn m-1 btn-outline-success shadow myBtn bgGrey"
                         onClick={e => {
                           navigate("/vault");
                         }}

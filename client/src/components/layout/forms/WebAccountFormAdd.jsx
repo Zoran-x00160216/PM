@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import Sidebar from "../subComponets/Sidebar";
@@ -36,15 +36,21 @@ const WebAccountFormAdd = ({
 
   const [openModal, setOpenModal] = useState(false);
 
+  // state for password toggle
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  useEffect(() => {
+    if (editAccount.status === 200) {
+      navigate("/vault");
+    }
+  }, [editAccount]);
+
   const passProps = {
     uppercase: true,
     lowercase: true,
     symbols: true,
     numbers: true
   };
-
-  // state for password toggle
-  const [passwordShown, setPasswordShown] = useState(false);
 
   const onChange = e => {
     e.preventDefault();
@@ -61,9 +67,6 @@ const WebAccountFormAdd = ({
     createWebAccount(formData, txt.txt);
   };
 
-  if (editAccount.status === 200) {
-    navigate("/vault");
-  }
   // Password toggle handler
   const togglePassword = () => {
     // When the handler is invoked
@@ -83,7 +86,7 @@ const WebAccountFormAdd = ({
   };
 
   return (
-    <Fragment>
+    <>
       <main>
         <div className="container myVh">
           <div className="row">
@@ -283,7 +286,7 @@ const WebAccountFormAdd = ({
                   <div className="d-flex justify-content-end mb-3">
                     <button
                       type="button"
-                      className="btn m-1 btn-outline-success shadow myBtn secondary"
+                      className="btn m-1 btn-outline-success shadow myBtn bgGrey"
                       onClick={e => {
                         navigate("/vault");
                       }}
@@ -304,7 +307,7 @@ const WebAccountFormAdd = ({
           </div>
         </div>
       </main>
-    </Fragment>
+    </>
   );
 };
 

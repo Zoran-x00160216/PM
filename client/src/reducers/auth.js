@@ -5,7 +5,7 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT,
+  LOGOUT
 } from "../actions/type";
 
 const initialState = {
@@ -14,9 +14,10 @@ const initialState = {
   loading: true,
   user: {},
   tier: "noAccess",
+  id: ""
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -25,8 +26,8 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: payload,
         tier: payload.tier,
+        user: payload
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
@@ -36,7 +37,8 @@ export default function (state = initialState, action) {
         ...payload,
         isAuthenticated: true,
         loading: false,
-        tier: payload.tier,
+        tier: payload.tokenData.tier,
+        id: payload.tokenData._id
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:
@@ -50,6 +52,7 @@ export default function (state = initialState, action) {
         loading: false,
         user: null,
         tier: "noAccess",
+        id: ""
       };
     default:
       return state;

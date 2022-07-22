@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { IbanElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { updateUser } from "../../actions/auth";
 import StatusMessages, { useMessages } from "./StatusMessages";
 import ReadMoreReadLess from "./ReadMoreReadLess";
 
-const SepaDebitForm = () => {
+const SepaDebitForm = ({ updateUser }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [messages, addMessage] = useMessages();
-  const [paymentStatus, addPaymentStatus] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
@@ -76,18 +78,20 @@ const SepaDebitForm = () => {
       );
       addMessage("Refetching payment intent in 5s.");
       setTimeout(async () => {
-        const { paymentIntent: pi } = await stripe.retrievePaymentIntent(
+        const { paymentIntent } = await stripe.retrievePaymentIntent(
           clientSecret
         );
-        addMessage(`Payment (${pi.id}): ${pi.status}`);
+        addMessage(`Payment ${paymentIntent.status}, id: ${paymentIntent.id}`);
       }, 5000);
     } else {
       addMessage(`Payment ${paymentIntent.status}, id: ${paymentIntent.id}`);
-      addPaymentStatus(paymentIntent.status);
+    }
+    if (paymentIntent.status === "succeeded") {
+      updateUser("premium");
+      // setAlert("Congratulations, you upgraded to premium account", "mySuccess");
+      setTimeout(() => navigate("/vault"), 2000);
     }
   };
-
-  paymentStatus === "succeeded" && setTimeout(() => navigate("/vault"), 2000);
 
   return (
     <>
@@ -163,4 +167,12 @@ const SepaDebitForm = () => {
   );
 };
 
-export default SepaDebitForm;
+SepaDebitForm.propTypes = {
+  updateUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { updateUser })(SepaDebitForm);

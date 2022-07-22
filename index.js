@@ -31,7 +31,8 @@ app.use(express.json({ extended: false }));
 // app.get("/", (req, res) => res.send("API Running"));
 
 // Route Middlewares
-app.use("/api/user", require("./routes/user"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/updateUser", verify, require("./routes/updateUser"));
 app.use("/api/createPaymentIntent", require("./routes/createPaymentIntent"));
 app.use("/api/webAccounts", verify, require("./routes/webAccounts"));
 app.use("/api/creditCards", verify, require("./routes/creditCards"));

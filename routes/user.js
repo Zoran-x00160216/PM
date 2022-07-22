@@ -79,10 +79,7 @@ router.post("/login", async (req, res) => {
     if (!validPasswd) return res.status(400).send("Invalid email or password");
 
     const date = new Date();
-    const account = await User.updateOne(
-      { _id: user._id },
-      { $set: { lastLogin: date } }
-    );
+    await User.updateOne({ _id: user._id }, { $set: { lastLogin: date } });
 
     // Create and assign JWT
     jwt.sign(
