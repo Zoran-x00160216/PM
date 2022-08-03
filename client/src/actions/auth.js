@@ -26,7 +26,6 @@ export const loadUser = () => async dispatch => {
 
   try {
     const res = await axios.get("http://localhost:5000/api/auth");
-    console.log(res.data.tier, res);
     dispatch({
       type: USER_LOADED,
       payload: res.data
@@ -55,11 +54,16 @@ export const register = ({ email, password, tier }) => async dispatch => {
       config
     );
 
-    console.log(res.data);
+    const token = res.data.token;
+    const tokenData = jwtDecode(token);
+    // console.log(tokenData);
+    const data = { token, tokenData };
+
+    console.log(data);
 
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: res.data
+      payload: data
     });
 
     dispatch(loadUser());
@@ -130,7 +134,9 @@ export const updateUser = data => async dispatch => {
       config
     );
     console.log(res);
+
     setTimeout(() => dispatch(setAlert(res.data.message, "mySuccess")), 2000);
+
     dispatch(loadUser());
   } catch (err) {
     if (err) {

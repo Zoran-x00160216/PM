@@ -1,26 +1,34 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Sidebar from "./Sidebar";
+import NotesFormAdd from "../forms/NotesFormAdd";
+import NotesFormEdit from "../forms/NotesFormEdit";
 import { connect } from "react-redux";
 import { getNotes } from "../../../actions/notes";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/js/src/dropdown";
 
 const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
+  const [noteId, setNoteId] = useState();
+  const [openModalAdd, setOpenModalAdd] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+
   useEffect(() => {
     getNotes(txt.txt);
   }, [getNotes, txt.txt]);
   // console.log(notes);
   // const accountsArray = webAccounts.webAccounts;
+
+  const setIdAndOpenModalEdit = id => {
+    setNoteId(id);
+    setOpenModalEdit(true);
+  };
   const accounts =
     Array.isArray(notes) &&
     notes.map(n => {
-      const linkWithParam = `/notes/edit/${n._id}`;
-
       return (
         <div
           key={n._id}
@@ -29,9 +37,12 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
           <div>
             <p className="margin0 fs-6">
               Name:
-              <Link to={linkWithParam}>
-                <span className="textSecondary"> {n.name}</span>
-              </Link>
+              <span
+                onClick={() => setIdAndOpenModalEdit(n._id)}
+                className="textSecondary"
+              >
+                {n.name}
+              </span>
             </p>
             {/* <p className="margin0">Note: {note.note}</p> */}
           </div>
@@ -54,14 +65,11 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
                   <span className="dropdown-item">Copy Note</span>
                 </CopyToClipboard>
               </li>
-              <li>
-                <Link
-                  to={linkWithParam}
-                  key={n._id}
-                  className="mb-2 dropdown-item"
-                >
-                  Edit
-                </Link>
+              <li
+                onClick={() => setIdAndOpenModalEdit(n._id)}
+                className="mb-2 dropdown-item"
+              >
+                Edit
               </li>
             </ul>
           </div>
@@ -70,7 +78,11 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
     });
 
   return (
-    <Fragment>
+    <>
+      {openModalAdd && <NotesFormAdd setOpenModalAdd={setOpenModalAdd} />}
+      {openModalEdit && (
+        <NotesFormEdit setOpenModalEdit={setOpenModalEdit} noteId={noteId} />
+      )}
       <div className="container myVh">
         <div className="row">
           <Sidebar />
@@ -81,10 +93,14 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
                   <div className="me-auto vw-90">
                     <h5>Notes</h5>
                   </div>
-                  <Link to="/notes/add" className="cursor">
-                    Add
-                    <i className="bi bi-plus-circle textSecondary lrgIcon p-2"></i>
-                  </Link>
+
+                  <div onClick={() => setOpenModalAdd(true)} className="cursor">
+                    <span className="mr-2">Add</span>
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      className="lrgIcon textPrimary"
+                    />
+                  </div>
                 </div>
                 <div>
                   <ul className="mt-3 p-1">
@@ -96,7 +112,7 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

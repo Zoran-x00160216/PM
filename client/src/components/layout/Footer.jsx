@@ -15,7 +15,7 @@ const Footer = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/vault" className="nav-link" aria-current="page">
+        <Link to="/webAccounts" className="nav-link" aria-current="page">
           Vault
         </Link>
       </li>
@@ -87,11 +87,11 @@ const Footer = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
 
 Footer.protoType = {
   login: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
+const mapStateToProps = state => ({
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { logout })(Footer);

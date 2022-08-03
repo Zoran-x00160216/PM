@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAlert } from "../../../actions/alert";
 import { register } from "../../../actions/auth";
@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const Register = ({ setAlert, register, isAuthenticated, setText }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -38,7 +39,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
 
   // Navigate to if register in
   if (isAuthenticated) {
-    return <Navigate to="/vault" />;
+    navigate("/webAccounts");
   }
 
   // Password toggle handler
@@ -83,7 +84,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
                       type={passwordShown ? "text" : "password"}
                       autoComplete="current-password"
                       className="form-control myRounded vw-90"
-                      id="exampleInputPassword1"
+                      // id="exampleInputPassword1"
                       name="password"
                       value={password}
                       onChange={e => onChange(e)}
@@ -103,7 +104,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
                       type={passwordShown ? "text" : "password"}
                       autoComplete="current-password"
                       className="form-control myRounded vw-90"
-                      id="exampleInputPassword1"
+                      // id="exampleInputPassword1"
                       name="password2"
                       value={password2}
                       onChange={e => onChange(e)}

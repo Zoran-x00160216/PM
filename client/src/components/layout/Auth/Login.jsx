@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../../actions/auth";
 import { setText } from "../../../actions/text";
@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const Login = ({ login, isAuthenticated, tier, setText }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -32,9 +33,9 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
   if (isAuthenticated) {
     setText(password);
     if (tier === "admin") {
-      return <Navigate to="/adminDashboard" />;
+      navigate("/adminDashboard");
     } else {
-      return <Navigate to="/vault" />;
+      navigate("/webAccounts");
     }
   }
 

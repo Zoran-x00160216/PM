@@ -1,25 +1,34 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Sidebar from "./Sidebar";
+import CardsFormAdd from "../forms/CardsFormAdd";
+import CardsFormEdit from "../forms/CardsFormEdit";
 import { connect } from "react-redux";
 import { getCards } from "../../../actions/cards";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/js/src/dropdown";
 
 const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
+  const [passId, setPassId] = useState();
+  const [openModalAdd, setOpenModalAdd] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+
   useEffect(() => {
     getCards(txt.txt);
   }, [getCards, txt.txt]);
+
+  const setIdAndOpenModalEdit = id => {
+    setPassId(id);
+    setOpenModalEdit(true);
+  };
 
   // const accountsArray = webAccounts.webAccounts;
   const accounts =
     Array.isArray(cards) &&
     cards.map(card => {
-      const linkWithParam = `/cards/edit/${card._id}`;
       return (
         <div
           key={card._id}
@@ -28,9 +37,12 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
           <div>
             <p className="margin0 fs-6">
               Name:
-              <Link to={linkWithParam}>
-                <span className="textSecondary"> {card.name}</span>
-              </Link>
+              <span
+                onClick={() => setIdAndOpenModalEdit(card._id)}
+                className="textSecondary"
+              >
+                {card.name}
+              </span>
             </p>
           </div>
           <div className="dropdown">
@@ -59,14 +71,11 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
                 </CopyToClipboard>
               </li>
 
-              <li>
-                <Link
-                  to={linkWithParam}
-                  key={card._id}
-                  className="mb-2 dropdown-item"
-                >
-                  Edit
-                </Link>
+              <li
+                onClick={() => setIdAndOpenModalEdit(card._id)}
+                className="mb-2 dropdown-item"
+              >
+                Edit
               </li>
             </ul>
           </div>
@@ -74,7 +83,11 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
       );
     });
   return (
-    <Fragment>
+    <>
+      {openModalAdd && <CardsFormAdd setOpenModalAdd={setOpenModalAdd} />}
+      {openModalEdit && (
+        <CardsFormEdit setOpenModalEdit={setOpenModalEdit} passId={passId} />
+      )}
       <div className="container myVh">
         <div className="row">
           <Sidebar />
@@ -85,10 +98,13 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
                   <div className="me-auto vw-90">
                     <h5>Credit Cards</h5>
                   </div>
-                  <Link to="/cards/add" className="cursor">
-                    Add
-                    <i className="bi bi-plus-circle textSecondary lrgIcon p-2"></i>
-                  </Link>
+                  <div onClick={() => setOpenModalAdd(true)} className="cursor">
+                    <span className="mr-2">Add</span>
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      className="lrgIcon textPrimary"
+                    />
+                  </div>
                 </div>
                 <div>
                   <ul className="mt-3 p-1">
@@ -100,7 +116,7 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

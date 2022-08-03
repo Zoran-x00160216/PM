@@ -63,6 +63,6 @@
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
-    "@types/bootstrap": "^5.1.9"
+    "@types/bootstrap": "^5.2.1"
   }
 }

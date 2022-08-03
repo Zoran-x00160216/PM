@@ -9,7 +9,8 @@ import {
   faIdCard,
   faStar,
   faAngleDown,
-  faEarthEurope
+  faEarthEurope,
+  faPlus
 } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = ({ auth: { tier } }) => {
@@ -19,7 +20,7 @@ const Sidebar = ({ auth: { tier } }) => {
         <div className="m-3 shadow-sm bgCards myRounded">
           <ul className="pt-4 pb-4">
             <li className="pb-1">
-              <Link to="/vault">
+              <Link to="/webAccounts">
                 <FontAwesomeIcon
                   icon={faEarthEurope}
                   className="lrgIcon textPrimary mr-1"
@@ -68,13 +69,15 @@ const Sidebar = ({ auth: { tier } }) => {
               </Link>
             </li>
             <li>
-              <a href="#!">
-                <FontAwesomeIcon
-                  icon={faAngleDown}
-                  className="lrgIcon textPrimary mr-1"
-                />
-                Folders
-              </a>
+              <FontAwesomeIcon
+                icon={faAngleDown}
+                className="lrgIcon textPrimary mr-1"
+              />
+              <span>Folders</span>
+              <FontAwesomeIcon
+                icon={faPlus}
+                className="ml-5 lrgIcon textPrimary"
+              />
             </li>
           </ul>
         </div>

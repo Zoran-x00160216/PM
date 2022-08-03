@@ -1,25 +1,33 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import IdentityFormAdd from "../forms/IdentityFormAdd";
+import IdentityFormEdit from "../forms/IdentityFormEdit";
 import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
 import { getIdentity } from "../../../actions/identity";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/js/src/dropdown";
 
 const Identity = ({ getIdentity, identity: { loading, identity } }) => {
+  const [passId, setPassId] = useState();
+  const [openModalAdd, setOpenModalAdd] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+
   useEffect(() => {
     getIdentity();
   }, [getIdentity]);
 
+  const setIdAndOpenModalEdit = id => {
+    setPassId(id);
+    setOpenModalEdit(true);
+  };
+
   const accounts =
     Array.isArray(identity) &&
     identity.map(i => {
-      const linkWithParam = `/identity/edit/${i._id}`;
-
       return (
         <div
           key={i._id}
@@ -28,9 +36,13 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
           <div>
             <p className="margin0 fs-6">
               Name:
-              <Link to={linkWithParam}>
-                <span className="textSecondary"> {i.name}</span>
-              </Link>
+              <span
+                onClick={() => setIdAndOpenModalEdit(i._id)}
+                className="textSecondary"
+              >
+                {" "}
+                {i.name}
+              </span>
             </p>
             <p className="margin0 fs-6">Email: {i.email}</p>
           </div>
@@ -98,14 +110,11 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
                   </CopyToClipboard>
                 </li>
               )}
-              <li>
-                <Link
-                  to={linkWithParam}
-                  key={i._id}
-                  className="mb-2 dropdown-item"
-                >
-                  Edit
-                </Link>
+              <li
+                onClick={() => setIdAndOpenModalEdit(i._id)}
+                className="mb-2 dropdown-item fs-6 margin0"
+              >
+                Edit
               </li>
             </ul>
           </div>
@@ -114,7 +123,11 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
     });
 
   return (
-    <Fragment>
+    <>
+      {openModalAdd && <IdentityFormAdd setOpenModalAdd={setOpenModalAdd} />}
+      {openModalEdit && (
+        <IdentityFormEdit setOpenModalEdit={setOpenModalEdit} passId={passId} />
+      )}
       <div className="container myVh">
         <div className="row">
           <Sidebar />
@@ -125,10 +138,13 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
                   <div className="me-auto vw-90">
                     <h5>Identity</h5>
                   </div>
-                  <Link to="/identity/add" className="cursor">
-                    Add
-                    <i className="bi bi-plus-circle textSecondary lrgIcon p-2"></i>
-                  </Link>
+                  <div onClick={() => setOpenModalAdd(true)} className="cursor">
+                    <span className="mr-2">Add</span>
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      className="lrgIcon textPrimary"
+                    />
+                  </div>
                 </div>
                 <div>
                   <ul className="mt-3 p-1">
@@ -140,19 +156,21 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 
 Identity.propTypes = {
   getIdentity: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  identity: PropTypes.object.isRequired
+  identity: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  identity: state.identity
+  identity: state.identity,
+  text: state.text
 });
 
 export default connect(mapStateToProps, { getIdentity })(Identity);

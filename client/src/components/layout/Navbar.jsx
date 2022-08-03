@@ -19,7 +19,7 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/vault" className="nav-link" aria-current="page">
+        <Link to="/webAccounts" className="nav-link" aria-current="page">
           Vault
         </Link>
       </li>
@@ -74,7 +74,7 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
   );
 
   return (
-    <nav className="navbar sticky-top navbar-expand-lg navbar-light  bgBody">
+    <nav className="navbar sticky-top navbar-expand-lg navbar-light bgBody">
       <div className="container fs-6">
         <img src={logo} className="rounded float-start" alt="PM"></img>
         <p className="navbar-brand me-auto mb-2 mb-lg-0 myPr5">
@@ -92,7 +92,7 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div
-          className="collapse navbar-collapse navbarBg"
+          className="collapse navbar-collapse bgBody"
           id="navbarTogglerDemo03"
         >
           {!loading && (

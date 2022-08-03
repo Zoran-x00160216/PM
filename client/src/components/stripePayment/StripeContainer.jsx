@@ -28,9 +28,9 @@ const StripeContainer = () => {
               <button
                 className="col-md-2 shadow bgGrey
                   p-2 text-light"
-                onClick={() => navigate("/vault")}
+                onClick={() => navigate("/webAccounts")}
               >
-                close
+                Close
               </button>
               <button
                 className="col-md-5 shadow  primary p-2 text-light"
