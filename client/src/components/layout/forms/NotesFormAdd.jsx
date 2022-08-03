@@ -18,11 +18,11 @@ const NotesFormAdd = ({
   const [formData, setFormData] = useState({
     name: "",
     note: "",
-    folder: "",
+    category: "",
     favorite: false
   });
 
-  const { name, note, folder, favorite } = formData;
+  const { name, note, category, favorite } = formData;
 
   const onChange = e => {
     e.preventDefault();
@@ -46,7 +46,7 @@ const NotesFormAdd = ({
       <main className="modalBackgroundForm">
         <div className="modalContainerForm bgCards">
           <div className="modal-header">
-            <h5 className="modal-title textPrimary">Add a Note</h5>
+            <h5 className="modal-title textPrimary">Add</h5>
             <button
               type="button"
               className="btn-close"
@@ -89,13 +89,13 @@ const NotesFormAdd = ({
               <div className="row">
                 <div className="col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
-                    Folder:
+                    Category:
                   </label>
                   <input
                     type="text"
                     className="form-control myInput"
-                    name="folder"
-                    value={folder}
+                    name="category"
+                    value={category}
                     onChange={e => onChange(e)}
                   ></input>
                 </div>

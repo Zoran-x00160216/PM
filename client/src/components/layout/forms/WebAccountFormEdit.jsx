@@ -56,7 +56,7 @@ const WebAccountFormEdit = ({
     username: "",
     password: "",
     uri: "",
-    folder: "",
+    category: "",
     favorite: false,
     note: "",
     updated: "",
@@ -68,7 +68,7 @@ const WebAccountFormEdit = ({
     username,
     password,
     uri,
-    folder,
+    category,
     favorite,
     note,
     updated,
@@ -95,7 +95,7 @@ const WebAccountFormEdit = ({
       username: loading || !account[0].username ? "" : account[0].username,
       password: loading || !account[0].password ? "" : account[0].password,
       uri: loading || !account[0].uri ? "" : account[0].uri,
-      folder: loading || !account[0].folder ? "" : account[0].folder,
+      category: loading || !account[0].category ? "" : account[0].category,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       note: loading || !account[0].note ? "" : account[0].note,
       updated:
@@ -275,13 +275,13 @@ const WebAccountFormEdit = ({
               <div className="row">
                 <div className="mb-1 col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
-                    Folder:
+                    Category:
                   </label>
                   <input
                     type="text"
                     className="form-control myInput"
-                    name="folder"
-                    value={folder}
+                    name="category"
+                    value={category}
                     onChange={e => onChange(e)}
                   ></input>
                 </div>

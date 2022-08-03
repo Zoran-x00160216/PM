@@ -9,6 +9,10 @@ const WebAccountSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true,
+  },
   username: {
     type: String,
     required: true,
@@ -26,7 +30,7 @@ const WebAccountSchema = new mongoose.Schema({
     required: false,
     max: 100,
   },
-  folder: {
+  category: {
     type: String,
     required: false,
   },

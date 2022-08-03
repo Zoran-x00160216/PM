@@ -36,7 +36,7 @@ const IdentityFormEdit = ({
     country: "",
     city: "",
     postalCode: "",
-    folder: "",
+    category: "",
     favorite: false,
     updated: "",
     date: ""
@@ -53,7 +53,7 @@ const IdentityFormEdit = ({
     country,
     city,
     postalCode,
-    folder,
+    category,
     favorite,
     updated,
     date
@@ -90,7 +90,7 @@ const IdentityFormEdit = ({
       city: loading || !account[0].city ? "" : account[0].city,
       postalCode:
         loading || !account[0].postalCode ? "" : account[0].postalCode,
-      folder: loading || !account[0].folder ? "" : account[0].folder,
+      category: loading || !account[0].category ? "" : account[0].category,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       updated: formatDate(account[0].updated),
       date: formatDate(account[0].date)
@@ -303,13 +303,13 @@ const IdentityFormEdit = ({
               <div className="row">
                 <div className="col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
-                    Folder:
+                    Category:
                   </label>
                   <input
                     type="text"
                     className="form-control myInput"
-                    name="folder"
-                    value={folder}
+                    name="category"
+                    value={category}
                     onChange={e => onChange(e)}
                   ></input>
                 </div>

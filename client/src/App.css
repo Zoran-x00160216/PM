@@ -41,6 +41,9 @@ body > p {
 .mr-2 {
   margin-right: 10px;
 }
+.mr-4 {
+  margin-right: 25px;
+}
 .ml-5 {
   margin-left: 200px;
 }

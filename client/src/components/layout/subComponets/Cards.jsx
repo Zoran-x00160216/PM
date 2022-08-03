@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import Sidebar from "./Sidebar";
+import Sidebar from "./sidebar/Sidebar";
 import CardsFormAdd from "../forms/CardsFormAdd";
 import CardsFormEdit from "../forms/CardsFormEdit";
 import { connect } from "react-redux";

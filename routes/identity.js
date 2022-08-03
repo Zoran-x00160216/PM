@@ -17,6 +17,7 @@ router.post("/", async (req, res) => {
   const data = {
     user_id: req.user._id,
     name: req.body.name,
+    type: "identity",
     email: req.body.email,
     PPS: req.body.PPS,
     passportNum: req.body.passportNum,
@@ -27,7 +28,7 @@ router.post("/", async (req, res) => {
     country: req.body.country,
     city: req.body.city,
     postalCode: req.body.postalCode,
-    folder: req.body.folder,
+    category: req.body.category,
     favorite: req.body.favorite,
     updated: new Date(),
   };
@@ -65,6 +66,7 @@ router.put("/", async (req, res) => {
   const data = {
     user_id: req.user._id,
     name: req.body.name,
+    type: "identity",
     email: req.body.email,
     PPS: req.body.PPS,
     passportNum: req.body.passportNum,
@@ -75,7 +77,7 @@ router.put("/", async (req, res) => {
     country: req.body.country,
     city: req.body.city,
     postalCode: req.body.postalCode,
-    folder: req.body.folder,
+    category: req.body.category,
     favorite: req.body.favorite,
     updated: new Date(),
   };

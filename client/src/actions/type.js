@@ -52,3 +52,9 @@ export const GET_USERS = "GET_USERS";
 export const EDIT_USERS = "EDIT_USERS";
 export const ERROR_USERS = "ERROR_USERS";
 export const CLEAR_USERS = "CLEAR_USERS";
+
+// reducers/category
+export const GET_CATEGORY = "GET_CATEGORY";
+export const ERROR_CATEGORY = "ERROR_CATEGORY";
+export const CLEAR_CATEGORY = "CLEAR_CATEGORY";
+export const EDIT_CATEGORY = "EDIT_CATEGORY";

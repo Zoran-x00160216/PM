@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import Sidebar from "./Sidebar";
+import Sidebar from "./sidebar/Sidebar";
 import NotesFormAdd from "../forms/NotesFormAdd";
 import NotesFormEdit from "../forms/NotesFormEdit";
 import { connect } from "react-redux";

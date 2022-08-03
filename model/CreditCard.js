@@ -9,6 +9,10 @@ const CreditCardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true,
+  },
   number: {
     type: String,
     required: true,
@@ -21,7 +25,7 @@ const CreditCardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  folder: {
+  category: {
     type: String,
     required: false,
   },

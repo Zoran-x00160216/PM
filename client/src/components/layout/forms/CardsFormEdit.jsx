@@ -26,7 +26,7 @@ const CardsFormEdit = ({
     number: "",
     expiryMonth: "",
     expiryYear: "",
-    folder: "",
+    category: "",
     favorite: false
   });
 
@@ -35,7 +35,7 @@ const CardsFormEdit = ({
     number,
     expiryMonth,
     expiryYear,
-    folder,
+    category,
     favorite,
     updated,
     date
@@ -65,7 +65,7 @@ const CardsFormEdit = ({
         loading || !account[0].expiryMonth ? "" : account[0].expiryMonth,
       expiryYear:
         loading || !account[0].expiryYear ? "" : account[0].expiryYear,
-      folder: loading || !account[0].folder ? "" : account[0].folder,
+      category: loading || !account[0].category ? "" : account[0].category,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       updated: formatDate(account[0].updated),
       date: formatDate(account[0].date)
@@ -212,13 +212,13 @@ const CardsFormEdit = ({
               <div className="row">
                 <div className="mb-1 col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
-                    Folder:
+                    Category:
                   </label>
                   <input
                     type="text"
                     className="form-control myInput"
-                    name="folder"
-                    value={folder}
+                    name="category"
+                    value={category}
                     onChange={e => onChange(e)}
                   ></input>
                 </div>

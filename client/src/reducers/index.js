@@ -7,6 +7,7 @@ import cards from "./cards";
 import notes from "./notes";
 import identity from "./identity";
 import users from "./users";
+import category from "./category";
 
 export default combineReducers({
   alert,
@@ -17,4 +18,5 @@ export default combineReducers({
   notes,
   identity,
   users,
+  category
 });

@@ -23,13 +23,13 @@ const NotesFormEdit = ({
     user_id: "",
     name: "",
     note: "",
-    folder: "",
+    category: "",
     favorite: false,
     updated: "",
     date: ""
   });
 
-  const { name, note, folder, favorite, updated, date } = formData;
+  const { name, note, category, favorite, updated, date } = formData;
   let account = [];
   Array.isArray(notes) &&
     notes.map(note => {
@@ -47,7 +47,7 @@ const NotesFormEdit = ({
       user_id: loading || !account[0].user_id ? "" : account[0].user_id,
       name: loading || !account[0].name ? "" : account[0].name,
       note: loading || !account[0].note ? "" : account[0].note,
-      folder: loading || !account[0].folder ? "" : account[0].folder,
+      category: loading || !account[0].category ? "" : account[0].category,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       updated: formatDate(account[0].updated),
       date: formatDate(account[0].date)
@@ -67,8 +67,8 @@ const NotesFormEdit = ({
   const onSubmit = e => {
     e.preventDefault();
     edit ? deleteNote(formData) : editNote(formData, txt.txt);
-    setTimeout(() => getNotes(txt.txt), 100);
-    setTimeout(() => setOpenModalEdit(false), 120);
+    setTimeout(() => getNotes(txt.txt), 50);
+    setTimeout(() => setOpenModalEdit(false), 70);
   };
 
   return (
@@ -116,12 +116,12 @@ const NotesFormEdit = ({
               </div>
               <div className="row">
                 <div className="col-md-6">
-                  <label className="col-form-label">Folder:</label>
+                  <label className="col-form-label">Category:</label>
                   <input
                     type="text"
                     className="form-control myInput"
-                    name="folder"
-                    value={folder}
+                    name="category"
+                    value={category}
                     onChange={e => onChange(e)}
                   ></input>
                 </div>

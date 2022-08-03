@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import IdentityFormAdd from "../forms/IdentityFormAdd";
 import IdentityFormEdit from "../forms/IdentityFormEdit";
-import Sidebar from "./Sidebar";
+import Sidebar from "./sidebar/Sidebar";
 import { connect } from "react-redux";
 import { getIdentity } from "../../../actions/identity";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

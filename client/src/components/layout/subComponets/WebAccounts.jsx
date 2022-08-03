@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ModalConfirm from "../../modal/ModalConfirm";
 import WebAccountFormAdd from "../forms/WebAccountFormAdd";
 import WebAccountFormEdit from "../forms/WebAccountFormEdit";
-import Sidebar from "./Sidebar";
+import Sidebar from "./sidebar/Sidebar";
 import { connect } from "react-redux";
 import { getWebAccounts } from "../../../actions/webAccounts";
 import { useNavigate } from "react-router-dom";

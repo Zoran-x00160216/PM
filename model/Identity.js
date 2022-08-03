@@ -9,6 +9,10 @@ const IdentitySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -49,7 +53,7 @@ const IdentitySchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  folder: {
+  category: {
     type: String,
     required: false,
   },

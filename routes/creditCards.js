@@ -16,10 +16,11 @@ router.post("/", async (req, res) => {
   const data = {
     user_id: req.user._id,
     name: req.body.name,
+    type: "creditCard",
     number: req.body.number,
     expiryMonth: req.body.expiryMonth,
     expiryYear: req.body.expiryYear,
-    folder: req.body.folder,
+    category: req.body.category,
     favorite: req.body.favorite,
     updated: new Date(),
   };
@@ -54,10 +55,11 @@ router.put("/", async (req, res) => {
   const data = {
     user_id: req.user._id,
     name: req.body.name,
+    type: "creditCard",
     number: req.body.number,
     expiryMonth: req.body.expiryMonth,
     expiryYear: req.body.expiryYear,
-    folder: req.body.folder,
+    category: req.body.category,
     favorite: req.body.favorite,
     updated: new Date(),
   };

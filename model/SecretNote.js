@@ -9,12 +9,16 @@ const SecretNoteSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true,
+  },
   note: {
     type: String,
     required: false,
     max: 500,
   },
-  folder: {
+  category: {
     type: String,
     required: false,
   },

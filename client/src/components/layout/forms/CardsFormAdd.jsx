@@ -17,11 +17,18 @@ const CardsFormAdd = ({
     number: "",
     expiryMonth: "",
     expiryYear: "",
-    folder: "",
+    category: "",
     favorite: false
   });
 
-  const { name, number, expiryMonth, expiryYear, folder, favorite } = formData;
+  const {
+    name,
+    number,
+    expiryMonth,
+    expiryYear,
+    category,
+    favorite
+  } = formData;
 
   const onChange = e => {
     e.preventDefault();
@@ -144,13 +151,13 @@ const CardsFormAdd = ({
               <div className="row mb-3">
                 <div className="mb-1 col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
-                    Folder:
+                    Category:
                   </label>
                   <input
                     type="text"
                     className="form-control myInput"
-                    name="folder"
-                    value={folder}
+                    name="category"
+                    value={category}
                     onChange={e => onChange(e)}
                   ></input>
                 </div>
@@ -211,7 +218,8 @@ const mapStateToProps = state => ({
   text: state.text,
   cards: state.cards
 });
-export default connect(mapStateToProps, {
+
+export default connect(0, {
   createCard,
   getCards
 })(CardsFormAdd);

@@ -24,7 +24,7 @@ const IdentityFormAdd = ({
     country: "",
     city: "",
     postalCode: "",
-    folder: "",
+    category: "",
     favorite: false
   });
 
@@ -40,7 +40,7 @@ const IdentityFormAdd = ({
     country,
     city,
     postalCode,
-    folder,
+    category,
     favorite
   } = formData;
 
@@ -222,13 +222,13 @@ const IdentityFormAdd = ({
               <div className="row">
                 <div className="col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
-                    Folder:
+                    Category:
                   </label>
                   <input
                     type="text"
                     className="form-control myInput"
-                    name="folder"
-                    value={folder}
+                    name="category"
+                    value={category}
                     onChange={e => onChange(e)}
                   ></input>
                 </div>

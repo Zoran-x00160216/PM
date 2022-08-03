@@ -13,7 +13,7 @@ const jwt = require("jsonwebtoken");
 router.get("/", verify, async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password");
-    console.log(user);
+    // console.log(user);
     res.json(user);
   } catch (error) {
     res.status(500).send("Server error");
@@ -43,7 +43,7 @@ router.post("/register", async (req, res) => {
       lastLogin: new Date(),
     });
 
-    console.log(user);
+    // console.log(user);
 
     await user.save();
 
