@@ -26,11 +26,19 @@ router.post("/", async (req, res) => {
     note: req.body.note,
     updated: new Date(),
   };
+
   // Validate data
   const { error } = webAccountValidation(data);
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
+    // Check if Account already exist
+    const accountExist = await WebAccount.findOne({
+      user_id: req.user._id,
+      name: req.body.name,
+    });
+    if (accountExist) return res.status(400).send("Account already exist");
+
     const webAccount = await new WebAccount(data);
     // console.log(webAccount);
 

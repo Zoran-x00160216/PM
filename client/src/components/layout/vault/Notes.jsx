@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Sidebar from "./sidebar/Sidebar";
-import NotesFormAdd from "../forms/NotesFormAdd";
-import NotesFormEdit from "../forms/NotesFormEdit";
+import NotesFormAdd from "./forms/NotesFormAdd";
+import NotesFormEdit from "./forms/NotesFormEdit";
 import { connect } from "react-redux";
 import { getNotes } from "../../../actions/notes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Spinner from "../../spinner/Spinner";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/js/src/dropdown";
 
@@ -77,7 +78,9 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
       );
     });
 
-  return (
+  return loading && notes === null ? (
+    <Spinner />
+  ) : (
     <>
       {openModalAdd && <NotesFormAdd setOpenModalAdd={setOpenModalAdd} />}
       {openModalEdit && (

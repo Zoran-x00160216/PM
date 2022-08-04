@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createCard, getCards } from "../../../actions/cards";
+import { deleteCard, editCard, getCards } from "../../../../actions/cards";
+import { formatDate } from "../../../../utility/formatDate";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy, faTrashCan, faEye } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./FormModal.css";
 
-const CardsFormAdd = ({
-  createCard,
+const CardsFormEdit = ({
+  editCard,
+  deleteCard,
   getCards,
-  setOpenModalAdd,
-  cards: { cards },
-  text: { txt }
+  cards: { loading, cards },
+  text: { txt },
+  setOpenModalEdit,
+  passId
 }) => {
+  const [edit, setEdit] = useState(false);
+
   const [formData, setFormData] = useState({
+    _id: "",
+    user_id: "",
     name: "",
     number: "",
     expiryMonth: "",
@@ -27,8 +36,41 @@ const CardsFormAdd = ({
     expiryMonth,
     expiryYear,
     category,
-    favorite
+    favorite,
+    updated,
+    date
   } = formData;
+
+  // state for password toggle
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  let account = [];
+  Array.isArray(cards) &&
+    cards.map(card => {
+      if (passId === card._id) {
+        Object.keys(card).forEach(function() {
+          account.push(card);
+        });
+      }
+      return card;
+    });
+  useEffect(() => {
+    // console.log(account);
+    setFormData({
+      _id: loading || !account[0]._id ? "" : account[0]._id,
+      user_id: loading || !account[0].user_id ? "" : account[0].user_id,
+      name: loading || !account[0].name ? "" : account[0].name,
+      number: loading || !account[0].number ? "" : account[0].number,
+      expiryMonth:
+        loading || !account[0].expiryMonth ? "" : account[0].expiryMonth,
+      expiryYear:
+        loading || !account[0].expiryYear ? "" : account[0].expiryYear,
+      category: loading || !account[0].category ? "" : account[0].category,
+      favorite: loading || !account[0].favorite ? false : account[0].favorite,
+      updated: formatDate(account[0].updated),
+      date: formatDate(account[0].date)
+    });
+  }, [loading]);
 
   const onChange = e => {
     e.preventDefault();
@@ -42,9 +84,16 @@ const CardsFormAdd = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    createCard(formData, txt.txt);
+    edit ? deleteCard(formData) : editCard(formData, txt.txt);
     setTimeout(() => getCards(txt.txt), 100);
-    setTimeout(() => setOpenModalAdd(false), 120);
+    setTimeout(() => setOpenModalEdit(false), 120);
+  };
+
+  // Password toggle handler
+  const togglePassword = () => {
+    // When the handler is invoked
+    // inverse the boolean state of passwordShown
+    setPasswordShown(!passwordShown);
   };
 
   return (
@@ -52,13 +101,13 @@ const CardsFormAdd = ({
       <main className="modalBackgroundForm">
         <div className="modalContainerForm bgCards">
           <div className="modal-header">
-            <h5 className="modal-title textPrimary">Add</h5>
+            <h5 className="modal-title textPrimary">Edit a Card</h5>
             <button
               type="button"
               className="btn-close"
               aria-label="Close"
               onClick={() => {
-                setOpenModalAdd(false);
+                setOpenModalEdit(false);
               }}
             ></button>
           </div>
@@ -84,16 +133,28 @@ const CardsFormAdd = ({
                   Number:
                 </label>
                 <div className="d-flex">
-                  <input
-                    type="text"
-                    className="form-control myInput"
-                    name="number"
-                    value={number}
-                    onChange={e => onChange(e)}
-                    minLength="14"
-                    maxLength="14"
-                    required
-                  ></input>
+                  <div className="mr-1 flex-grow-1">
+                    <input
+                      type={passwordShown ? "text" : "password"}
+                      className="form-control myInput"
+                      id="recipient-username"
+                      name="number"
+                      value={number}
+                      onChange={e => onChange(e)}
+                      required
+                    ></input>
+                  </div>
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    onClick={togglePassword}
+                    className="lrgIcon cursor mr-1 textPrimary"
+                  />
+                  <CopyToClipboard text={number}>
+                    <FontAwesomeIcon
+                      icon={faCopy}
+                      className="lrgIcon textPrimary"
+                    />
+                  </CopyToClipboard>
                 </div>
               </div>
               <div className="row mb-1">
@@ -102,7 +163,7 @@ const CardsFormAdd = ({
                     Expiry Month:
                   </label>
                   <select
-                    type="number"
+                    type="text"
                     className="form-control myInput"
                     id="inputGroupSelect01"
                     name="expiryMonth"
@@ -148,7 +209,7 @@ const CardsFormAdd = ({
                   </select>
                 </div>
               </div>
-              <div className="row mb-3">
+              <div className="row">
                 <div className="mb-1 col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
                     Category:
@@ -181,12 +242,23 @@ const CardsFormAdd = ({
                 </div>
               </div>
             </div>
-            <div className="d-flex justify-content-end mb-3">
+            <div className="d-flex justify-content-between mb-3">
+              <button
+                type="submit"
+                name="delete"
+                className="noBorder m-2 bg-body"
+                onClick={() => setEdit(true)}
+              >
+                <FontAwesomeIcon
+                  icon={faTrashCan}
+                  className="textRed lrgIcon"
+                />
+              </button>
               <button
                 type="button"
                 className="btn m-1 btn-outline-success shadow myBtn bgGrey"
                 onClick={() => {
-                  setOpenModalAdd(false);
+                  setOpenModalEdit(false);
                 }}
               >
                 Close
@@ -196,30 +268,38 @@ const CardsFormAdd = ({
                 name="update"
                 className="btn m-1 btn-outline-success shadow myBtn primary"
               >
-                Save
+                Update
               </button>
             </div>
           </form>
+          <div className="m-1 fs-6">
+            <span className="small">
+              Created: {date}
+              <br></br>Last update: {updated}
+            </span>
+          </div>
         </div>
       </main>
     </>
   );
 };
 
-CardsFormAdd.propType = {
-  createCard: PropTypes.func.isRequired,
+CardsFormEdit.propTypes = {
+  editCard: PropTypes.func.isRequired,
+  deleteCard: PropTypes.func.isRequired,
   getCards: PropTypes.func.isRequired,
-  text: PropTypes.object.isRequired,
   cards: PropTypes.object.isRequired,
-  setOpenModalAdd: PropTypes.func.isRequired
+  setOpenModalEdit: PropTypes.func.isRequired,
+  passId: PropTypes.string.isRequired,
+  edit: PropTypes.bool,
+  text: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  text: state.text,
-  cards: state.cards
+  cards: state.cards,
+  text: state.text
 });
 
-export default connect(0, {
-  createCard,
-  getCards
-})(CardsFormAdd);
+export default connect(mapStateToProps, { editCard, deleteCard, getCards })(
+  CardsFormEdit
+);

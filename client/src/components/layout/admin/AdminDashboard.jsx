@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import AdminSidebar from "./AdminSidebar";
 import PieChartComponent from "./PieChartComponent";
+import Spinner from "../../spinner/Spinner";
 import { connect } from "react-redux";
 import {
   getAllEntries,
@@ -18,9 +19,9 @@ const AdminDashboard = ({
 }) => {
   const [allEntries, setAllEntries] = useState();
   const [allUsers, setAllUsers] = useState();
-  const [allEntriesPremium, setAllEntriesPremium] = useState();
-  const [allEntriesBasic, setAllEntriesBasic] = useState();
-
+  const [allEntriesPremium, setAllEntriesPremium] = useState(null);
+  const [allEntriesBasic, setAllEntriesBasic] = useState(null);
+  console.log(allEntriesBasic);
   // call a functions to get db summary per category, users and access priviledge
   useEffect(() => {
     try {
@@ -53,7 +54,9 @@ const AdminDashboard = ({
   }, []);
   // console.log(allEntriesBasic, allEntriesPremium);
 
-  return (
+  return allEntriesPremium === null && getBasicAllEntries === null ? (
+    <Spinner />
+  ) : (
     <Fragment>
       <div className="container">
         <div className="row">

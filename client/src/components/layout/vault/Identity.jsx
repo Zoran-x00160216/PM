@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import IdentityFormAdd from "../forms/IdentityFormAdd";
-import IdentityFormEdit from "../forms/IdentityFormEdit";
+import IdentityFormAdd from "./forms/IdentityFormAdd";
+import IdentityFormEdit from "./forms/IdentityFormEdit";
 import Sidebar from "./sidebar/Sidebar";
+import Spinner from "../../spinner/Spinner";
 import { connect } from "react-redux";
 import { getIdentity } from "../../../actions/identity";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -122,7 +123,9 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
       );
     });
 
-  return (
+  return loading && identity === null ? (
+    <Spinner />
+  ) : (
     <>
       {openModalAdd && <IdentityFormAdd setOpenModalAdd={setOpenModalAdd} />}
       {openModalEdit && (

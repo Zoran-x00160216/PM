@@ -19,14 +19,19 @@ router.post("/", async (req, res) => {
     items: req.body.items,
     updated: new Date(),
   };
+  // Validate data
+  const { error } = categoryValidation(data);
+  if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    // Validate data
-    const { error } = categoryValidation(data);
-    if (error) return res.status(400).send(error.details[0].message);
+    // Check if category already exist
+    const catExist = await Category.findOne({
+      user_id: req.user._id,
+      name: req.body.name,
+    });
+    if (catExist) return res.status(400).send("Category already exist");
 
     const category = await new Category(data);
-
     await category.save();
     console.log(category);
 

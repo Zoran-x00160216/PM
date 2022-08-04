@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setAlert } from "./alert";
-import { GET_NOTES, ERROR_NOTES } from "./type";
+import { GET_NOTES, ERROR_NOTES, EDIT_NOTES } from "./type";
 import CryptoJS from "crypto-js";
 
 // Get web accounts
@@ -50,8 +50,10 @@ export const createNote = (formData, text) => async dispatch => {
       config
     );
 
+    console.log(res.data);
+
     dispatch({
-      type: GET_NOTES,
+      type: EDIT_NOTES,
       payload: res.data
     });
 
@@ -92,7 +94,7 @@ export const editNote = (formData, text) => async dispatch => {
       config
     );
     dispatch({
-      type: GET_NOTES,
+      type: EDIT_NOTES,
       payload: res.data
     });
 
@@ -127,7 +129,7 @@ export const deleteNote = formData => async dispatch => {
     // console.log(res.data);
 
     dispatch({
-      type: GET_NOTES,
+      type: EDIT_NOTES,
       payload: res.data
     });
 

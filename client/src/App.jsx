@@ -9,10 +9,11 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Login from "./components/layout/Auth/Login";
 import Register from "./components/layout/Auth/Register";
-import WebAccounts from "./components/layout/subComponets/WebAccounts";
-import Identity from "./components/layout/subComponets/Identity";
-import Notes from "./components/layout/subComponets/Notes";
-import Cards from "./components/layout/subComponets/Cards";
+import WebAccounts from "./components/layout/vault/WebAccounts";
+import Identity from "./components/layout/vault/Identity";
+import Notes from "./components/layout/vault/Notes";
+import Cards from "./components/layout/vault/Cards";
+import Favorites from "./components/layout/vault/favorites/Favorites";
 import AlertComponent from "./components/layout/AlertComponent";
 import AdminDashboard from "./components/layout/admin/AdminDashboard";
 import Users from "./components/layout/admin/Users";
@@ -67,6 +68,9 @@ const App = () => {
             </Route>
             <Route element={<PrivateRoute />}>
               <Route path="/notes" element={<Notes />} />
+            </Route>
+            <Route element={<PrivateRoute />}>
+              <Route path="/favorites" element={<Favorites />} />
             </Route>
           </Routes>
           <Footer />

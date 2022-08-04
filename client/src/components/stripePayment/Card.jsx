@@ -66,7 +66,7 @@ const CardForm = ({ updateUser }) => {
     if (paymentIntent.status === "succeeded") {
       updateUser("premium");
       // setAlert("Congratulations, you upgraded to premium account", "mySuccess");
-      setTimeout(() => navigate("/vault"), 2000);
+      setTimeout(() => navigate("/webAccounts"), 2000);
     }
     // Show a success message to your customer
     // There's a risk of the customer closing the window before callback

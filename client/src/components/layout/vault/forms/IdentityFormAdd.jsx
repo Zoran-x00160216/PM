@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createIdentity, getIdentity } from "../../../actions/identity";
+import { createIdentity, getIdentity } from "../../../../actions/identity";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./FormModal.css";
 

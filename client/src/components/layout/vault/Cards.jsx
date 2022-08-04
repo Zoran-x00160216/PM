@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Sidebar from "./sidebar/Sidebar";
-import CardsFormAdd from "../forms/CardsFormAdd";
-import CardsFormEdit from "../forms/CardsFormEdit";
+import CardsFormAdd from "./forms/CardsFormAdd";
+import CardsFormEdit from "./forms/CardsFormEdit";
+import Spinner from "../../spinner/Spinner";
 import { connect } from "react-redux";
 import { getCards } from "../../../actions/cards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -82,7 +83,9 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
         </div>
       );
     });
-  return (
+  return loading && cards === null ? (
+    <Spinner />
+  ) : (
     <>
       {openModalAdd && <CardsFormAdd setOpenModalAdd={setOpenModalAdd} />}
       {openModalEdit && (

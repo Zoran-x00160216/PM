@@ -18,11 +18,10 @@ router.post("/", async (req, res) => {
     name: req.body.name,
     type: "note",
     note: req.body.note,
-    category: req.body.category,
+    category: "62eb9f8fec8b2290f674008d",
     favorite: req.body.favorite,
     updated: new Date(),
   };
-  // console.log(data);
 
   // Validate Data
   const { error } = secretNoteValidation(data);
@@ -30,6 +29,13 @@ router.post("/", async (req, res) => {
   // console.log(req.user._id, req.body);
 
   try {
+    // Check if Note already exist
+    const noteExist = await SecretNote.findOne({
+      user_id: req.user._id,
+      name: req.body.name,
+    });
+    if (noteExist) return res.status(400).send("Note already exist");
+
     const secretNote = await new SecretNote(data);
 
     await secretNote.save();
@@ -63,7 +69,10 @@ router.put("/", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    const secretNote = await SecretNote.updateOne({ _id: req.body._id }, data);
+    const secretNote = await SecretNote.updateOne(
+      { _id: req.body._id },
+      { $set: data }
+    );
     res.json(secretNote);
   } catch (error) {
     res.send(error);

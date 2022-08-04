@@ -5,8 +5,8 @@ import {
   deleteIdentity,
   editIdentity,
   getIdentity
-} from "../../../actions/identity";
-import { formatDate } from "../../../utility/formatDate";
+} from "../../../../actions/identity";
+import { formatDate } from "../../../../utility/formatDate";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faTrashCan } from "@fortawesome/free-solid-svg-icons";

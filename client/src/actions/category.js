@@ -47,7 +47,7 @@ export const createCategory = formData => async dispatch => {
   } catch (err) {
     if (err) {
       console.log(err);
-      dispatch(setAlert(err.message, "myDanger"));
+      dispatch(setAlert(err.response.data, "myDanger"));
     }
 
     dispatch({

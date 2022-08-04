@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createNote, getNotes } from "../../../actions/notes";
+import { createNote, getNotes } from "../../../../actions/notes";
 // import { CopyToClipboard } from "react-copy-to-clipboard";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCopy, faArrowRotateLeft } from "@fortawesome/free-solid-svg-icons";
@@ -37,8 +37,8 @@ const NotesFormAdd = ({
   const onSubmit = e => {
     e.preventDefault();
     createNote(formData, txt.txt);
-    setTimeout(() => getNotes(txt.txt), 100);
-    setTimeout(() => setOpenModalAdd(false), 120);
+    setTimeout(() => getNotes(txt.txt), 60);
+    setTimeout(() => setOpenModalAdd(false), 80);
   };
 
   return (

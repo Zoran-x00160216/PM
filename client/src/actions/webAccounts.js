@@ -59,7 +59,6 @@ export const createWebAccount = (formData, text) => async dispatch => {
       data,
       config
     );
-    console.log(res.data.status);
 
     dispatch({
       type: EDIT_WEB_ACCOUNTS,
@@ -105,7 +104,7 @@ export const editWebAccount = (formData, text) => async dispatch => {
     );
 
     dispatch({
-      type: GET_WEB_ACCOUNTS,
+      type: EDIT_WEB_ACCOUNTS,
       payload: res.data
     });
     dispatch(setAlert("Account Updated", "mySuccess"));
@@ -134,7 +133,7 @@ export const deleteWebAccount = formData => async dispatch => {
     // console.log(res.data);
 
     dispatch({
-      type: GET_WEB_ACCOUNTS,
+      type: EDIT_WEB_ACCOUNTS,
       payload: res.data
     });
 

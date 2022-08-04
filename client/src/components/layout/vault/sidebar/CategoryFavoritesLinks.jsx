@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import CategoryFormAdd from "../../forms/CategoryFormAdd";
-import CategoryFormEdit from "../../forms/CategoryFormEdit";
+import CategoryFormAdd from "../forms/CategoryFormAdd";
+import CategoryFormEdit from "../forms/CategoryFormEdit";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCategories } from "../../../../actions/category";
@@ -10,12 +10,12 @@ import {
   faStar,
   faAngleDown,
   faPlus,
-  faPencil
+  faGear
 } from "@fortawesome/free-solid-svg-icons";
 
 const CategoryFavoritesLinks = ({
   getCategories,
-  category: { categories }
+  categoryRedux: { categories }
 }) => {
   const [passId, setpassId] = useState();
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -35,16 +35,14 @@ const CategoryFavoritesLinks = ({
   const categoriesArray =
     Array.isArray(categories) &&
     categories.map(category => {
-      console.log(category.name, category._id);
       return (
         <ul key={category._id} className="d-flex justify-content-between">
-          <li onClick={() => setIdAndOpenModalEdit(category._id)}>
-            {category.name}
-          </li>
+          <li onClick={() => console.log("hello")}>{category.name}</li>
           <FontAwesomeIcon
-            icon={faPencil}
+            icon={faGear}
             className="cursor textPrimary mb-3 mr-4"
             aria-expanded="false"
+            onClick={() => setIdAndOpenModalEdit(category._id)}
           ></FontAwesomeIcon>
         </ul>
       );
@@ -59,7 +57,7 @@ const CategoryFavoritesLinks = ({
       <div className="m-3 mt-5 shadow-sm bgCards myRounded">
         <ul className="pt-4 pb-4">
           <li className="pb-1 mb-2">
-            <Link to="/fav">
+            <Link to="/favorites">
               <FontAwesomeIcon
                 icon={faStar}
                 className="lrgIcon textYellow mr-1"
@@ -68,25 +66,20 @@ const CategoryFavoritesLinks = ({
             </Link>
           </li>
           <li className="mb-3 d-flex justify-content-between">
-            <span>
+            <div>
               <FontAwesomeIcon
                 icon={faAngleDown}
                 className="lrgIcon textPrimary mr-1"
                 onClick={() => setToggleCategories(!toggleCategories)}
               />
-              Category
-            </span>
-            {/* <span>Category</span> */}
-            {/* <FontAwesomeIcon
+              <span>Category</span>
+            </div>
+
+            <FontAwesomeIcon
               icon={faPlus}
-              className="ml-5 lrgIcon textPrimary"
-            /> */}
-            <span onClick={() => setOpenModalAdd(true)} className="cursor">
-              <FontAwesomeIcon
-                icon={faPlus}
-                className="lrgIcon mr-4 textPrimary"
-              />
-            </span>
+              className="lrgIcon mr-4 textPrimary cursor"
+              onClick={() => setOpenModalAdd(true)}
+            />
           </li>
           {toggleCategories && categoriesArray}
         </ul>
@@ -97,11 +90,11 @@ const CategoryFavoritesLinks = ({
 
 CategoryFavoritesLinks.propTypes = {
   getCategories: PropTypes.func.isRequired,
-  category: PropTypes.object.isRequired
+  categoryRedux: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  category: state.category
+  categoryRedux: state.categoryRedux
 });
 
 export default connect(mapStateToProps, { getCategories })(

@@ -20,7 +20,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         categories: payload,
-        loading: false
+        loading: false,
+        editCategories: {}
       };
     case EDIT_CATEGORY:
       return {
@@ -38,7 +39,9 @@ export default function(state = initialState, action) {
       return {
         ...state,
         categories: [],
-        loading: false
+        editCategories: {},
+        loading: false,
+        error: {}
       };
     default:
       return state;

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { deleteNote, editNote, getNotes } from "../../../actions/notes";
-import { formatDate } from "../../../utility/formatDate";
+import { deleteNote, editNote, getNotes } from "../../../../actions/notes";
+import { formatDate } from "../../../../utility/formatDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,6 +13,7 @@ const NotesFormEdit = ({
   getNotes,
   notes: { loading, notes },
   text: { txt },
+  categoryRedux: { categories },
   setOpenModalEdit,
   noteId
 }) => {
@@ -31,23 +32,33 @@ const NotesFormEdit = ({
 
   const { name, note, category, favorite, updated, date } = formData;
   let account = [];
-  Array.isArray(notes) &&
-    notes.map(note => {
-      if (noteId === note._id) {
-        Object.keys(note).forEach(function() {
-          account.push(note);
-        });
-      }
-      return note;
-    });
+  let categoryName = "no category";
+  let categoryArray = [];
+
+  // console.log(categoryArray, categoryName, category);
+
   useEffect(() => {
+    Array.isArray(notes) &&
+      notes.map(note => {
+        if (noteId === note._id) {
+          return account.push(note);
+        }
+      });
+
+    Array.isArray(categories) &&
+      categories.map(cat => {
+        categoryArray.push(cat);
+        if (account[0].category === cat._id) {
+          return (categoryName = cat.name);
+        }
+      });
     // console.log(account);
     setFormData({
       _id: loading || !account[0]._id ? "" : account[0]._id,
       user_id: loading || !account[0].user_id ? "" : account[0].user_id,
       name: loading || !account[0].name ? "" : account[0].name,
       note: loading || !account[0].note ? "" : account[0].note,
-      category: loading || !account[0].category ? "" : account[0].category,
+      category: loading || !account[0].category ? "" : categoryName,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       updated: formatDate(account[0].updated),
       date: formatDate(account[0].date)
@@ -193,12 +204,14 @@ NotesFormEdit.propTypes = {
   setOpenModalEdit: PropTypes.func.isRequired,
   noteId: PropTypes.string.isRequired,
   edit: PropTypes.bool,
-  text: PropTypes.object.isRequired
+  text: PropTypes.object.isRequired,
+  categoryRedux: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   notes: state.notes,
-  text: state.text
+  text: state.text,
+  categoryRedux: state.categoryRedux
 });
 
 export default connect(mapStateToProps, { editNote, deleteNote, getNotes })(

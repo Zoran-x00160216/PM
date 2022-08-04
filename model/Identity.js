@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const IdentitySchema = new mongoose.Schema({
   user_id: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   name: {
     type: String,

@@ -39,7 +39,10 @@ export default function(state = initialState, action) {
       return {
         ...state,
         notes: [],
-        loading: false
+        editNote: {},
+        loading: true,
+        status: 0,
+        error: {}
       };
     default:
       return state;

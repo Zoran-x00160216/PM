@@ -30,8 +30,12 @@ router.post("/", async (req, res) => {
 
   try {
     // Check if Credit Card is already in DB
-    // const creditCardExist = await CreditCard.findOne({ number: req.body.number });
-    // if (creditCardExist) return res.status(400).send("Card already in database.");
+    const creditCardExist = await CreditCard.findOne({
+      user_id: req.user._id,
+      number: req.body.number,
+    });
+    if (creditCardExist)
+      return res.status(400).send("Card already in database.");
 
     const creditCard = await new CreditCard(data);
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCategories, createCategory } from "../../../actions/category";
-import "../subComponets/sidebar/SidebarModal.css";
+import { getCategories, createCategory } from "../../../../actions/category";
+import "../../vault/sidebar/SidebarModal.css";
 
 const CategoryFormAdd = ({
   setOpenModalAdd,
@@ -23,7 +23,7 @@ const CategoryFormAdd = ({
   const onSubmit = e => {
     e.preventDefault();
     createCategory(formData);
-    setTimeout(() => getCategories(), 50);
+    setTimeout(() => getCategories(), 70);
     setTimeout(() => setOpenModalAdd(false), 70);
   };
   return (

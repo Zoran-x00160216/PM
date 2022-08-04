@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { formatDate } from "../../../utility/formatDate";
+import { formatDate } from "../../../../utility/formatDate";
 import {
   editCategory,
   getCategories,
   createCategory,
   deleteCategory
-} from "../../../actions/category";
+} from "../../../../actions/category";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import "../subComponets/sidebar/SidebarModal.css";
+import "../../vault/sidebar/SidebarModal.css";
 
 const CategoryFormEdit = ({
   setOpenModalEdit,
@@ -18,7 +18,7 @@ const CategoryFormEdit = ({
   editCategory,
   getCategories,
   deleteCategory,
-  category: { loading, categories }
+  categoryRedux: { loading, categories }
 }) => {
   const [formData, setFormData] = useState({
     _id: "",
@@ -147,7 +147,7 @@ CategoryFormEdit.propTypes = {
   passId: PropTypes.string.isRequired
 };
 const mapStateToProps = state => ({
-  category: state.category
+  categoryRedux: state.categoryRedux
 });
 
 export default connect(mapStateToProps, {

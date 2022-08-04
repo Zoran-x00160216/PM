@@ -14,8 +14,8 @@ const PhoneSchema = new mongoose.Schema({
 
 const PersonalDetailsSchema = new mongoose.Schema({
   user_id: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   name: {
     type: String,

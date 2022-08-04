@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ModalConfirm from "../../modal/ModalConfirm";
-import WebAccountFormAdd from "../forms/WebAccountFormAdd";
-import WebAccountFormEdit from "../forms/WebAccountFormEdit";
+import WebAccountFormAdd from "./forms/WebAccountFormAdd";
+import WebAccountFormEdit from "./forms/WebAccountFormEdit";
 import Sidebar from "./sidebar/Sidebar";
+import Spinner from "../../spinner/Spinner";
 import { connect } from "react-redux";
 import { getWebAccounts } from "../../../actions/webAccounts";
 import { useNavigate } from "react-router-dom";
@@ -47,7 +48,7 @@ const WebAccounts = ({
     setLoginId(id);
     setOpenModalEdit(true);
   };
-
+  console.log(loading);
   const accounts =
     Array.isArray(webAccounts) &&
     webAccounts.map(webAccount => {
@@ -117,7 +118,9 @@ const WebAccounts = ({
         </div>
       );
     });
-  return (
+  return loading && webAccounts === null ? (
+    <Spinner />
+  ) : (
     <>
       {openModalAdd && <WebAccountFormAdd setOpenModalAdd={setOpenModalAdd} />}
       {openModalEdit && (

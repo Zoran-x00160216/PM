@@ -88,7 +88,7 @@ const Users = ({
               <ModalConfirm
                 setModal={setOpenModal}
                 setBtnText={"yes"}
-                setColor={"myDangerBg"}
+                setColor={"myDanger"}
                 setText={"Are you sure you want to delete user"}
                 edit={() => {
                   editUser(user._id);
