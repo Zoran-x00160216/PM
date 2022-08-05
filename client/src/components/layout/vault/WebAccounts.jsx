@@ -48,7 +48,7 @@ const WebAccounts = ({
     setLoginId(id);
     setOpenModalEdit(true);
   };
-  console.log(loading);
+
   const accounts =
     Array.isArray(webAccounts) &&
     webAccounts.map(webAccount => {
@@ -137,10 +137,10 @@ const WebAccounts = ({
               <div className="col">
                 <div className="p-2 hstack gap-5 border-bottom mb-4">
                   <div className="me-auto vw-90">
-                    <h5>Web Accounts</h5>
+                    <small>Web Accounts</small>
                   </div>
                   <div className="cursor" onClick={() => checkPermission()}>
-                    <span className="mr-2">Add</span>
+                    <small className="mr-2">Add</small>
                     <FontAwesomeIcon
                       icon={faPlus}
                       className="lrgIcon textPrimary"
