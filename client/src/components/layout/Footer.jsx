@@ -8,7 +8,7 @@ import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
 const Footer = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
   const privateLink = (
-    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+    <>
       <li className="nav-item">
         <Link to="/" className="nav-link active" aria-current="page">
           Home
@@ -40,11 +40,11 @@ const Footer = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
           Logout
         </Link>
       </li>
-    </ul>
+    </>
   );
 
   const publicLink = (
-    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+    <>
       <li className="nav-item">
         <Link to="/" className="nav-link active" aria-current="page">
           Home
@@ -66,16 +66,24 @@ const Footer = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
           About
         </Link>
       </li>
-    </ul>
+      <li className="nav-item">
+        <Link to="/help" className="nav-link">
+          Help
+        </Link>
+      </li>
+    </>
   );
 
   return (
-    <footer className="navbar navbar-expand-lg navbar-light bg-light  border-top">
+    <footer className="navbar navbar-expand-lg navbar-light p-5 border-top">
       <div className="container-fluid justify-content-center">
         <div className="py-3 mt-3">
-          {!loading && (
-            <Fragment>{isAuthenticated ? privateLink : publicLink}</Fragment>
-          )}
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            {!loading && (
+              <Fragment>{isAuthenticated ? privateLink : publicLink}</Fragment>
+            )}
+          </ul>
+
           <p className="text-center textPrimary pt-3">
             &copy; X00160216 Zoran Railic 2022
           </p>

@@ -38,20 +38,19 @@ const NotesFormEdit = ({
   // console.log(categoryArray, categoryName, category);
 
   useEffect(() => {
-    Array.isArray(notes) &&
-      notes.map(note => {
-        if (noteId === note._id) {
-          return account.push(note);
-        }
-      });
+    notes.forEach(note => {
+      if (noteId === note._id) {
+        return account.push(note);
+      }
+    });
 
-    Array.isArray(categories) &&
-      categories.map(cat => {
-        categoryArray.push(cat);
-        if (account[0].category === cat._id) {
-          return (categoryName = cat.name);
-        }
-      });
+    categories.map(cat => {
+      categoryArray.push(cat);
+      if (account[0].category === cat._id) {
+        return (categoryName = cat.name);
+      }
+      return cat;
+    });
     // console.log(account);
     setFormData({
       _id: loading || !account[0]._id ? "" : account[0]._id,
@@ -77,9 +76,10 @@ const NotesFormEdit = ({
 
   const onSubmit = e => {
     e.preventDefault();
+    console.log(formData);
     edit ? deleteNote(formData) : editNote(formData, txt.txt);
-    setTimeout(() => getNotes(txt.txt), 50);
-    setTimeout(() => setOpenModalEdit(false), 70);
+    setTimeout(() => getNotes(txt.txt), 60);
+    setTimeout(() => setOpenModalEdit(false), 80);
   };
 
   return (
@@ -141,14 +141,14 @@ const NotesFormEdit = ({
                   <div className="form-check form-switch">
                     <input
                       className="form-check-input"
-                      type="checkbox"
-                      role="switch"
+                      type="radio"
+                      // role="switch"
                       name="favorite"
                       value={favorite}
                       onChange={e => {
                         handleSwitch(e);
                       }}
-                      aria-checked={favorite}
+                      checked={favorite}
                     ></input>
                   </div>
                 </div>

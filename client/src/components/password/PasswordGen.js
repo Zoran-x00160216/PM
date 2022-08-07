@@ -1,20 +1,23 @@
 import React from "react";
 import Display from "./display/Display";
+import "../layout/vault/forms/FormModal.css"
 
 const PasswordGen = ({ setModal, setPassInput }) => {
   return (
-    <div className="modalBackground bgCards">
-      <div className="modalContainer">
+    <>
+    <main className="modalBackgroundForm">
+      <div className="modalContainerForm bgCards">
         <div className="modal-header">
-          <h4 className="modal-title" id="exampleModalLabel">
+          <h5 className="modal-title">
             Generate Password
-          </h4>
+          </h5>
         </div>
         <div className="modal-body">
           <Display setPassInput={setPassInput} setModal={setModal} />
         </div>
-      </div>
     </div>
+    </main>
+    </>
   );
 };
 

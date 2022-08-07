@@ -12,7 +12,7 @@ import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
 const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
   const privateLink = (
-    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+    <>
       <li className="nav-item">
         <Link to="/" className="nav-link active" aria-current="page">
           Home
@@ -21,6 +21,11 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
       <li className="nav-item">
         <Link to="/webAccounts" className="nav-link" aria-current="page">
           Vault
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link to="/about" className="nav-link">
+          About
         </Link>
       </li>
       <li className="nav-item">
@@ -44,11 +49,11 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
           Logout
         </Link>
       </li>
-    </ul>
+    </>
   );
 
   const publicLink = (
-    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+    <>
       <li className="nav-item">
         <Link to="/" className="nav-link active" aria-current="page">
           Home
@@ -70,7 +75,12 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
           About
         </Link>
       </li>
-    </ul>
+      <li className="nav-item">
+        <Link to="/help" className="nav-link">
+          Help
+        </Link>
+      </li>
+    </>
   );
 
   return (
@@ -95,9 +105,11 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
           className="collapse navbar-collapse bgBody"
           id="navbarTogglerDemo03"
         >
-          {!loading && (
-            <Fragment>{isAuthenticated ? privateLink : publicLink}</Fragment>
-          )}
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            {!loading && (
+              <Fragment>{isAuthenticated ? privateLink : publicLink}</Fragment>
+            )}
+          </ul>
           <form className="d-flex">
             <input
               className="form-control me-2 shadow myBtn searchWidth"

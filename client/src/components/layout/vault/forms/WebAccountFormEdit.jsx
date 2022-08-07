@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import PasswordGen from "../../../password/PasswordGen";
+// import CheckPasswordLength from "../../../../utility/checkPasswordLength";
 import { connect } from "react-redux";
 import {
   deleteWebAccount,
@@ -30,9 +31,6 @@ const WebAccountFormEdit = ({
   setOpenModalEdit,
   loginId
 }) => {
-  // const params = useParams();
-  // const navigate = useNavigate();
-
   const [openModal, setOpenModal] = useState(false);
 
   // state for edit or delete toggle if true delete
@@ -77,17 +75,15 @@ const WebAccountFormEdit = ({
 
   // loop over all login accounts and store in var one matching param id
   let account = [];
-  Array.isArray(webAccounts) &&
-    webAccounts.map(webAccount => {
+
+  useEffect(() => {
+    webAccounts.forEach(webAccount => {
       if (loginId === webAccount._id) {
         Object.keys(webAccount).forEach(function() {
           account.push(webAccount);
         });
       }
-      return webAccount;
     });
-
-  useEffect(() => {
     setFormData({
       _id: loading || !account[0]._id ? "" : account[0]._id,
       user_id: loading || !account[0].user_id ? "" : account[0].user_id,
@@ -120,8 +116,8 @@ const WebAccountFormEdit = ({
   const onSubmit = e => {
     e.preventDefault();
     edit ? deleteWebAccount(formData) : editWebAccount(formData, txt.txt);
-    setTimeout(() => getWebAccounts(txt.txt), 100);
-    setTimeout(() => setOpenModalEdit(false), 120);
+    setTimeout(() => getWebAccounts(txt.txt), 60);
+    setTimeout(() => setOpenModalEdit(false), 80);
   };
 
   // Password toggle handler
@@ -139,6 +135,18 @@ const WebAccountFormEdit = ({
     e.preventDefault();
     setFormData({ ...formData, password: pass.value });
     setOpenModal(false);
+  };
+
+  const checkPasswordLength = password => {
+    if (password === "") {
+      return <></>;
+    } else if (password && password.length < 14) {
+      return <small className="textRed">Bad password</small>;
+    } else if (password && password.length >= 14 && password.length <= 20) {
+      return <small className=" textPrimary">Strong password</small>;
+    } else {
+      return <small className="textSecondary">Super strong password</small>;
+    }
   };
 
   return (
@@ -247,6 +255,7 @@ const WebAccountFormEdit = ({
                     />
                   </CopyToClipboard>
                 </div>
+                {checkPasswordLength(password)}
               </div>
               <div className="mb-1">
                 <label htmlFor="recipient-name" className="col-form-label">
@@ -295,14 +304,14 @@ const WebAccountFormEdit = ({
                   <div className="form-check form-switch">
                     <input
                       className="form-check-input"
-                      type="checkbox"
-                      role="switch"
+                      type="radio"
+                      // role="switch"
                       name="favorite"
                       value={favorite}
                       onChange={e => {
                         handleSwitch(e);
                       }}
-                      aria-checked={favorite}
+                      checked={favorite}
                     ></input>
                   </div>
                 </div>

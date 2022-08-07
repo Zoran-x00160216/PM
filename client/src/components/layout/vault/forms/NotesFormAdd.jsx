@@ -106,14 +106,14 @@ const NotesFormAdd = ({
                   <div className="form-check form-switch">
                     <input
                       className="form-check-input"
-                      type="checkbox"
-                      role="switch"
+                      type="radio"
+                      // role="switch"
                       name="favorite"
                       value={favorite}
                       onChange={e => {
                         handleSwitch(e);
                       }}
-                      aria-checked={favorite}
+                      checked={favorite}
                     ></input>
                   </div>
                 </div>

@@ -13,9 +13,9 @@ const ReadMoreReadLess = ({ children }) => {
       <p onClick={toggleText}>
         {" "}
         {readMore ? (
-          <b className="pointer"> Read Less</b>
+          <small className="fw-bold"> Read Less</small>
         ) : (
-          <b className="pointer"> Read More</b>
+          <small className="fw-bold"> Read More</small>
         )}
       </p>
     </div>

@@ -142,10 +142,10 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
                     <h5>Identity</h5>
                   </div>
                   <div onClick={() => setOpenModalAdd(true)} className="cursor">
-                    <span className="mr-2">Add</span>
+                    <span className="mr-2 small-text">Add</span>
                     <FontAwesomeIcon
                       icon={faPlus}
-                      className="lrgIcon textPrimary"
+                      className="smIcon textPrimary"
                     />
                   </div>
                 </div>

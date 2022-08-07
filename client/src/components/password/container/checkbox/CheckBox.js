@@ -8,9 +8,9 @@ const CheckBox = props => {
 
     return (
         <>
-            <div className="col-md-3">
+            <div className="col-sm-3">
                 <label className="container">
-                    <h1>{label}</h1>
+                    <small className='small-text'>{label}</small>
                     <input 
                         type="checkbox"
                         name={name}

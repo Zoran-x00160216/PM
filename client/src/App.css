@@ -22,6 +22,7 @@ body {
   font-family: "Lato", sans-serif;
   color: var(--gray-dark);
   background-color: var(--gray);
+  overflow-x: hidden;
 }
 body > p {
   color: var(--dark);
@@ -49,7 +50,7 @@ body > p {
 }
 
 .small-text {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* Reset styles on <li> and <a> tags */
@@ -220,6 +221,11 @@ a:hover {
   height: 20px;
 }
 
+.smIcon {
+  width: 15px;
+  height: 15px;
+}
+
 .home {
   height: 90vh;
 }
@@ -234,15 +240,43 @@ a:hover {
   color: #f4f4f4;
 }
 
-/* .homeImg {
+.fixedHgthCards {
+  height: 250px;
+}
+
+
+
+.imgHome {
+position: absolute;
+top: 10vh;
+left: 0;
+width: 100vw;
+height: 70vh;
+background: url("./img/Untitled2.png")no-repeat center center/cover;
+}
+
+.imgHelp {
   position: absolute;
-  width: 40%;
-  top: 15%;
-  left: 30%;
-  opacity: 0.15;
-  background-image: url("./components/img/footer.png") no-repeat center center
-    center/cover;
-} */
+  top: 30vh;
+  left: 0;
+  width: 100vw;
+  height: 60vh;
+  background: url("./img/helpBg.png")no-repeat center center/cover;
+  }
+
+.imgLogin {
+    position: absolute;
+    top: 10vh;
+    left: 0;
+    width: 100vw;
+    height: 60vh;
+    background: url("./img/loginBg.png")no-repeat center center/cover;
+    }
+
+.imgHomeKeyboard {
+      opacity: 0.9;
+      background: url("./img/keyboard.jpg")no-repeat center center/cover;
+      }
 
 @media screen and (max-width: 985px) {
   .navbar ul {
@@ -252,4 +286,11 @@ a:hover {
   .hideElement {
     display: none;
   }
+  .fixedHgthCards {
+    height: 300px;
+  }
 }
+/* @media screen and (max-width: 500px) {
+
+
+} */

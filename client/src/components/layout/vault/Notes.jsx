@@ -98,10 +98,10 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
                   </div>
 
                   <div onClick={() => setOpenModalAdd(true)} className="cursor">
-                    <span className="mr-2">Add</span>
+                    <span className="mr-2 small-text">Add</span>
                     <FontAwesomeIcon
                       icon={faPlus}
-                      className="lrgIcon textPrimary"
+                      className="smIcon textPrimary"
                     />
                   </div>
                 </div>

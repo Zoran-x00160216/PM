@@ -43,8 +43,8 @@ const CardsFormAdd = ({
   const onSubmit = e => {
     e.preventDefault();
     createCard(formData, txt.txt);
-    setTimeout(() => getCards(txt.txt), 100);
-    setTimeout(() => setOpenModalAdd(false), 120);
+    setTimeout(() => getCards(txt.txt), 60);
+    setTimeout(() => setOpenModalAdd(false), 80);
   };
 
   return (
@@ -168,14 +168,14 @@ const CardsFormAdd = ({
                   <div className="form-check form-switch">
                     <input
                       className="form-check-input"
-                      type="checkbox"
-                      role="switch"
+                      type="radio"
+                      // role="switch"
                       name="favorite"
                       value={favorite}
                       onChange={e => {
                         handleSwitch(e);
                       }}
-                      aria-checked={favorite}
+                      checked={favorite}
                     ></input>
                   </div>
                 </div>

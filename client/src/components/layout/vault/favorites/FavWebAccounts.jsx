@@ -6,8 +6,8 @@ import { getWebAccounts } from "../../../../actions/webAccounts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/js/src/dropdown";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/js/src/dropdown";
 
 const FavWebAccounts = ({
   getWebAccounts,
@@ -25,76 +25,74 @@ const FavWebAccounts = ({
     setLoginId(id);
     setOpenModalEdit(true);
   };
-  const accounts =
-    Array.isArray(webAccounts) &&
-    webAccounts.map(webAccount => {
-      return (
-        <div
-          key={webAccount._id}
-          className="d-flex justify-content-between border-bottom mb-3"
-        >
-          <div>
-            <p className="margin0 fs-6">
-              Name:
-              <span
-                onClick={() => setIdAndOpenModalEdit(webAccount._id)}
-                className="textSecondary"
-              >
-                {webAccount.name}
-              </span>
-            </p>
-            <p className="margin0 fs-6">Username: {webAccount.username}</p>
-          </div>
-          <div className="dropdown">
-            <FontAwesomeIcon
-              icon={faEllipsis}
-              className="lrgIcon cursor textSecondary dropdown-toggle"
-              id="dropdownMenuButton1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            ></FontAwesomeIcon>
-
-            <ul
-              className="dropdown-menu noBorder shadow-sm  myRounded"
-              aria-labelledby="dropdownMenuButton1"
+  const accounts = webAccounts.map(webAccount => {
+    return webAccount.favorite === false ? null : (
+      <div
+        key={webAccount._id}
+        className="d-flex justify-content-between border-bottom mb-3"
+      >
+        <div>
+          <p className="margin0 fs-6">
+            Name:
+            <span
+              onClick={() => setIdAndOpenModalEdit(webAccount._id)}
+              className="textSecondary"
             >
-              {webAccount.username === "" ? null : (
-                <li>
-                  <CopyToClipboard text={webAccount.username}>
-                    <p className="dropdown-item margin0 myDropdownTxtColor">
-                      Copy Username
-                    </p>
-                  </CopyToClipboard>
-                </li>
-              )}
+              {webAccount.name}
+            </span>
+          </p>
+          <p className="margin0 fs-6">Username: {webAccount.username}</p>
+        </div>
+        <div className="dropdown">
+          <FontAwesomeIcon
+            icon={faEllipsis}
+            className="lrgIcon cursor textSecondary dropdown-toggle"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          ></FontAwesomeIcon>
+
+          <ul
+            className="dropdown-menu noBorder shadow-sm  myRounded"
+            aria-labelledby="dropdownMenuButton1"
+          >
+            {webAccount.username === "" ? null : (
               <li>
-                <CopyToClipboard text={webAccount.password}>
+                <CopyToClipboard text={webAccount.username}>
                   <p className="dropdown-item margin0 myDropdownTxtColor">
-                    Copy Password
+                    Copy Username
                   </p>
                 </CopyToClipboard>
               </li>
-              {webAccount.uri === "" ? null : (
-                <li>
-                  <CopyToClipboard text={webAccount.uri}>
-                    <p className="dropdown-item margin0 myDropdownTxtColor">
-                      Copy URL
-                    </p>
-                  </CopyToClipboard>
-                </li>
-              )}
-              <li
-                onClick={() => setIdAndOpenModalEdit(webAccount._id)}
-                className="mb-2 dropdown-item fs-6 margin0"
-              >
-                Edit
+            )}
+            <li>
+              <CopyToClipboard text={webAccount.password}>
+                <p className="dropdown-item margin0 myDropdownTxtColor">
+                  Copy Password
+                </p>
+              </CopyToClipboard>
+            </li>
+            {webAccount.uri === "" ? null : (
+              <li>
+                <CopyToClipboard text={webAccount.uri}>
+                  <p className="dropdown-item margin0 myDropdownTxtColor">
+                    Copy URL
+                  </p>
+                </CopyToClipboard>
               </li>
-            </ul>
-          </div>
+            )}
+            <li
+              onClick={() => setIdAndOpenModalEdit(webAccount._id)}
+              className="mb-2 dropdown-item fs-6 margin0"
+            >
+              Edit
+            </li>
+          </ul>
         </div>
-      );
-    });
-  return accounts.length === 0 ? null : (
+      </div>
+    );
+  });
+  return accounts.length === 3 ? null : (
     <>
       {openModalEdit && (
         <WebAccountFormEdit
@@ -102,7 +100,7 @@ const FavWebAccounts = ({
           loginId={loginId}
         />
       )}
-      <div className="p-2 hstack gap-5 border-bottom mb-4">
+      <div className="p-2 hstack gap-5 border-bottom mb-2">
         <div className="me-auto vw-90">
           <small>Web Accounts</small>
         </div>

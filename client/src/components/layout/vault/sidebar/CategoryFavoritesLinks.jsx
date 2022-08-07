@@ -56,7 +56,7 @@ const CategoryFavoritesLinks = ({
       )}
       <div className="m-3 mt-5 shadow-sm bgCards myRounded">
         <ul className="pt-4 pb-4">
-          <li className="pb-1 mb-2">
+          <li className="pb-1 mb-3">
             <Link to="/favorites">
               <FontAwesomeIcon
                 icon={faStar}
@@ -65,21 +65,22 @@ const CategoryFavoritesLinks = ({
               Favorites
             </Link>
           </li>
-          <li className="mb-3 d-flex justify-content-between">
+          <li className="mb-3 d-flex justify-content-between pb-1">
             <div>
               <FontAwesomeIcon
                 icon={faAngleDown}
                 className="lrgIcon textPrimary mr-1"
                 onClick={() => setToggleCategories(!toggleCategories)}
               />
-              <span>Category</span>
+              Category
             </div>
-
-            <FontAwesomeIcon
-              icon={faPlus}
-              className="lrgIcon mr-4 textPrimary cursor"
-              onClick={() => setOpenModalAdd(true)}
-            />
+            <div>
+              <FontAwesomeIcon
+                icon={faPlus}
+                className="smIcon mr-4 textPrimary cursor"
+                onClick={() => setOpenModalAdd(true)}
+              />
+            </div>
           </li>
           {toggleCategories && categoriesArray}
         </ul>

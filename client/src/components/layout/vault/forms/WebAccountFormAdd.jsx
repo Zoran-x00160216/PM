@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import PasswordGen from "../../../password/PasswordGen";
+// import checkPasswordLength from "../../../../utility/checkPasswordLength";
 import { connect } from "react-redux";
 import { generatePassword } from "../../../../utility/passwordGenerator";
 import {
@@ -63,8 +64,8 @@ const WebAccountFormAdd = ({
   const onSubmit = e => {
     e.preventDefault();
     createWebAccount(formData, txt.txt);
-    setTimeout(() => getWebAccounts(txt.txt), 100);
-    setTimeout(() => setOpenModalAdd(false), 120);
+    setTimeout(() => getWebAccounts(txt.txt), 60);
+    setTimeout(() => setOpenModalAdd(false), 80);
   };
 
   // Password toggle handler
@@ -83,6 +84,18 @@ const WebAccountFormAdd = ({
     e.preventDefault();
     setFormData({ ...formData, password: pass.value });
     setOpenModal(false);
+  };
+
+  const checkPasswordLength = password => {
+    if (password === "") {
+      return <></>;
+    } else if (password && password.length < 14) {
+      return <small className="textRed">Bad password</small>;
+    } else if (password && password.length >= 14 && password.length <= 20) {
+      return <small className=" textPrimary">Strong password</small>;
+    } else {
+      return <small className="textSecondary">Super strong password</small>;
+    }
   };
 
   return (
@@ -192,6 +205,7 @@ const WebAccountFormAdd = ({
                   </CopyToClipboard>
                 </div>
               </div>
+              {checkPasswordLength(password)}
               <div>
                 <label htmlFor="recipient-name" className="col-form-label">
                   URI:
@@ -236,14 +250,14 @@ const WebAccountFormAdd = ({
                   <div className="form-check form-switch">
                     <input
                       className="form-check-input"
-                      type="checkbox"
-                      role="switch"
+                      type="radio"
+                      // role="switch"
                       name="favorite"
                       value={favorite}
                       onChange={e => {
                         handleSwitch(e);
                       }}
-                      aria-checked={favorite}
+                      checked={favorite}
                     ></input>
                   </div>
                 </div>

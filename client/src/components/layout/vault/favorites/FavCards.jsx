@@ -6,8 +6,8 @@ import { getCards } from "../../../../actions/cards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/js/src/dropdown";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/js/src/dropdown";
 
 const FavCards = ({ getCards, cards: { cards }, text: { txt } }) => {
   const [passId, setPassId] = useState();
@@ -23,10 +23,9 @@ const FavCards = ({ getCards, cards: { cards }, text: { txt } }) => {
   };
 
   // const accountsArray = webAccounts.webAccounts;
-  const accounts =
-    Array.isArray(cards) &&
-    cards.map(card => {
-      return (
+  const accounts = cards.map(card => {
+    return (
+      card.favorite === true && (
         <div
           key={card._id}
           className="d-flex justify-content-between border-bottom mb-3"
@@ -77,10 +76,12 @@ const FavCards = ({ getCards, cards: { cards }, text: { txt } }) => {
             </ul>
           </div>
         </div>
-      );
-    });
-  return accounts === null ? null : (
-    <>
+      )
+    );
+  });
+  console.log(accounts);
+  return accounts.length === 0 ? null : (
+    <div>
       {openModalEdit && (
         <CardsFormEdit setOpenModalEdit={setOpenModalEdit} passId={passId} />
       )}
@@ -94,7 +95,7 @@ const FavCards = ({ getCards, cards: { cards }, text: { txt } }) => {
           <>{accounts}</>
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 

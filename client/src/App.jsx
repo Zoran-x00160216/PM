@@ -8,6 +8,7 @@ import Home from "./components/layout/Home";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Login from "./components/layout/Auth/Login";
+import Help from "./components/layout/Help";
 import Register from "./components/layout/Auth/Register";
 import WebAccounts from "./components/layout/vault/WebAccounts";
 import Identity from "./components/layout/vault/Identity";
@@ -44,6 +45,7 @@ const App = () => {
           <AlertComponent />
           <Routes>
             <Route exact path="/" element={<Home />} />
+            <Route exact path="/help" element={<Help />} />
             <Route exact path="/login" element={<Login />} />
             <Route
               exact

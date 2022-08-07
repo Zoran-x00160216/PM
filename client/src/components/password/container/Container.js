@@ -169,11 +169,11 @@ const Container = props => {
   };
 
   return (
-    <div className="password-settings">
-      <h3 className="h3">Use the slider, and select from the options.</h3>
+    <div className="password-settings fs-6">
+      <p className="small-text">Use the slider, and select from the options.</p>
 
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-sm-12">
           <div className="form-group">
             &nbsp;
             <Slider
@@ -187,7 +187,7 @@ const Container = props => {
           </div>
         </div>
 
-        <div className="col-md-12">
+        <div className="col-sm-12">
           <div className="row checkbox-container">
             {CHECKBOX_LIST.map(checkbox => (
               <CheckBox
@@ -225,7 +225,7 @@ const Container = props => {
           </div>
           <div className="col-sm-4">
             <Button
-              className="btn m-1 btn-outline-success shadow myBtn secondary"
+              className="btn m-1 btn-outline-success shadow myBtn bgGrey"
               label="Close"
               handleClick={() => {
                 setModal(false);

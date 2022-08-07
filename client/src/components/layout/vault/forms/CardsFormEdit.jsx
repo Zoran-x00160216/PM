@@ -45,17 +45,16 @@ const CardsFormEdit = ({
   const [passwordShown, setPasswordShown] = useState(false);
 
   let account = [];
-  Array.isArray(cards) &&
-    cards.map(card => {
+
+  useEffect(() => {
+    cards.forEach(card => {
       if (passId === card._id) {
         Object.keys(card).forEach(function() {
           account.push(card);
         });
       }
-      return card;
     });
-  useEffect(() => {
-    // console.log(account);
+
     setFormData({
       _id: loading || !account[0]._id ? "" : account[0]._id,
       user_id: loading || !account[0].user_id ? "" : account[0].user_id,
@@ -79,14 +78,14 @@ const CardsFormEdit = ({
 
   const handleSwitch = e => {
     e.preventDefault();
-    setFormData({ ...formData, [e.target.name]: e.target.checked });
+    setFormData({ ...formData, [e.target.name]: e.currentTarget.checked });
   };
 
   const onSubmit = e => {
     e.preventDefault();
     edit ? deleteCard(formData) : editCard(formData, txt.txt);
-    setTimeout(() => getCards(txt.txt), 100);
-    setTimeout(() => setOpenModalEdit(false), 120);
+    setTimeout(() => getCards(txt.txt), 60);
+    setTimeout(() => setOpenModalEdit(false), 80);
   };
 
   // Password toggle handler
@@ -223,20 +222,23 @@ const CardsFormEdit = ({
                   ></input>
                 </div>
                 <div className="mb-1 col-md-6">
-                  <label htmlFor="recipient-name" className="col-form-label">
-                    Favorites:
-                  </label>
                   <div className="form-check form-switch">
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexSwitchCheckDefault"
+                    >
+                      Favorites:
+                    </label>
                     <input
                       className="form-check-input"
-                      type="checkbox"
-                      role="switch"
+                      type="radio"
+                      // role="switch"
                       name="favorite"
                       value={favorite}
                       onChange={e => {
                         handleSwitch(e);
                       }}
-                      aria-checked={favorite}
+                      checked={favorite}
                     ></input>
                   </div>
                 </div>

@@ -49,8 +49,21 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
     setPasswordShown(!passwordShown);
   };
 
+  const checkPasswordLength = password => {
+    if (password === "") {
+      return <></>;
+    } else if (password && password.length < 14) {
+      return <small className="textRed">Bad password</small>;
+    } else if (password && password.length >= 14 && password.length <= 20) {
+      return <small className=" textPrimary">Strong password</small>;
+    } else {
+      return <small className="textSecondary">Super strong password</small>;
+    }
+  };
+
   return (
     <main>
+      <div className="imgHome"></div>
       <div className="container">
         <div className="vh-100 row fs-6 d-flex flex-wrap justify-content-center align-content-center m-2">
           <div className="col-md-5 mb-3">
@@ -98,6 +111,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
                     className="lrgIcon cursor mt-2 textPrimary"
                   />
                 </div>
+                {checkPasswordLength(password)}
                 <div className="d-flex">
                   <div className="mr-1 flex-grow-1">
                     <input

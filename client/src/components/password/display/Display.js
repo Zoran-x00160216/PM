@@ -51,7 +51,7 @@ const Display = ({ setPassInput, setModal }) => {
           className="col-9 password-display-container text-light fw-bold"
           style={{ backgroundColor: setBackgroundColor(password) }}
         >
-          <div style={{ width: "100%" }}>
+          <div style={{ width: "90%" }}>
             <div className="password-display">
               <input
                 ref={passwordRef}

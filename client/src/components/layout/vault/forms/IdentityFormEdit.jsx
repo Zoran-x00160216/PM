@@ -60,17 +60,16 @@ const IdentityFormEdit = ({
   } = formData;
 
   let account = [];
-  Array.isArray(identity) &&
-    identity.map(item => {
+
+  useEffect(() => {
+    identity.forEach(item => {
       if (passId === item._id) {
         Object.keys(item).forEach(function() {
           account.push(item);
         });
       }
-      return item;
     });
-  useEffect(() => {
-    // console.log(account);
+
     setFormData({
       _id: loading || !account[0]._id ? "" : account[0]._id,
       user_id: loading || !account[0].user_id ? "" : account[0].user_id,
@@ -110,8 +109,8 @@ const IdentityFormEdit = ({
   const onSubmit = e => {
     e.preventDefault();
     edit ? deleteIdentity(formData) : editIdentity(formData, txt.txt);
-    setTimeout(() => getIdentity(txt.txt), 100);
-    setTimeout(() => setOpenModalEdit(false), 120);
+    setTimeout(() => getIdentity(txt.txt), 60);
+    setTimeout(() => setOpenModalEdit(false), 80);
   };
 
   return (
@@ -320,14 +319,14 @@ const IdentityFormEdit = ({
                   <div className="form-check form-switch">
                     <input
                       className="form-check-input"
-                      type="checkbox"
-                      role="switch"
+                      type="radio"
+                      // role="switch"
                       name="favorite"
                       value={favorite}
                       onChange={e => {
                         handleSwitch(e);
                       }}
-                      aria-checked={favorite}
+                      checked={favorite}
                     ></input>
                   </div>
                 </div>

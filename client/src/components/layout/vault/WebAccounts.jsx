@@ -137,13 +137,13 @@ const WebAccounts = ({
               <div className="col">
                 <div className="p-2 hstack gap-5 border-bottom mb-4">
                   <div className="me-auto vw-90">
-                    <small>Web Accounts</small>
+                    <h5>Web Accounts</h5>
                   </div>
                   <div className="cursor" onClick={() => checkPermission()}>
-                    <small className="mr-2">Add</small>
+                    <small className="mr-2 small-text">Add</small>
                     <FontAwesomeIcon
                       icon={faPlus}
-                      className="lrgIcon textPrimary"
+                      className="smIcon textPrimary"
                     />
                   </div>
                   {openModal && (
