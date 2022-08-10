@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import "./Container.css";
 import Button from "./button/Button";
 import Slider from "./slider/Slider";
 import CheckBox from "./checkbox/CheckBox";

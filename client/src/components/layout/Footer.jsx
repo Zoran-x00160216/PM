@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { logout } from "../../actions/auth";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import { faRightToBracket, faGear } from "@fortawesome/free-solid-svg-icons";
 
 const Footer = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
   const privateLink = (
@@ -38,6 +38,12 @@ const Footer = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
             className="textPrimary mr-1"
           />
           Logout
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link to="/settings" className="nav-link">
+          <FontAwesomeIcon icon={faGear} className="textPrimary mr-1" />
+          Settings
         </Link>
       </li>
     </>

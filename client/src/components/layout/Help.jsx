@@ -1,7 +1,5 @@
 import React from "react";
 import ReadMoreReadLess from "../stripePayment/ReadMoreReadLess";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 const Help = () => {
   return (
@@ -36,59 +34,39 @@ const Help = () => {
               </div>
               <div>
                 <p className="fw-bold mb-3 border-bottom">
-                  What if I loose master password?
+                  How to generate a password?
                 </p>
                 <ReadMoreReadLess>
-                  By providing your payment information and confirming this
-                  payment, you authorise (A) PM and Stripe, our payment service
-                  provider and/or PPRO, its local service provider, to send
-                  instructions to your bank to debit your account and (B) your
-                  bank to debit your account in accordance with those
-                  instructions. As part of your rights, you are entitled to a
-                  refund from your bank under the terms and conditions of your
-                  agreement with your bank. A refund must be claimed within 8
-                  weeks starting from the date on which your account was
-                  debited. Your rights are explained in a statement that you can
-                  obtain from your bank. You agree to receive notifications for
-                  future debits up to 2 days before they occur.
+                  Follow the instructions below: 1. Press the setting wheel to
+                  open the password generator modal 2. Set password length 3.
+                  Set password strength 4. Press select to copy the password to
+                  the input field or 5. To just copy to clipboard
                 </ReadMoreReadLess>
               </div>
               <div>
                 <p className="fw-bold mb-3 border-bottom">
-                  What if I loose master password?
+                  How to check is it my account is compromised?
                 </p>
                 <ReadMoreReadLess>
-                  By providing your payment information and confirming this
-                  payment, you authorise (A) PM and Stripe, our payment service
-                  provider and/or PPRO, its local service provider, to send
-                  instructions to your bank to debit your account and (B) your
-                  bank to debit your account in accordance with those
-                  instructions. As part of your rights, you are entitled to a
-                  refund from your bank under the terms and conditions of your
-                  agreement with your bank. A refund must be claimed within 8
-                  weeks starting from the date on which your account was
-                  debited. Your rights are explained in a statement that you can
-                  obtain from your bank. You agree to receive notifications for
-                  future debits up to 2 days before they occur.
+                  This option is only for premium users. You can find the form
+                  in the sidebar just enter the email you want to check and the
+                  result will be displayed. Hopefully none. See below.
                 </ReadMoreReadLess>
               </div>
               <div>
                 <p className="fw-bold mb-3 border-bottom">
-                  How to generate password?
+                  What if I lose the master password?
                 </p>
                 <ReadMoreReadLess>
-                  By providing your payment information and confirming this
-                  payment, you authorise (A) PM and Stripe, our payment service
-                  provider and/or PPRO, its local service provider, to send
-                  instructions to your bank to debit your account and (B) your
-                  bank to debit your account in accordance with those
-                  instructions. As part of your rights, you are entitled to a
-                  refund from your bank under the terms and conditions of your
-                  agreement with your bank. A refund must be claimed within 8
-                  weeks starting from the date on which your account was
-                  debited. Your rights are explained in a statement that you can
-                  obtain from your bank. You agree to receive notifications for
-                  future debits up to 2 days before they occur.
+                  Your master password is used as a secret key to encrypt 
+                  decrypt your data so even if your data is leaked it would be
+                  almost useless for hackers because is encrypted. For a
+                  password that is 15 characters and a mix of numbers, upper,
+                  lower case and characters it would be almost impossible to
+                  find the master password by brute force. So if you lose your
+                  password unfortunately we’ll not be able to retrieve your
+                  data. Make a good strong master password and that would be the
+                  only password you need to remember.
                 </ReadMoreReadLess>
               </div>
               <div>
@@ -96,18 +74,9 @@ const Help = () => {
                   How to check is it my any account compromised?
                 </p>
                 <ReadMoreReadLess>
-                  By providing your payment information and confirming this
-                  payment, you authorise (A) PM and Stripe, our payment service
-                  provider and/or PPRO, its local service provider, to send
-                  instructions to your bank to debit your account and (B) your
-                  bank to debit your account in accordance with those
-                  instructions. As part of your rights, you are entitled to a
-                  refund from your bank under the terms and conditions of your
-                  agreement with your bank. A refund must be claimed within 8
-                  weeks starting from the date on which your account was
-                  debited. Your rights are explained in a statement that you can
-                  obtain from your bank. You agree to receive notifications for
-                  future debits up to 2 days before they occur.
+                  This option is only for premium users. You can find the form
+                  in the sidebar just enter the email you want to check and the
+                  result and will be displayed. Hopefully none. See below.
                 </ReadMoreReadLess>
               </div>
               <div>
@@ -115,18 +84,10 @@ const Help = () => {
                   Can I share passwords securly?
                 </p>
                 <ReadMoreReadLess>
-                  By providing your payment information and confirming this
-                  payment, you authorise (A) PM and Stripe, our payment service
-                  provider and/or PPRO, its local service provider, to send
-                  instructions to your bank to debit your account and (B) your
-                  bank to debit your account in accordance with those
-                  instructions. As part of your rights, you are entitled to a
-                  refund from your bank under the terms and conditions of your
-                  agreement with your bank. A refund must be claimed within 8
-                  weeks starting from the date on which your account was
-                  debited. Your rights are explained in a statement that you can
-                  obtain from your bank. You agree to receive notifications for
-                  future debits up to 2 days before they occur.
+                  Shortly yes, you create a note or password that you want to
+                  share and click create the link. Share the link. The link will
+                  be available only once after which will be deleted with all
+                  information. See instructions below.
                 </ReadMoreReadLess>
               </div>
             </div>

@@ -10,7 +10,7 @@ import {
 } from "../../../../actions/category";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import "../../vault/sidebar/SidebarModal.css";
+import "./FormModal.css";
 
 const CategoryFormEdit = ({
   setOpenModalEdit,
@@ -66,7 +66,7 @@ const CategoryFormEdit = ({
   return (
     <>
       <main className="modalBackgroundForm">
-        <div className="modalContainerForm bgCards">
+        <div className="modalContainerFormSmall bgCards">
           <div className="modal-header">
             <h5 className="modal-title textPrimary">Edit</h5>
             <button

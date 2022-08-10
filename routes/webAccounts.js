@@ -74,7 +74,6 @@ router.put("/", async (req, res) => {
     note: req.body.note,
     updated: new Date(),
   };
-  console.log(data);
 
   try {
     // Validate data

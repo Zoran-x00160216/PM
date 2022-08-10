@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import PasswordGen from "../../../password/PasswordGen";
-// import CheckPasswordLength from "../../../../utility/checkPasswordLength";
+import checkPassStrength from "../../../../utility/checkPassStrength";
 import { connect } from "react-redux";
 import {
   deleteWebAccount,
@@ -118,6 +118,7 @@ const WebAccountFormEdit = ({
     edit ? deleteWebAccount(formData) : editWebAccount(formData, txt.txt);
     setTimeout(() => getWebAccounts(txt.txt), 60);
     setTimeout(() => setOpenModalEdit(false), 80);
+    console.log(txt, txt.txt);
   };
 
   // Password toggle handler
@@ -137,17 +138,7 @@ const WebAccountFormEdit = ({
     setOpenModal(false);
   };
 
-  const checkPasswordLength = password => {
-    if (password === "") {
-      return <></>;
-    } else if (password && password.length < 14) {
-      return <small className="textRed">Bad password</small>;
-    } else if (password && password.length >= 14 && password.length <= 20) {
-      return <small className=" textPrimary">Strong password</small>;
-    } else {
-      return <small className="textSecondary">Super strong password</small>;
-    }
-  };
+  let passResoults = checkPassStrength(password);
 
   return (
     <>
@@ -255,7 +246,7 @@ const WebAccountFormEdit = ({
                     />
                   </CopyToClipboard>
                 </div>
-                {checkPasswordLength(password)}
+                <small className={passResoults[1]}>{passResoults[0]}</small>
               </div>
               <div className="mb-1">
                 <label htmlFor="recipient-name" className="col-form-label">
@@ -379,12 +370,10 @@ WebAccountFormEdit.propTypes = {
   setOpenModalEdit: PropTypes.func.isRequired,
   loginId: PropTypes.string.isRequired,
   edit: PropTypes.bool,
-  alert: PropTypes.array.isRequired,
   text: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  alert: state.alert,
   webAccounts: state.webAccounts,
   text: state.text
 });

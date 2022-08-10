@@ -23,12 +23,15 @@ const Home = ({ isAuthenticated }) => {
                   social media companies were hacked and customer data was
                   stolen. In latest incident twitter confirmed data breaches as
                   5.4m acccounts sold on hacker forum.
-                  <a
-                    href="https://www.hackread.com/twitter-data-breach-accounts-sold-hacker-forum/"
-                    target="_blank"
+                  <span
+                    onClick={() =>
+                      window.open(
+                        "https://www.hackread.com/twitter-data-breach-accounts-sold-hacker-forum/"
+                      )
+                    }
                   >
-                    <i className=".text-info"> read more on that here...</i>
-                  </a>
+                    <i className=".text-info"> read more here...</i>
+                  </span>
                 </p>
               </div>
             </div>

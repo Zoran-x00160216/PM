@@ -16,6 +16,14 @@ const loginValidation = (data) => {
   });
   return ValidationSchema.validate(data);
 };
+const updateUserValidation = (data) => {
+  const ValidationSchema = Joi.object().keys({
+    password: Joi.string().min(14).max(35).required(),
+  });
+  return ValidationSchema.validate(data);
+};
+updateUserValidation
 
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.updateUserValidation = updateUserValidation;

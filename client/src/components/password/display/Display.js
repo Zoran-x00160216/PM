@@ -34,10 +34,10 @@ const Display = ({ setPassInput, setModal }) => {
   const setBackgroundColor = password => {
     if (password && password.length >= 14 && password.length <= 20) {
       pwdDescription = "Strong password";
-      return "#05c5ff";
+      return "#059bffd7";
     } else if (password && password.length > 20) {
       pwdDescription = "Super strong password";
-      return "#20c997";
+      return "#1fbb8c";
     } else {
       pwdDescription = "Bad password";
       return "#e66969";
@@ -48,7 +48,7 @@ const Display = ({ setPassInput, setModal }) => {
     <>
       <div className="row">
         <div
-          className="col-9 password-display-container text-light fw-bold"
+          className="col-9 password-display-container text-light"
           style={{ backgroundColor: setBackgroundColor(password) }}
         >
           <div style={{ width: "90%" }}>
@@ -67,7 +67,7 @@ const Display = ({ setPassInput, setModal }) => {
                 <>
                   <FontAwesomeIcon
                     icon={faCircleCheck}
-                    className="mr-1 fw-bold"
+                    className="mr-1 mt-1"
                   />
                   {pwdDescription}
                 </>
@@ -75,7 +75,7 @@ const Display = ({ setPassInput, setModal }) => {
                 <>
                   <FontAwesomeIcon
                     icon={faCircleExclamation}
-                    className="mr-1 fw-bold"
+                    className="mr-1 mt-1"
                   />
                   {pwdDescription}
                 </>

@@ -3,14 +3,13 @@
 .checkbox-container {
   margin: 0 auto;
   text-align: center;
-  bottom: 10px;
+  bottom: 5px;
 }
 
 .container {
   display: block;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 12px;
   cursor: pointer;
   font-size: 15px;
   -webkit-user-select: none;
@@ -52,7 +51,7 @@
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #05c5ff;
+  background-color: #059bffd7;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */

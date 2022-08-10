@@ -4,7 +4,7 @@
   background-color: rgba(200, 200, 200, 0.7);
   left: 0;
   top: 5vh;
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,8 +13,44 @@
 
 .modalContainerForm {
   border-radius: 20px;
-  width: 60vw;
-  height: 90%;
+  width: 50vw;
+  height: 80vh;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  margin: 2rem;
+}
+
+.modalBackgroundPassword {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(200, 200, 200, 0.9);
+  left: 0;
+  top: 5vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 101;
+}
+
+
+.modalContainerPassword {
+  border-radius: 20px;
+  width: 50vw;
+  height: 80vh;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  margin: 2rem;
+}
+
+.modalContainerFormSmall {
+  border-radius: 20px;
+  width: 40vw;
+  height: auto;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
@@ -23,22 +59,47 @@
 }
 
 .formScroll {
-  height: 60vh;
+  height: 50vh;
   overflow-y: scroll;
   margin-bottom: 0.5rem;
 }
 
 @media screen and (max-width: 1100px) {
   .modalContainerForm {
-    width: 50vw;
+    width: 60vw;
   }
 }
-
-@media screen and (max-width: 600px) {
-  .formScroll {
-    height: 50vh;
-  }
+@media screen and (max-width: 650px) {
   .modalContainerForm {
     width: 95vw;
   }
+
+.modalContainerFormSmall {
+  width: 95vw;
+}
+.modalBackgroundPassword {
+  width: 100vw;
+  height: 750px;
+  background-color: rgba(200, 200, 200, 0.9);
+  left: 0;
+  top: 5vh;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 102;
+  overflow-y: scroll;
+}
+
+
+.modalContainerPassword {
+  border-radius: 20px;
+  width: 95vw;
+  height: 650px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  margin: 2rem;
+}
 }

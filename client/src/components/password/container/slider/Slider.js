@@ -9,8 +9,8 @@ const Slider = (props) => {
   const rangeRef = useRef();
   let [range, setRange] = useState();
 
-  const activeRangeColor = "#05c5ff";
-  const rangeBackground = "#d7dcdf";
+  const activeRangeColor = "#059bffd7";
+  const rangeBackground = "#1fbb8c";
 
   const handleChange = (max) => (e) => {
     onChangeValue(e);

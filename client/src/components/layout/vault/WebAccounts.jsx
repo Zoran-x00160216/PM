@@ -7,6 +7,9 @@ import Sidebar from "./sidebar/Sidebar";
 import Spinner from "../../spinner/Spinner";
 import { connect } from "react-redux";
 import { getWebAccounts } from "../../../actions/webAccounts";
+import { getNotes } from "../../../actions/notes";
+import { getCards } from "../../../actions/cards";
+import { getIdentity } from "../../../actions/identity";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +19,9 @@ import "bootstrap/js/src/dropdown";
 
 const WebAccounts = ({
   getWebAccounts,
+  getNotes,
+  getCards,
+  getIdentity,
   webAccounts: { loading, webAccounts },
   text: { txt },
   auth: { tier }
@@ -28,7 +34,10 @@ const WebAccounts = ({
 
   useEffect(() => {
     getWebAccounts(txt.txt);
-  }, [getWebAccounts, txt.txt]);
+    getCards(txt.txt);
+    getIdentity(txt.txt);
+    getNotes(txt.txt);
+  }, [getWebAccounts, getCards, getIdentity, getNotes, txt.txt]);
 
   const checkPermission = () => {
     if (webAccounts.length >= 7 && tier === "basic") {
@@ -37,7 +46,8 @@ const WebAccounts = ({
       setOpenModalAdd(true);
     }
   };
-  // console.log(webAccounts.length, tier, id);
+
+  console.log(txt);
 
   const openPayment = () => {
     setOpenModal(false);
@@ -174,6 +184,9 @@ const WebAccounts = ({
 
 WebAccounts.propTypes = {
   getWebAccounts: PropTypes.func.isRequired,
+  getNotes: PropTypes.func.isRequired,
+  getCards: PropTypes.func.isRequired,
+  getIdentity: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   webAccounts: PropTypes.object.isRequired,
   // user: PropTypes.object.isRequired,
@@ -186,4 +199,9 @@ const mapStateToProps = state => ({
   text: state.text
 });
 
-export default connect(mapStateToProps, { getWebAccounts })(WebAccounts);
+export default connect(mapStateToProps, {
+  getWebAccounts,
+  getNotes,
+  getCards,
+  getIdentity
+})(WebAccounts);

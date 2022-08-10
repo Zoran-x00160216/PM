@@ -88,11 +88,11 @@ router.put("/", async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     const account = await Identity.updateOne({ _id: req.body._id }, data);
-    console.log(account);
+    // console.log(account);
     res.json(account);
   } catch (error) {
     res.send(error);
-    console.log(error);
+    // console.log(error);
   }
 });
 

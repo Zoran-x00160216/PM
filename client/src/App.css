@@ -24,12 +24,17 @@ body {
   background-color: var(--gray);
   overflow-x: hidden;
 }
+
 body > p {
   color: var(--dark);
 }
 
 .bgBody {
   background-color: var(--gray);
+}
+
+.col-form-label{
+  font-size: 13px;
 }
 
 .myPr5 {
@@ -77,10 +82,10 @@ a:hover {
 }
 
 .myBtn {
-  width: 120px;
+  width: 90px;
   border: 0.5px solid var(--gray);
   border-radius: 20px;
-  padding: 7px 20px;
+  padding: 5px 15px;
   color: var(--light);
 }
 
@@ -100,8 +105,8 @@ a:hover {
   border: none;
   border-bottom: 0.5px solid rgb(219, 218, 218);
   border-radius: 5px;
-  padding: 5px 20px;
   color: var(--dark);
+  height: 25px;
 }
 
 .myRounded {
@@ -208,6 +213,10 @@ a:hover {
   min-height: 100vh;
 }
 
+.vw50p {
+  width: 50%;
+}
+
 .mr-1 {
   margin-right: 0.7rem;
 }
@@ -243,7 +252,6 @@ a:hover {
 .fixedHgthCards {
   height: 250px;
 }
-
 
 
 .imgHome {
@@ -289,6 +297,15 @@ background: url("./img/Untitled2.png")no-repeat center center/cover;
   .fixedHgthCards {
     height: 300px;
   }
+
+  
+.myBtn {
+  width: 90px;
+  border: 0.5px solid var(--gray);
+  border-radius: 20px;
+  padding: 6px 15px;
+  color: var(--light);
+}
 }
 /* @media screen and (max-width: 500px) {
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import PasswordGen from "../../../password/PasswordGen";
-// import checkPasswordLength from "../../../../utility/checkPasswordLength";
+import checkPassStrength from "../../../../utility/checkPassStrength";
 import { connect } from "react-redux";
 import { generatePassword } from "../../../../utility/passwordGenerator";
 import {
@@ -16,7 +16,6 @@ import {
   faArrowRotateLeft,
   faGear
 } from "@fortawesome/free-solid-svg-icons";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./FormModal.css";
 
 const WebAccountFormAdd = ({
@@ -38,7 +37,6 @@ const WebAccountFormAdd = ({
   });
 
   const { name, username, password, uri, category, favorite, note } = formData;
-
   const [openModal, setOpenModal] = useState(false);
 
   // state for password toggle
@@ -86,24 +84,16 @@ const WebAccountFormAdd = ({
     setOpenModal(false);
   };
 
-  const checkPasswordLength = password => {
-    if (password === "") {
-      return <></>;
-    } else if (password && password.length < 14) {
-      return <small className="textRed">Bad password</small>;
-    } else if (password && password.length >= 14 && password.length <= 20) {
-      return <small className=" textPrimary">Strong password</small>;
-    } else {
-      return <small className="textSecondary">Super strong password</small>;
-    }
-  };
-
+  let passResoults = checkPassStrength(password);
   return (
     <>
+      {openModal && (
+        <PasswordGen setModal={setOpenModal} setPassInput={setPassInput} />
+      )}
       <main className="modalBackgroundForm">
         <div className="modalContainerForm bgCards">
           <div className="modal-header">
-            <h5 className="modal-title textPrimary">Add an Account</h5>
+            <h5 className="modal-title textPrimary">Add</h5>
             <button
               type="button"
               className="btn-close"
@@ -116,7 +106,10 @@ const WebAccountFormAdd = ({
           <form onSubmit={e => onSubmit(e)}>
             <div className="modal-body formScroll fs-6">
               <div>
-                <label htmlFor="recipient-name" className="col-form-label">
+                <label
+                  htmlFor="recipient-name"
+                  className="col-form-label small-text"
+                >
                   Name:
                 </label>
                 <div className="d-flex">
@@ -191,12 +184,7 @@ const WebAccountFormAdd = ({
                       setOpenModal(true);
                     }}
                   />
-                  {openModal && (
-                    <PasswordGen
-                      setModal={setOpenModal}
-                      setPassInput={setPassInput}
-                    />
-                  )}
+
                   <CopyToClipboard text={password}>
                     <FontAwesomeIcon
                       icon={faCopy}
@@ -205,7 +193,7 @@ const WebAccountFormAdd = ({
                   </CopyToClipboard>
                 </div>
               </div>
-              {checkPasswordLength(password)}
+              <small className={passResoults[1]}>{passResoults[0]}</small>
               <div>
                 <label htmlFor="recipient-name" className="col-form-label">
                   URI:
@@ -275,7 +263,7 @@ const WebAccountFormAdd = ({
                 ></textarea>
               </div>
             </div>
-            <div className="d-flex justify-content-end mb-3">
+            <div className="d-flex justify-content-end">
               <button
                 type="button"
                 className="btn m-1 btn-outline-success shadow myBtn bgGrey"

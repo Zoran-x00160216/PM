@@ -17,6 +17,7 @@ import Cards from "./components/layout/vault/Cards";
 import Favorites from "./components/layout/vault/favorites/Favorites";
 import AlertComponent from "./components/layout/AlertComponent";
 import AdminDashboard from "./components/layout/admin/AdminDashboard";
+import Settings from "./components/layout/Settings";
 import Users from "./components/layout/admin/Users";
 import { loadUser, logout } from "./actions/auth";
 import setAuthToken from "./utility/setAuthToken";
@@ -58,6 +59,9 @@ const App = () => {
             </Route>
             <Route element={<PrivateRouteAdmin />}>
               <Route path="/admin/users" element={<Users />} />
+            </Route>
+            <Route element={<PrivateRouteAdmin />}>
+              <Route path="/settings" element={<Settings />} />
             </Route>
             <Route element={<PrivateRoute />}>
               <Route path="/webAccounts" element={<WebAccounts />} />

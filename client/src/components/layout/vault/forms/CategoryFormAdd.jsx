@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCategories, createCategory } from "../../../../actions/category";
-import "../../vault/sidebar/SidebarModal.css";
+import "./FormModal.css";
 
 const CategoryFormAdd = ({
   setOpenModalAdd,
@@ -29,7 +29,7 @@ const CategoryFormAdd = ({
   return (
     <>
       <main className="modalBackgroundForm">
-        <div className="modalContainerForm bgCards">
+        <div className="modalContainerFormSmall bgCards">
           <div className="modal-header">
             <h5 className="modal-title textPrimary">Add</h5>
             <button

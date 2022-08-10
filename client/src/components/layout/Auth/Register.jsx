@@ -5,6 +5,7 @@ import { setAlert } from "../../../actions/alert";
 import { register } from "../../../actions/auth";
 import { setText } from "../../../actions/text";
 import PropTypes from "prop-types";
+import checkPassStrength from "../../../utility/checkPassStrength";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 
@@ -49,17 +50,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
     setPasswordShown(!passwordShown);
   };
 
-  const checkPasswordLength = password => {
-    if (password === "") {
-      return <></>;
-    } else if (password && password.length < 14) {
-      return <small className="textRed">Bad password</small>;
-    } else if (password && password.length >= 14 && password.length <= 20) {
-      return <small className=" textPrimary">Strong password</small>;
-    } else {
-      return <small className="textSecondary">Super strong password</small>;
-    }
-  };
+  let passResoults = checkPassStrength(password);
 
   return (
     <main>
@@ -111,7 +102,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
                     className="lrgIcon cursor mt-2 textPrimary"
                   />
                 </div>
-                {checkPasswordLength(password)}
+                <small className={passResoults[1]}>{passResoults[0]}</small>
                 <div className="d-flex">
                   <div className="mr-1 flex-grow-1">
                     <input

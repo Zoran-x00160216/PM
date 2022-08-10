@@ -119,14 +119,14 @@ export const login = (email, password) => async dispatch => {
 };
 
 // Update user account
-export const updateUser = data => async dispatch => {
+export const updateUser = ({password}) => async dispatch => {
   try {
     const config = {
       headers: {
         "Content-Type": "application/json"
       }
     };
-    const body = JSON.stringify({ data });
+    const body = JSON.stringify({ password });
 
     const res = await axios.put(
       "http://localhost:5000/api/updateUser",
@@ -141,7 +141,7 @@ export const updateUser = data => async dispatch => {
   } catch (err) {
     if (err) {
       // console.log(err.response.data);
-      dispatch(setAlert(err.res.data, "myDanger"));
+      dispatch(setAlert(err.response.data, "myDanger"));
     }
   }
 };
