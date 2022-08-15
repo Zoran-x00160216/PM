@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   categories: [],
-  editCategories: {},
+  editStatus: {},
   loading: true,
   error: {}
 };
@@ -21,13 +21,13 @@ export default function(state = initialState, action) {
         ...state,
         categories: payload,
         loading: false,
-        editCategories: {}
+        editStatus: {}
       };
     case EDIT_CATEGORY:
       return {
         ...state,
         loading: false,
-        editCategories: payload
+        editStatus: payload
       };
     case ERROR_CATEGORY:
       return {
@@ -39,7 +39,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         categories: [],
-        editCategories: {},
+        editStatus: {},
         loading: false,
         error: {}
       };

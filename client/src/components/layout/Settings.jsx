@@ -50,19 +50,22 @@ const Settings = ({
   };
 
   const changeEncryptionOnDBItems = () => {
-    webAccounts.forEach(webAccount => {
-      console.log(webAccount);
-      editWebAccount(webAccount, password);
-    });
-    notes.forEach(note => {
-      editNote(note, password);
-    });
-    cards.forEach(card => {
-      editCard(card, password);
-    });
-    identity.forEach(idn => {
-      editIdentity(idn, password);
-    });
+    Array.isArray(webAccounts) &&
+      webAccounts.forEach(webAccount => {
+        editWebAccount(webAccount, password);
+      });
+    Array.isArray(notes) &&
+      notes.forEach(note => {
+        editNote(note, password);
+      });
+    Array.isArray(cards) &&
+      cards.forEach(card => {
+        editCard(card, password);
+      });
+    Array.isArray(identity) &&
+      identity.forEach(idn => {
+        editIdentity(idn, password);
+      });
   };
 
   let passResoults = checkPassStrength(password);

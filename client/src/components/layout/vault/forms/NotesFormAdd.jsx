@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createNote, getNotes } from "../../../../actions/notes";
@@ -12,8 +12,8 @@ const NotesFormAdd = ({
   getNotes,
   setOpenModalAdd,
   createNote,
-  notes: { notes },
-  text: { txt }
+  text: { txt },
+  categoryRedux: { categories }
 }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -23,6 +23,27 @@ const NotesFormAdd = ({
   });
 
   const { name, note, category, favorite } = formData;
+
+  let catId = "";
+  const cat =
+    Array.isArray(categories) &&
+    categories.map(c => {
+      if (c.name === "no category") {
+        catId = c._id;
+      }
+
+      return (
+        <option key={c._id} value={c._id}>
+          {c.name}
+        </option>
+      );
+    });
+
+  useEffect(() => {
+    if (category === "") {
+      setFormData({ ...formData, category: catId });
+    }
+  }, []);
 
   const onChange = e => {
     e.preventDefault();
@@ -40,6 +61,11 @@ const NotesFormAdd = ({
     setTimeout(() => getNotes(txt.txt), 60);
     setTimeout(() => setOpenModalAdd(false), 80);
   };
+
+  // if (editStatus.status === 200) {
+  //   setTimeout(() => getNotes(txt.txt), 60);
+  //   setTimeout(() => setOpenModalAdd(false), 80);
+  // }
 
   return (
     <>
@@ -81,7 +107,7 @@ const NotesFormAdd = ({
                   className="form-control myInput"
                   id="message-text"
                   name="note"
-                  rows="10"
+                  rows="40"
                   value={note}
                   onChange={e => onChange(e)}
                 ></textarea>
@@ -91,13 +117,16 @@ const NotesFormAdd = ({
                   <label htmlFor="recipient-name" className="col-form-label">
                     Category:
                   </label>
-                  <input
+                  <select
                     type="text"
                     className="form-control myInput"
+                    id="inputGroupSelect01"
                     name="category"
                     value={category}
                     onChange={e => onChange(e)}
-                  ></input>
+                  >
+                    {cat}
+                  </select>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
@@ -148,14 +177,15 @@ NotesFormAdd.propType = {
   createNote: PropTypes.func.isRequired,
   getNotes: PropTypes.func.isRequired,
   text: PropTypes.object.isRequired,
-  notes: PropTypes.object.isRequired,
-  setOpenModalAdd: PropTypes.func.isRequired
+  setOpenModalAdd: PropTypes.func.isRequired,
+  categoryRedux: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   text: state.text,
-  notes: state.notes
+  categoryRedux: state.categoryRedux
 });
+
 export default connect(mapStateToProps, {
   createNote,
   getNotes

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createCard, getCards } from "../../../../actions/cards";
@@ -9,8 +9,8 @@ const CardsFormAdd = ({
   createCard,
   getCards,
   setOpenModalAdd,
-  cards: { cards },
-  text: { txt }
+  text: { txt },
+  categoryRedux: { categories }
 }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -30,6 +30,27 @@ const CardsFormAdd = ({
     favorite
   } = formData;
 
+  let catId = "";
+  const cat =
+    Array.isArray(categories) &&
+    categories.map(c => {
+      if (c.name === "no category") {
+        catId = c._id;
+      }
+
+      return (
+        <option key={c._id} value={c._id}>
+          {c.name}
+        </option>
+      );
+    });
+
+  useEffect(() => {
+    if (category === "") {
+      setFormData({ ...formData, category: catId });
+    }
+  }, []);
+
   const onChange = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,6 +67,11 @@ const CardsFormAdd = ({
     setTimeout(() => getCards(txt.txt), 60);
     setTimeout(() => setOpenModalAdd(false), 80);
   };
+
+  // if (editStatus.status === 200) {
+  //   setTimeout(() => getCards(txt.txt), 60);
+  //   setTimeout(() => setOpenModalAdd(false), 80);
+  // }
 
   return (
     <>
@@ -153,13 +179,16 @@ const CardsFormAdd = ({
                   <label htmlFor="recipient-name" className="col-form-label">
                     Category:
                   </label>
-                  <input
+                  <select
                     type="text"
                     className="form-control myInput"
+                    id="inputGroupSelect01"
                     name="category"
                     value={category}
                     onChange={e => onChange(e)}
-                  ></input>
+                  >
+                    {cat}
+                  </select>
                 </div>
                 <div className="mb-1 col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
@@ -210,13 +239,13 @@ CardsFormAdd.propType = {
   createCard: PropTypes.func.isRequired,
   getCards: PropTypes.func.isRequired,
   text: PropTypes.object.isRequired,
-  cards: PropTypes.object.isRequired,
-  setOpenModalAdd: PropTypes.func.isRequired
+  setOpenModalAdd: PropTypes.func.isRequired,
+  categoryRedux: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   text: state.text,
-  cards: state.cards
+  categoryRedux: state.categoryRedux
 });
 
 export default connect(mapStateToProps, {

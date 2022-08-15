@@ -6,8 +6,6 @@ import { getCards } from "../../../../actions/cards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap/js/src/dropdown";
 
 const FavCards = ({ getCards, cards: { cards }, text: { txt } }) => {
   const [passId, setPassId] = useState();
@@ -79,17 +77,13 @@ const FavCards = ({ getCards, cards: { cards }, text: { txt } }) => {
       )
     );
   });
-  console.log(accounts);
+
   return accounts.length === 0 ? null : (
     <div>
       {openModalEdit && (
         <CardsFormEdit setOpenModalEdit={setOpenModalEdit} passId={passId} />
       )}
-      <div className="p-2 hstack gap-5 border-bottom mb-4">
-        <div className="me-auto vw-90">
-          <small>Cards</small>
-        </div>
-      </div>
+
       <div>
         <ul className="mt-3 p-1">
           <>{accounts}</>

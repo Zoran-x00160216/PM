@@ -121,11 +121,7 @@ const FavIdentity = ({ getIdentity, identity: { identity } }) => {
       {openModalEdit && (
         <IdentityFormEdit setOpenModalEdit={setOpenModalEdit} passId={passId} />
       )}
-      <div className="p-2 hstack gap-5 border-bottom mb-4">
-        <div className="me-auto vw-90">
-          <small>Identity</small>
-        </div>
-      </div>
+
       <div>
         <ul className="mt-3 p-1">
           <>{accounts}</>

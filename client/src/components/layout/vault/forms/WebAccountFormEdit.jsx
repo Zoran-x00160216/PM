@@ -29,7 +29,8 @@ const WebAccountFormEdit = ({
   webAccounts: { loading, webAccounts },
   text: { txt },
   setOpenModalEdit,
-  loginId
+  loginId,
+  categoryRedux: { categories }
 }) => {
   const [openModal, setOpenModal] = useState(false);
 
@@ -77,13 +78,14 @@ const WebAccountFormEdit = ({
   let account = [];
 
   useEffect(() => {
-    webAccounts.forEach(webAccount => {
-      if (loginId === webAccount._id) {
-        Object.keys(webAccount).forEach(function() {
-          account.push(webAccount);
-        });
-      }
-    });
+    Array.isArray(webAccounts) &&
+      webAccounts.forEach(webAccount => {
+        if (loginId === webAccount._id) {
+          Object.keys(webAccount).forEach(function() {
+            account.push(webAccount);
+          });
+        }
+      });
     setFormData({
       _id: loading || !account[0]._id ? "" : account[0]._id,
       user_id: loading || !account[0].user_id ? "" : account[0].user_id,
@@ -91,7 +93,8 @@ const WebAccountFormEdit = ({
       username: loading || !account[0].username ? "" : account[0].username,
       password: loading || !account[0].password ? "" : account[0].password,
       uri: loading || !account[0].uri ? "" : account[0].uri,
-      category: loading || !account[0].category ? "" : account[0].category,
+      category:
+        loading || !account[0].category._id ? "" : account[0].category._id,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       note: loading || !account[0].note ? "" : account[0].note,
       updated:
@@ -99,6 +102,16 @@ const WebAccountFormEdit = ({
       date: loading || !account[0].date ? "" : formatDate(account[0].date)
     });
   }, [loading]);
+
+  const cat =
+    Array.isArray(categories) &&
+    categories.map(c => {
+      return (
+        <option key={c._id} value={c._id}>
+          {c.name}
+        </option>
+      );
+    });
 
   // save input in the formdata state
   const onChange = e => {
@@ -118,8 +131,12 @@ const WebAccountFormEdit = ({
     edit ? deleteWebAccount(formData) : editWebAccount(formData, txt.txt);
     setTimeout(() => getWebAccounts(txt.txt), 60);
     setTimeout(() => setOpenModalEdit(false), 80);
-    console.log(txt, txt.txt);
   };
+
+  // if (editStatus.acknowledged === true || editStatus.deletedCount === 1) {
+  //   setTimeout(() => getWebAccounts(txt.txt), 60);
+  //   setTimeout(() => setOpenModalEdit(false), 80);
+  // }
 
   // Password toggle handler
   const togglePassword = () => {
@@ -140,6 +157,19 @@ const WebAccountFormEdit = ({
 
   let passResoults = checkPassStrength(password);
 
+  // const dateDisplay = () => {
+  //   {
+  //     date === updated ? (
+  //     <span className="small">Created: {date}</span>
+  //     ) : (
+  //       <>
+  //         {" "}
+  //         <span className="small">Created: {date}</span>
+  //         <span className="small">Last update: {updated}</span>{" "}
+  //       </>
+  //     );
+  //   }
+  // };
   return (
     <>
       <main className="modalBackgroundForm">
@@ -156,7 +186,7 @@ const WebAccountFormEdit = ({
             ></button>
           </div>
           <form onSubmit={e => onSubmit(e)}>
-            <div className="modal-body formScroll fs-6">
+            <div className="modal-body formScroll fs-6 mb-2">
               <div className="mb-1">
                 <label htmlFor="recipient-name" className="col-form-label">
                   Name:
@@ -277,13 +307,17 @@ const WebAccountFormEdit = ({
                   <label htmlFor="recipient-name" className="col-form-label">
                     Category:
                   </label>
-                  <input
+                  <select
                     type="text"
                     className="form-control myInput"
+                    id="inputGroupSelect01"
                     name="category"
                     value={category}
                     onChange={e => onChange(e)}
-                  ></input>
+                  >
+                    <option defaultValue={""}></option>
+                    {cat}
+                  </select>
                 </div>
                 <div className="mb-1 col-md-6 form-check form-switch">
                   <label
@@ -321,40 +355,49 @@ const WebAccountFormEdit = ({
               </div>
             </div>
             <div className="d-flex justify-content-between mb-3">
-              <button
-                type="submit"
-                name="delete"
-                className="noBorder m-2 bg-body"
-                onClick={() => setEdit(true)}
-              >
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  className="textRed lrgIcon"
-                />
-              </button>
-              <button
-                type="button"
-                className="btn m-1 btn-outline-success shadow myBtn bgGrey"
-                onClick={() => {
-                  setOpenModalEdit(false);
-                }}
-              >
-                Close
-              </button>
-              <button
-                type="submit"
-                name="update"
-                className="btn m-1 btn-outline-success shadow myBtn primary"
-              >
-                Update
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  name="delete"
+                  className="bgCards noBorder"
+                  onClick={() => setEdit(true)}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    className="lrgIcon deleteBtn"
+                  />
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="btn m-1 btn-outline-success shadow myBtn bgGrey"
+                  onClick={() => {
+                    setOpenModalEdit(false);
+                  }}
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  name="update"
+                  className="btn m-1 btn-outline-success shadow myBtn primary"
+                >
+                  Update
+                </button>
+              </div>
             </div>
           </form>
-          <div className="m-1 fs-6">
-            <span className="small">
-              Created: {date}
-              <br></br>Last update: {updated}
-            </span>
+          <div className="d-flex justify-content-between">
+            {date === updated ? (
+              <span className="small-text">Created: {date}</span>
+            ) : (
+              <>
+                {" "}
+                <span className="small-text">Created: {date}</span>
+                <span className="small-text">Last update: {updated}</span>{" "}
+              </>
+            )}
           </div>
         </div>
       </main>
@@ -370,12 +413,14 @@ WebAccountFormEdit.propTypes = {
   setOpenModalEdit: PropTypes.func.isRequired,
   loginId: PropTypes.string.isRequired,
   edit: PropTypes.bool,
-  text: PropTypes.object.isRequired
+  text: PropTypes.object.isRequired,
+  categoryRedux: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   webAccounts: state.webAccounts,
-  text: state.text
+  text: state.text,
+  categoryRedux: state.categoryRedux
 });
 
 export default connect(mapStateToProps, {

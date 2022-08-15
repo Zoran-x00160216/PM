@@ -13,11 +13,10 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
     email: "",
     password: ""
   });
-
-  const { email, password } = formData;
-
   // state for password toggle
   const [passwordShown, setPasswordShown] = useState(false);
+
+  const { email, password } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });

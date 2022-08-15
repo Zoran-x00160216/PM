@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import PasswordGen from "../../../password/PasswordGen";
 import checkPassStrength from "../../../../utility/checkPassStrength";
@@ -21,9 +21,9 @@ import "./FormModal.css";
 const WebAccountFormAdd = ({
   createWebAccount,
   getWebAccounts,
-  webAccounts: { editAccount },
   text: { txt },
-  setOpenModalAdd
+  setOpenModalAdd,
+  categoryRedux: { categories }
 }) => {
   // const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -49,6 +49,27 @@ const WebAccountFormAdd = ({
     numbers: true
   };
 
+  let catId = "";
+  const cat =
+    Array.isArray(categories) &&
+    categories.map(c => {
+      if (c.name === "no category") {
+        catId = c._id;
+      }
+
+      return (
+        <option key={c._id} value={c._id}>
+          {c.name}
+        </option>
+      );
+    });
+
+  useEffect(() => {
+    if (category === "") {
+      setFormData({ ...formData, category: catId });
+    }
+  }, []);
+
   const onChange = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -65,6 +86,11 @@ const WebAccountFormAdd = ({
     setTimeout(() => getWebAccounts(txt.txt), 60);
     setTimeout(() => setOpenModalAdd(false), 80);
   };
+
+  // if (editStatus.status === 200) {
+  //   setTimeout(() => getWebAccounts(txt.txt), 60);
+  //   setTimeout(() => setOpenModalAdd(false), 80);
+  // }
 
   // Password toggle handler
   const togglePassword = () => {
@@ -103,7 +129,7 @@ const WebAccountFormAdd = ({
               }}
             ></button>
           </div>
-          <form onSubmit={e => onSubmit(e)}>
+          <form onSubmit={e => onSubmit(e)} className="mb-2">
             <div className="modal-body formScroll fs-6">
               <div>
                 <label
@@ -223,13 +249,16 @@ const WebAccountFormAdd = ({
                   <label htmlFor="recipient-name" className="col-form-label">
                     Category:
                   </label>
-                  <input
+                  <select
                     type="text"
                     className="form-control myInput"
+                    id="inputGroupSelect01"
                     name="category"
                     value={category}
                     onChange={e => onChange(e)}
-                  ></input>
+                  >
+                    {cat}
+                  </select>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
@@ -266,7 +295,7 @@ const WebAccountFormAdd = ({
             <div className="d-flex justify-content-end">
               <button
                 type="button"
-                className="btn m-1 btn-outline-success shadow myBtn bgGrey"
+                className=" btn-outline-success shadow myBtn bgGrey mr-2"
                 onClick={() => {
                   setOpenModalAdd(false);
                 }}
@@ -276,7 +305,7 @@ const WebAccountFormAdd = ({
               <button
                 type="submit"
                 name="update"
-                className="btn m-1 btn-outline-success shadow myBtn primary"
+                className="btn-outline-success shadow myBtn primary"
               >
                 Save
               </button>
@@ -292,13 +321,13 @@ WebAccountFormAdd.propType = {
   createWebAccount: PropTypes.func.isRequired,
   getWebAccounts: PropTypes.func.isRequired,
   text: PropTypes.object.isRequired,
-  webAccounts: PropTypes.object.isRequired,
-  setOpenModalAdd: PropTypes.func.isRequired
+  setOpenModalAdd: PropTypes.func.isRequired,
+  categoryRedux: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   text: state.text,
-  webAccounts: state.webAccounts
+  categoryRedux: state.categoryRedux
 });
 export default connect(mapStateToProps, {
   createWebAccount,

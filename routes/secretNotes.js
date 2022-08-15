@@ -5,8 +5,8 @@ const { secretNoteValidation } = require("../services/entriesValidation");
 
 router.get("/", async (req, res) => {
   try {
-    const note = await SecretNote.find({ user_id: req.user._id });
-    res.json(note);
+    const notes = await SecretNote.find({ user_id: req.user._id }).populate("category", "name");
+    res.json(notes);
   } catch (error) {
     res.send(error);
   }
@@ -18,12 +18,13 @@ router.post("/", async (req, res) => {
     name: req.body.name,
     type: "note",
     note: req.body.note,
-    category: "62eb9f8fec8b2290f674008d",
+    category: req.body.category,
     favorite: req.body.favorite,
     updated: new Date(),
   };
 
   // Validate Data
+  console.log(data)
   const { error } = secretNoteValidation(data);
   if (error) return res.status(400).send(error.details[0].message);
   // console.log(req.user._id, req.body);
@@ -64,6 +65,8 @@ router.put("/", async (req, res) => {
     favorite: req.body.favorite,
     updated: new Date(),
   };
+
+  console.log(data);
   // Validate Data
   const { error } = secretNoteValidation(data);
   if (error) return res.status(400).send(error.details[0].message);

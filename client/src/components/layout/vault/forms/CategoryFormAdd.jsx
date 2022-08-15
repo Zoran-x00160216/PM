@@ -10,8 +10,7 @@ const CategoryFormAdd = ({
   getCategories
 }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    items: ["no category"]
+    name: ""
   });
   const { name } = formData;
 
@@ -23,7 +22,7 @@ const CategoryFormAdd = ({
   const onSubmit = e => {
     e.preventDefault();
     createCategory(formData);
-    setTimeout(() => getCategories(), 70);
+    setTimeout(() => getCategories(), 60);
     setTimeout(() => setOpenModalAdd(false), 70);
   };
   return (

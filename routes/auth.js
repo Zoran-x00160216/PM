@@ -22,11 +22,34 @@ router.get("/", verify, async (req, res) => {
 
 // Register
 router.post("/register", async (req, res) => {
+
+
+  try {
+    //    // Check if default admin exist
+    //    const admExist = await User.findOne({
+    //  email: "admin@email.com"
+    //   });
+    //   const defaultPass = "12345678901234"
+    //      // Hasg password
+    // const saltAdm = await bcrypt.genSalt(10);
+    // const hashAdm = await bcrypt.hash(defaultPass, saltAdm);
+
+    // const admin = {
+    //   email: "admin@email.com",
+    //   password: hashAdm,
+    //   tier: "admin",
+    //   updated: new Date(),
+    // };
+
+    //   console.log(admExist)
+    //   if(admExist === null) {   
+    //     const user = await new User(admin);
+    //     await user.save();
+    //   }
   // Validate data
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  try {
     // Check if user/email already exist
     const userExist = await User.findOne({ email: req.body.email });
     if (userExist) return res.status(400).send("User already exist");
@@ -86,7 +109,7 @@ router.post("/login", async (req, res) => {
     jwt.sign(
       { _id: user._id, tier: user.tier },
       process.env.TOKEN_SECRET,
-      { expiresIn: 3600 },
+      { expiresIn: 360 },
       (err, token) => {
         if (err) throw err;
         res.send({ token, tier: user.tier });

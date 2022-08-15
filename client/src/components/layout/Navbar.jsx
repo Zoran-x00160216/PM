@@ -29,8 +29,8 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/about" className="nav-link">
-          About
+        <Link to="/help" className="nav-link">
+          Help
         </Link>
       </li>
       {tier !== "admin" ? null : (

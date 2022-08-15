@@ -22,7 +22,7 @@ const updateUserValidation = (data) => {
   });
   return ValidationSchema.validate(data);
 };
-updateUserValidation
+
 
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;

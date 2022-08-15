@@ -7,7 +7,7 @@ import VaultLinks from "./VaultLinks";
 
 const Sidebar = ({ auth: { tier } }) => {
   return (
-    <div className="col-sm-4 mt-2 fs-6">
+    <div className="col-sm-4 fs-6">
       <div className="col">
         <VaultLinks />
         <CategoryFavoritesLinks />

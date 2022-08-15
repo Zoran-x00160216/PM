@@ -14,6 +14,7 @@ const CardsFormEdit = ({
   getCards,
   cards: { loading, cards },
   text: { txt },
+  categoryRedux: { categories },
   setOpenModalEdit,
   passId
 }) => {
@@ -47,13 +48,14 @@ const CardsFormEdit = ({
   let account = [];
 
   useEffect(() => {
-    cards.forEach(card => {
-      if (passId === card._id) {
-        Object.keys(card).forEach(function() {
-          account.push(card);
-        });
-      }
-    });
+    Array.isArray(cards) &&
+      cards.forEach(card => {
+        if (passId === card._id) {
+          Object.keys(card).forEach(function() {
+            account.push(card);
+          });
+        }
+      });
 
     setFormData({
       _id: loading || !account[0]._id ? "" : account[0]._id,
@@ -64,12 +66,23 @@ const CardsFormEdit = ({
         loading || !account[0].expiryMonth ? "" : account[0].expiryMonth,
       expiryYear:
         loading || !account[0].expiryYear ? "" : account[0].expiryYear,
-      category: loading || !account[0].category ? "" : account[0].category,
+      category:
+        loading || !account[0].category._id ? "" : account[0].category._id,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       updated: formatDate(account[0].updated),
       date: formatDate(account[0].date)
     });
   }, [loading]);
+
+  const cat =
+    Array.isArray(categories) &&
+    categories.map(c => {
+      return (
+        <option key={c._id} value={c._id}>
+          {c.name}
+        </option>
+      );
+    });
 
   const onChange = e => {
     e.preventDefault();
@@ -87,6 +100,11 @@ const CardsFormEdit = ({
     setTimeout(() => getCards(txt.txt), 60);
     setTimeout(() => setOpenModalEdit(false), 80);
   };
+
+  // if (editStatus.acknowledged === true || editStatus.deletedCount === 1) {
+  //   setTimeout(() => getCards(txt.txt), 60);
+  //   setTimeout(() => setOpenModalEdit(false), 80);
+  // }
 
   // Password toggle handler
   const togglePassword = () => {
@@ -213,13 +231,17 @@ const CardsFormEdit = ({
                   <label htmlFor="recipient-name" className="col-form-label">
                     Category:
                   </label>
-                  <input
+                  <select
                     type="text"
                     className="form-control myInput"
+                    id="inputGroupSelect01"
                     name="category"
                     value={category}
                     onChange={e => onChange(e)}
-                  ></input>
+                  >
+                    <option defaultValue={""}></option>
+                    {cat}
+                  </select>
                 </div>
                 <div className="mb-1 col-md-6">
                   <div className="form-check form-switch">
@@ -245,40 +267,49 @@ const CardsFormEdit = ({
               </div>
             </div>
             <div className="d-flex justify-content-between mb-3">
-              <button
-                type="submit"
-                name="delete"
-                className="noBorder m-2 bg-body"
-                onClick={() => setEdit(true)}
-              >
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  className="textRed lrgIcon"
-                />
-              </button>
-              <button
-                type="button"
-                className="btn m-1 btn-outline-success shadow myBtn bgGrey"
-                onClick={() => {
-                  setOpenModalEdit(false);
-                }}
-              >
-                Close
-              </button>
-              <button
-                type="submit"
-                name="update"
-                className="btn m-1 btn-outline-success shadow myBtn primary"
-              >
-                Update
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  name="delete"
+                  className="bgCards noBorder"
+                  onClick={() => setEdit(true)}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    className="lrgIcon deleteBtn"
+                  />
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="btn m-1 btn-outline-success shadow myBtn bgGrey"
+                  onClick={() => {
+                    setOpenModalEdit(false);
+                  }}
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  name="update"
+                  className="btn m-1 btn-outline-success shadow myBtn primary"
+                >
+                  Update
+                </button>
+              </div>
             </div>
           </form>
-          <div className="m-1 fs-6">
-            <span className="small">
-              Created: {date}
-              <br></br>Last update: {updated}
-            </span>
+          <div className="d-flex justify-content-between">
+            {date === updated ? (
+              <span className="small-text">Created: {date}</span>
+            ) : (
+              <>
+                {" "}
+                <span className="small-text">Created: {date}</span>
+                <span className="small-text">Last update: {updated}</span>{" "}
+              </>
+            )}
           </div>
         </div>
       </main>
@@ -294,12 +325,14 @@ CardsFormEdit.propTypes = {
   setOpenModalEdit: PropTypes.func.isRequired,
   passId: PropTypes.string.isRequired,
   edit: PropTypes.bool,
-  text: PropTypes.object.isRequired
+  text: PropTypes.object.isRequired,
+  categoryRedux: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   cards: state.cards,
-  text: state.text
+  text: state.text,
+  categoryRedux: state.categoryRedux
 });
 
 export default connect(mapStateToProps, { editCard, deleteCard, getCards })(

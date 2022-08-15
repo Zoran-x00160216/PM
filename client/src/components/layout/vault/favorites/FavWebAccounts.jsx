@@ -100,11 +100,7 @@ const FavWebAccounts = ({
           loginId={loginId}
         />
       )}
-      <div className="p-2 hstack gap-5 border-bottom mb-2">
-        <div className="me-auto vw-90">
-          <small>Web Accounts</small>
-        </div>
-      </div>
+
       <div>
         <ul className="mt-3 p-1">
           <>{accounts}</>

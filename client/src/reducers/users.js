@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   users: [],
-  editUsers: [],
+  editStatus: [],
   loading: true,
   status: 0,
   error: {}
@@ -21,13 +21,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         users: payload,
+        editStatus: {},
         loading: false
       };
     case EDIT_USERS:
       return {
         ...state,
         loading: false,
-        editUsers: payload
+        editStatus: payload
       };
     case ERROR_USERS:
       return {
@@ -39,6 +40,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         users: [],
+        editStatus: {},
         loading: false
       };
     default:

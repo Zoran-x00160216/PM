@@ -1,18 +1,19 @@
 import axios from "axios";
 import { GET_USERS, ERROR_USERS, EDIT_USERS } from "./type";
 import { setAlert } from "./alert";
-
+ 
 // Load Users
 export const getUsers = () => async dispatch => {
   try {
     const res = await axios.get("http://localhost:5000/api/admin/");
-    // console.log(res.data);
 
     dispatch({
       type: GET_USERS,
       payload: res.data
     });
+
   } catch (err) {
+    if(err) {
     dispatch({
       type: ERROR_USERS,
       payload: {
@@ -22,11 +23,12 @@ export const getUsers = () => async dispatch => {
     });
   }
 };
+}
 
 // Delete profile
 export const deleteUser = id => async dispatch => {
   try {
-    // console.log(formData._id);
+
     const res = await axios.delete(`http://localhost:5000/api/admin/${id}`);
     console.log(res.data);
 
@@ -36,18 +38,20 @@ export const deleteUser = id => async dispatch => {
     });
 
     dispatch(setAlert("Account Deleted", "mySuccess"));
+
   } catch (err) {
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
+
+      dispatch({
+        type: ERROR_USERS,
+        payload: {
+          msg: err.response,
+          status: err.response.status
+        }
+      });
     }
 
-    dispatch({
-      type: ERROR_USERS,
-      payload: {
-        msg: err.response,
-        status: err.response.status
-      }
-    });
   }
 };
 

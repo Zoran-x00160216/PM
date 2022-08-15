@@ -26,15 +26,19 @@ export const loadUser = () => async dispatch => {
 
   try {
     const res = await axios.get("http://localhost:5000/api/auth");
+
     dispatch({
       type: USER_LOADED,
       payload: res.data
     });
-  } catch (error) {
-    dispatch({
-      type: AUTH_ERROR
-    });
-  }
+
+  } catch (err) {
+    if(err) {
+      dispatch({
+        type: AUTH_ERROR
+      });
+    }
+    }
 };
 
 // Reg User
@@ -56,10 +60,7 @@ export const register = ({ email, password, tier }) => async dispatch => {
 
     const token = res.data.token;
     const tokenData = jwtDecode(token);
-    // console.log(tokenData);
     const data = { token, tokenData };
-
-    console.log(data);
 
     dispatch({
       type: REGISTER_SUCCESS,
@@ -67,15 +68,15 @@ export const register = ({ email, password, tier }) => async dispatch => {
     });
 
     dispatch(loadUser());
+
   } catch (err) {
-    console.log(err);
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
-    }
 
-    dispatch({
-      type: REGISTER_FAIL
-    });
+      dispatch({
+        type: REGISTER_FAIL
+      });
+    }
   }
 };
 
@@ -97,7 +98,6 @@ export const login = (email, password) => async dispatch => {
 
     const token = res.data.token;
     const tokenData = jwtDecode(token);
-    // console.log(tokenData);
     const data = { token, tokenData };
 
     dispatch({
@@ -106,15 +106,16 @@ export const login = (email, password) => async dispatch => {
     });
 
     dispatch(loadUser());
+
   } catch (err) {
     if (err) {
-      // console.log(err.response.data);
       dispatch(setAlert(err.response.data, "myDanger"));
+
+      dispatch({
+        type: LOGIN_FAIL
+      });
     }
 
-    dispatch({
-      type: LOGIN_FAIL
-    });
   }
 };
 
@@ -133,8 +134,7 @@ export const updateUser = ({password}) => async dispatch => {
       body,
       config
     );
-    console.log(res);
-
+    
     setTimeout(() => dispatch(setAlert(res.data.message, "mySuccess")), 2000);
 
     dispatch(loadUser());

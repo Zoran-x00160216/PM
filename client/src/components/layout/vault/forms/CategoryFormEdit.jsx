@@ -23,8 +23,7 @@ const CategoryFormEdit = ({
   const [formData, setFormData] = useState({
     _id: "",
     user_id: "",
-    name: "",
-    items: ["no category"]
+    name: ""
   });
   const { name, updated, date } = formData;
 
@@ -47,7 +46,6 @@ const CategoryFormEdit = ({
       _id: loading || !account[0]._id ? "" : account[0]._id,
       user_id: loading || !account[0].user_id ? "" : account[0].user_id,
       name: loading || !account[0].name ? "" : account[0].name,
-      items: loading || !account[0].items ? "" : account[0].items,
       updated: formatDate(account[0].updated),
       date: formatDate(account[0].date)
     });
@@ -97,40 +95,49 @@ const CategoryFormEdit = ({
               </div>
             </div>
             <div className="d-flex justify-content-between mb-3">
-              <button
-                type="submit"
-                name="delete"
-                className="noBorder m-2 bg-body"
-                onClick={() => setEdit(true)}
-              >
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  className="textRed lrgIcon"
-                />
-              </button>
-              <button
-                type="button"
-                className="btn m-1 btn-outline-success shadow myBtn bgGrey"
-                onClick={() => {
-                  setOpenModalEdit(false);
-                }}
-              >
-                Close
-              </button>
-              <button
-                type="submit"
-                name="update"
-                className="btn m-1 btn-outline-success shadow myBtn primary"
-              >
-                Update
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  name="delete"
+                  className="bgCards noBorder"
+                  onClick={() => setEdit(true)}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    className="lrgIcon deleteBtn"
+                  />
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="btn m-1 btn-outline-success shadow myBtn bgGrey"
+                  onClick={() => {
+                    setOpenModalEdit(false);
+                  }}
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  name="update"
+                  className="btn m-1 btn-outline-success shadow myBtn primary"
+                >
+                  Update
+                </button>
+              </div>
             </div>
           </form>
-          <div className="m-1 fs-6">
-            <span className="small">
-              Created: {date}
-              <br></br>Last update: {updated}
-            </span>
+          <div className="d-flex justify-content-between">
+            {date === updated ? (
+              <span className="small-text">Created: {date}</span>
+            ) : (
+              <>
+                {" "}
+                <span className="small-text">Created: {date}</span>
+                <span className="small-text">Last update: {updated}</span>{" "}
+              </>
+            )}
           </div>
         </div>
       </main>

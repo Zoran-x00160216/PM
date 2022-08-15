@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createIdentity, getIdentity } from "../../../../actions/identity";
@@ -9,8 +9,8 @@ const IdentityFormAdd = ({
   createIdentity,
   getIdentity,
   setOpenModalAdd,
-  identity: { identity },
-  text: { txt }
+  text: { txt },
+  categoryRedux: { categories }
 }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -44,6 +44,27 @@ const IdentityFormAdd = ({
     favorite
   } = formData;
 
+  let catId = "";
+  const cat =
+    Array.isArray(categories) &&
+    categories.map(c => {
+      if (c.name === "no category") {
+        catId = c._id;
+      }
+
+      return (
+        <option key={c._id} value={c._id}>
+          {c.name}
+        </option>
+      );
+    });
+
+  useEffect(() => {
+    if (category === "") {
+      setFormData({ ...formData, category: catId });
+    }
+  }, []);
+
   const onChange = e => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,6 +81,11 @@ const IdentityFormAdd = ({
     setTimeout(() => getIdentity(txt.txt), 60);
     setTimeout(() => setOpenModalAdd(false), 80);
   };
+
+  // if (editStatus.status === 200) {
+  //   setTimeout(() => getIdentity(txt.txt), 60);
+  //   setTimeout(() => setOpenModalAdd(false), 80);
+  // }
 
   return (
     <>
@@ -224,13 +250,16 @@ const IdentityFormAdd = ({
                   <label htmlFor="recipient-name" className="col-form-label">
                     Category:
                   </label>
-                  <input
+                  <select
                     type="text"
                     className="form-control myInput"
+                    id="inputGroupSelect01"
                     name="category"
                     value={category}
                     onChange={e => onChange(e)}
-                  ></input>
+                  >
+                    {cat}
+                  </select>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
@@ -280,15 +309,16 @@ const IdentityFormAdd = ({
 IdentityFormAdd.propType = {
   createIdentity: PropTypes.func.isRequired,
   getIdentity: PropTypes.func.isRequired,
-  identity: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired,
-  setOpenModalAdd: PropTypes.func.isRequired
+  setOpenModalAdd: PropTypes.func.isRequired,
+  categoryRedux: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  identity: state.identity,
-  text: state.text
+  text: state.text,
+  categoryRedux: state.categoryRedux
 });
+
 export default connect(mapStateToProps, {
   createIdentity,
   getIdentity

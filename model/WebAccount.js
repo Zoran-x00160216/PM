@@ -31,8 +31,8 @@ const WebAccountSchema = new mongoose.Schema({
     max: 100,
   },
   category: {
-    type: String,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
   },
   favorite: {
     type: Boolean,

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Spinner.css";
 
-const Spinner = () => {
+function Spinner() {
   return (
     <>
       <div className="spinnerContainer">
@@ -14,6 +14,6 @@ const Spinner = () => {
       </div>
     </>
   );
-};
+}
 
 export default Spinner;

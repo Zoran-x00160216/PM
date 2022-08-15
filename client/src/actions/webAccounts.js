@@ -13,31 +13,32 @@ dotenv.config();
 export const getWebAccounts = text => async dispatch => {
   // console.log(text);
   try {
-    const url = process.env.SERVER_URL;
-    console.log(url);
+    // const url = process.env.SERVER_URL;
+    // console.log(url);
     const res = await axios.get("http://localhost:5000/api/webAccounts");
 
-    let data = res.data;
-    // console.log(data);
     // Decrypt
+    let data = res.data;
     for (let d = 0; d < data.length; d++) {
       let bytes = CryptoJS.AES.decrypt(data[d].password, text);
       let originalText = bytes.toString(CryptoJS.enc.Utf8);
       data[d].password = originalText;
-      // console.log(d, data, originalText);
     }
 
     dispatch({
       type: GET_WEB_ACCOUNTS,
       payload: data
-    });
+    })
+
   } catch (err) {
+    if(err) {
     dispatch({
       type: ERROR_WEB_ACCOUNTS,
       payload: {
         msg: err.response
       }
     });
+  }
   }
 };
 
@@ -54,6 +55,7 @@ export const createWebAccount = (formData, text) => async dispatch => {
         "Content-Type": "application/json"
       }
     };
+
     const res = await axios.post(
       "http://localhost:5000/api/webAccounts",
       data,
@@ -66,25 +68,27 @@ export const createWebAccount = (formData, text) => async dispatch => {
     });
 
     dispatch(setAlert("Account Created", "mySuccess"));
+
   } catch (err) {
     if (err) {
-      console.log(err);
       dispatch(setAlert(err.response.data, "myDanger"));
+      dispatch({
+        type: ERROR_WEB_ACCOUNTS,
+        payload: {
+          msg: err.response,
+          status: err.response.status
+        }
+      });
     }
 
-    dispatch({
-      type: ERROR_WEB_ACCOUNTS,
-      payload: {
-        msg: err.response,
-        status: err.response.status
-      }
-    });
+
   }
 };
 
 // Update profile
 export const editWebAccount = (formData, text) => async dispatch => {
   try {
+    
     // encrypt password
     let data = formData;
     const encrypted = CryptoJS.AES.encrypt(data.password, text).toString();
@@ -107,48 +111,53 @@ export const editWebAccount = (formData, text) => async dispatch => {
       type: EDIT_WEB_ACCOUNTS,
       payload: res.data
     });
+
     dispatch(setAlert("Account Updated", "mySuccess"));
+
   } catch (err) {
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
+      dispatch({
+        type: ERROR_WEB_ACCOUNTS,
+        payload: {
+          msg: err.response,
+          status: err.response.status
+        }
+      });
     }
 
-    dispatch({
-      type: ERROR_WEB_ACCOUNTS,
-      payload: {
-        msg: err.response,
-        status: err.response.status
-      }
-    });
+   
   }
 };
 
 // Delete profile
 export const deleteWebAccount = formData => async dispatch => {
   try {
-    // console.log(formData._id);
+
     const res = await axios.delete(
       `http://localhost:5000/api/webAccounts/${formData._id}`
     );
-    // console.log(res.data);
 
+    
     dispatch({
       type: EDIT_WEB_ACCOUNTS,
       payload: res.data
     });
 
     dispatch(setAlert("Account Deleted", "mySuccess"));
+
   } catch (err) {
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
+      dispatch({
+        type: ERROR_WEB_ACCOUNTS,
+        payload: {
+          msg: err.response,
+          status: err.response.status
+        }
+      });
     }
 
-    dispatch({
-      type: ERROR_WEB_ACCOUNTS,
-      payload: {
-        msg: err.response,
-        status: err.response.status
-      }
-    });
+
   }
 };

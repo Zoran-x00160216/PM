@@ -26,8 +26,8 @@ const CreditCardSchema = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: String,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
   },
   favorite: {
     type: Boolean,

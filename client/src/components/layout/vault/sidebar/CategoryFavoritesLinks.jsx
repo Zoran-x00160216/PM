@@ -10,7 +10,7 @@ import {
   faStar,
   faAngleDown,
   faPlus,
-  faGear
+  faPencil
 } from "@fortawesome/free-solid-svg-icons";
 
 const CategoryFavoritesLinks = ({
@@ -24,27 +24,32 @@ const CategoryFavoritesLinks = ({
 
   useEffect(() => {
     getCategories();
-  }, [getCategories]);
+  }, []);
 
   const setIdAndOpenModalEdit = id => {
     setpassId(id);
     setOpenModalEdit(true);
   };
 
-  console.log(categories);
+  // console.log(categories);
   const categoriesArray =
     Array.isArray(categories) &&
     categories.map(category => {
-      return (
-        <ul key={category._id} className="d-flex justify-content-between">
-          <li onClick={() => console.log("hello")}>{category.name}</li>
+      const linkWithParam = `/category/${category._id}`;
+      return category.name === "no category" ? (
+        <div key={category._id} className="d-flex justify-content-between">
+          <Link to={linkWithParam}>{category.name}</Link>
+        </div>
+      ) : (
+        <div key={category._id} className="d-flex justify-content-between">
+          <Link to={linkWithParam}>{category.name}</Link>
           <FontAwesomeIcon
-            icon={faGear}
-            className="cursor textPrimary mb-3 mr-4"
+            icon={faPencil}
+            className="cursor textPrimary mb-2 mr-4"
             aria-expanded="false"
             onClick={() => setIdAndOpenModalEdit(category._id)}
           ></FontAwesomeIcon>
-        </ul>
+        </div>
       );
     });
 
@@ -82,7 +87,7 @@ const CategoryFavoritesLinks = ({
               />
             </div>
           </li>
-          {toggleCategories && categoriesArray}
+          <ul>{toggleCategories && categoriesArray}</ul>
         </ul>
       </div>
     </>

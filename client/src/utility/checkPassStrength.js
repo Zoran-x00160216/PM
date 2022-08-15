@@ -4,7 +4,7 @@ const scorePassword = pass => {
         return score;
 
     // award every unique letter until 5 repetitions
-    let letters = new Object();
+    let letters = {};
     for (let i=0; i<pass.length; i++) {
         letters[pass[i]] = (letters[pass[i]] || 0) + 1;
         score += 10 / letters[pass[i]];

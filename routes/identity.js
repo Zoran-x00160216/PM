@@ -5,7 +5,7 @@ const { identityValidation } = require("../services/entriesValidation");
 
 router.get("/", async (req, res) => {
   try {
-    const accounts = await Identity.find({ user_id: req.user._id });
+    const accounts = await Identity.find({ user_id: req.user._id }).populate("category", "name");
     res.json(accounts);
   } catch (error) {
     res.send(error);

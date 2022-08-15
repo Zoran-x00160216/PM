@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import IdentityFormAdd from "./forms/IdentityFormAdd";
-import IdentityFormEdit from "./forms/IdentityFormEdit";
-import Sidebar from "./sidebar/Sidebar";
-import Spinner from "../../spinner/Spinner";
+import IdentityFormEdit from "../forms/IdentityFormEdit";
 import { connect } from "react-redux";
-import { getIdentity } from "../../../actions/identity";
+import { getIdentity } from "../../../../actions/identity";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/js/src/dropdown";
 
-const Identity = ({ getIdentity, identity: { loading, identity } }) => {
+const CatIdentity = ({ getIdentity, identity: { identity }, c }) => {
   const [passId, setPassId] = useState();
-  const [openModalAdd, setOpenModalAdd] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
 
   useEffect(() => {
     getIdentity();
-  }, [getIdentity]);
+  }, []);
 
   const setIdAndOpenModalEdit = id => {
     setPassId(id);
@@ -29,7 +24,7 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
   const accounts =
     Array.isArray(identity) &&
     identity.map(i => {
-      return (
+      return i.category._id !== c ? null : (
         <div
           key={i._id}
           className="d-flex justify-content-between border-bottom mb-3"
@@ -123,51 +118,27 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
       );
     });
 
-  return loading && identity === null ? (
-    <Spinner />
-  ) : (
+  return accounts.length === 0 ? null : (
     <>
-      {openModalAdd && <IdentityFormAdd setOpenModalAdd={setOpenModalAdd} />}
       {openModalEdit && (
         <IdentityFormEdit setOpenModalEdit={setOpenModalEdit} passId={passId} />
       )}
-      <div className="container myVh">
-        <div className="row">
-          <Sidebar />
-          <div className="col-sm-6 mt-3">
-            <div className="p-3 shadow-sm mb-5 bgCards myRounded">
-              <div className="col">
-                <div className="p-2 hstack gap-5 border-bottom mb-4">
-                  <div className="me-auto vw-90">
-                    <p>Identity</p>
-                  </div>
-                  <div onClick={() => setOpenModalAdd(true)} className="cursor">
-                    <span className="mr-2">Add</span>
-                    <FontAwesomeIcon
-                      icon={faPlus}
-                      className="smIcon textPrimary"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <ul className="mt-3 p-1">
-                    <>{accounts}</>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+      <div>
+        <ul className="mt-3 p-1">
+          <>{accounts}</>
+        </ul>
       </div>
     </>
   );
 };
 
-Identity.propTypes = {
+CatIdentity.propTypes = {
   getIdentity: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   identity: PropTypes.object.isRequired,
-  text: PropTypes.object.isRequired
+  text: PropTypes.object.isRequired,
+  c: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -176,4 +147,4 @@ const mapStateToProps = state => ({
   text: state.text
 });
 
-export default connect(mapStateToProps, { getIdentity })(Identity);
+export default connect(mapStateToProps, { getIdentity })(CatIdentity);

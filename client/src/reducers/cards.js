@@ -7,9 +7,8 @@ import {
 
 const initialState = {
   cards: [],
-  editCards: {},
+  editStatus: {},
   loading: true,
-  status: 0,
   error: {}
 };
 
@@ -21,13 +20,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         cards: payload,
-        loading: false
+        loading: false,
+        editStatus: {}
       };
     case EDIT_CARDS:
       return {
         ...state,
         loading: false,
-        editCards: payload
+        editStatus: payload
       };
     case ERROR_CARDS:
       return {
@@ -39,6 +39,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         cards: [],
+        editStatus: {},
         loading: false
       };
     default:

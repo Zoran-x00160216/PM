@@ -11,7 +11,7 @@ const NotesFormEdit = ({
   editNote,
   deleteNote,
   getNotes,
-  notes: { loading, notes },
+  notes: { loading, notes, editStatus },
   text: { txt },
   categoryRedux: { categories },
   setOpenModalEdit,
@@ -31,38 +31,39 @@ const NotesFormEdit = ({
   });
 
   const { name, note, category, favorite, updated, date } = formData;
-  let account = [];
-  let categoryName = "no category";
-  let categoryArray = [];
 
-  // console.log(categoryArray, categoryName, category);
+  let account = [];
 
   useEffect(() => {
-    notes.forEach(note => {
-      if (noteId === note._id) {
-        return account.push(note);
-      }
-    });
+    Array.isArray(notes) &&
+      notes.forEach(note => {
+        if (noteId === note._id) {
+          return account.push(note);
+        }
+      });
 
-    categories.map(cat => {
-      categoryArray.push(cat);
-      if (account[0].category === cat._id) {
-        return (categoryName = cat.name);
-      }
-      return cat;
-    });
-    // console.log(account);
     setFormData({
       _id: loading || !account[0]._id ? "" : account[0]._id,
       user_id: loading || !account[0].user_id ? "" : account[0].user_id,
       name: loading || !account[0].name ? "" : account[0].name,
       note: loading || !account[0].note ? "" : account[0].note,
-      category: loading || !account[0].category ? "" : categoryName,
+      category:
+        loading || !account[0].category._id ? "" : account[0].category._id,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       updated: formatDate(account[0].updated),
       date: formatDate(account[0].date)
     });
   }, [loading]);
+
+  const cat =
+    Array.isArray(categories) &&
+    categories.map(c => {
+      return (
+        <option key={c._id} value={c._id}>
+          {c.name}
+        </option>
+      );
+    });
 
   const onChange = e => {
     e.preventDefault();
@@ -76,11 +77,13 @@ const NotesFormEdit = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(formData);
     edit ? deleteNote(formData) : editNote(formData, txt.txt);
+  };
+
+  if (editStatus.acknowledged === true || editStatus.deletedCount === 1) {
     setTimeout(() => getNotes(txt.txt), 60);
     setTimeout(() => setOpenModalEdit(false), 80);
-  };
+  }
 
   return (
     <>
@@ -118,7 +121,7 @@ const NotesFormEdit = ({
                 </label>
                 <textarea
                   className="form-control myInput"
-                  rows="10"
+                  rows="40"
                   id="message-text"
                   name="note"
                   value={note}
@@ -127,14 +130,20 @@ const NotesFormEdit = ({
               </div>
               <div className="row">
                 <div className="col-md-6">
-                  <label className="col-form-label">Category:</label>
-                  <input
+                  <label htmlFor="recipient-name" className="col-form-label">
+                    Category:
+                  </label>
+                  <select
                     type="text"
                     className="form-control myInput"
+                    id="inputGroupSelect01"
                     name="category"
                     value={category}
                     onChange={e => onChange(e)}
-                  ></input>
+                  >
+                    <option defaultValue={""}></option>
+                    {cat}
+                  </select>
                 </div>
                 <div className="col-md-6">
                   <label className="col-form-label">Favorites:</label>
@@ -155,40 +164,49 @@ const NotesFormEdit = ({
               </div>
             </div>
             <div className="d-flex justify-content-between mb-3">
-              <button
-                type="submit"
-                name="delete"
-                className="noBorder m-2 bg-body"
-                onClick={() => setEdit(true)}
-              >
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  className="textRed lrgIcon"
-                />
-              </button>
-              <button
-                type="button"
-                className="btn m-1 btn-outline-success shadow myBtn bgGrey"
-                onClick={() => {
-                  setOpenModalEdit(false);
-                }}
-              >
-                Close
-              </button>
-              <button
-                type="submit"
-                name="update"
-                className="btn m-1 btn-outline-success shadow myBtn primary"
-              >
-                Update
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  name="delete"
+                  className="bgCards noBorder"
+                  onClick={() => setEdit(true)}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    className="lrgIcon deleteBtn"
+                  />
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="btn m-1 btn-outline-success shadow myBtn bgGrey"
+                  onClick={() => {
+                    setOpenModalEdit(false);
+                  }}
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  name="update"
+                  className="btn m-1 btn-outline-success shadow myBtn primary"
+                >
+                  Update
+                </button>
+              </div>
             </div>
           </form>
-          <div className="m-1 fs-6">
-            <span className="small">
-              Created: {date}
-              <br></br>Last update: {updated}
-            </span>
+          <div className="d-flex justify-content-between">
+            {date === updated ? (
+              <span className="small-text">Created: {date}</span>
+            ) : (
+              <>
+                {" "}
+                <span className="small-text">Created: {date}</span>
+                <span className="small-text">Last update: {updated}</span>{" "}
+              </>
+            )}
           </div>
         </div>
       </main>

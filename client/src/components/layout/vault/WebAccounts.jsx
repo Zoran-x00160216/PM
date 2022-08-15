@@ -47,8 +47,6 @@ const WebAccounts = ({
     }
   };
 
-  console.log(txt);
-
   const openPayment = () => {
     setOpenModal(false);
     navigate("/stripeContainer");
@@ -68,7 +66,7 @@ const WebAccounts = ({
           className="d-flex justify-content-between border-bottom mb-3"
         >
           <div>
-            <p className="margin0 fs-6">
+            <p className="margin0">
               Name:
               <span
                 onClick={() => setIdAndOpenModalEdit(webAccount._id)}
@@ -77,7 +75,7 @@ const WebAccounts = ({
                 {webAccount.name}
               </span>
             </p>
-            <p className="margin0 fs-6">Username: {webAccount.username}</p>
+            <p className="margin0">Username: {webAccount.username}</p>
           </div>
           <div className="dropdown">
             <FontAwesomeIcon
@@ -139,18 +137,18 @@ const WebAccounts = ({
           loginId={loginId}
         />
       )}
-      <div className="container myVh">
+      <div className="container">
         <div className="row">
           <Sidebar />
           <div className="col-sm-6 mt-3">
-            <div className="m-2 p-3 shadow-sm mb-5 bgCards myRounded">
+            <div className="p-3 shadow-sm mb-5 bgCards myRounded">
               <div className="col">
                 <div className="p-2 hstack gap-5 border-bottom mb-4">
                   <div className="me-auto vw-90">
-                    <h5>Web Accounts</h5>
+                    <p>Web Accounts</p>
                   </div>
                   <div className="cursor" onClick={() => checkPermission()}>
-                    <small className="mr-2 small-text">Add</small>
+                    <small className="mr-2">Add</small>
                     <FontAwesomeIcon
                       icon={faPlus}
                       className="smIcon textPrimary"

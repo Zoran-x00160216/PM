@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   webAccounts: [],
-  editAccount: {},
+  editStatus: {},
   status: 0,
   loading: true,
   error: {}
@@ -21,14 +21,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         webAccounts: payload,
-        editAccount: {},
+        editStatus: {},
         loading: false
       };
     case EDIT_WEB_ACCOUNTS:
       return {
         ...state,
         loading: false,
-        editAccount: payload
+        editStatus: payload
       };
     case ERROR_WEB_ACCOUNTS:
       return {

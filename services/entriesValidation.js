@@ -74,8 +74,7 @@ const categoryValidation = (data) => {
   const ValidationSchema = Joi.object().keys({
     _id: Joi.string().empty(""),
     user_id: Joi.string().required(),
-    name: Joi.string().empty(""),
-    items: Joi.array().empty(""),
+    name: Joi.string().required(),
     updated: Joi.date().empty(""),
   });
   return ValidationSchema.validate(data);

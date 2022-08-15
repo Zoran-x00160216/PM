@@ -7,9 +7,8 @@ import {
 
 const initialState = {
   notes: [],
-  editNote: {},
+  editStatus: {},
   loading: true,
-  status: 0,
   error: {}
 };
 
@@ -21,13 +20,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         notes: payload,
-        loading: false
+        loading: false,
+        editStatus: {}
       };
     case EDIT_NOTES:
       return {
         ...state,
         loading: false,
-        editNote: payload
+        editStatus: payload
       };
     case ERROR_NOTES:
       return {
@@ -39,7 +39,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         notes: [],
-        editNote: {},
+        editStatus: {},
         loading: true,
         status: 0,
         error: {}

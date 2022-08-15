@@ -32,8 +32,6 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
       setAlert("Passwords do not match", "myDanger");
     } else {
       setText(password);
-      // const salt = await bcrypt.genSalt(10);
-      // const hash = await bcrypt.hash(password, salt);
       register({ email, password, tier });
     }
   };

@@ -24,6 +24,11 @@ const Footer = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
           About
         </Link>
       </li>
+      <li className="nav-item">
+        <Link to="/help" className="nav-link">
+          Help
+        </Link>
+      </li>
       {tier !== "admin" ? null : (
         <li className="nav-item">
           <Link to="/adminDashboard" className="nav-link">

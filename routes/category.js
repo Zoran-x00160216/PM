@@ -5,8 +5,25 @@ const { categoryValidation } = require("../services/entriesValidation");
 
 router.get("/", async (req, res) => {
   try {
+    const data = {
+      user_id: req.user._id,
+      name: "no category",
+      updated: new Date(),
+    };
+       // Check if no category exist
+       const catExist = await Category.findOne({
+        user_id: req.user._id,
+        name: "no category"
+      });
+      console.log(catExist)
+      if(catExist === null) {   
+        const category = await new Category(data);
+        await category.save();
+      }
+
     const categories = await Category.find({ user_id: req.user._id });
     res.json(categories);
+
   } catch (error) {
     res.send(error);
   }
@@ -16,7 +33,6 @@ router.post("/", async (req, res) => {
   const data = {
     user_id: req.user._id,
     name: req.body.name,
-    items: req.body.items,
     updated: new Date(),
   };
   // Validate data
@@ -33,7 +49,7 @@ router.post("/", async (req, res) => {
 
     const category = await new Category(data);
     await category.save();
-    console.log(category);
+    // console.log(category);
 
     res.send({ name: category.name, status: 200 });
   } catch (error) {
@@ -55,7 +71,6 @@ router.put("/", async (req, res) => {
   const data = {
     user_id: req.user._id,
     name: req.body.name,
-    items: req.body.items,
     updated: new Date(),
   };
 

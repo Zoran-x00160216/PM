@@ -20,14 +20,17 @@ export const getNotes = text => async dispatch => {
       type: GET_NOTES,
       payload: data
     });
+
   } catch (err) {
-    dispatch({
-      type: ERROR_NOTES,
-      payload: {
-        msg: err.response
-        // status: err.response.status,
-      }
-    });
+    if(err) {
+      dispatch({
+        type: ERROR_NOTES,
+        payload: {
+          msg: err.response
+          // status: err.response.status,
+        }
+      });
+    }
   }
 };
 
@@ -44,13 +47,12 @@ export const createNote = (formData, text) => async dispatch => {
         "Content-Type": "application/json"
       }
     };
+
     const res = await axios.post(
       "http://localhost:5000/api/secretNotes",
       data,
       config
     );
-
-    console.log(res.data);
 
     dispatch({
       type: EDIT_NOTES,
@@ -58,19 +60,21 @@ export const createNote = (formData, text) => async dispatch => {
     });
 
     dispatch(setAlert("Note Created", "mySuccess"));
+
   } catch (err) {
     if (err) {
-      console.log(err);
       dispatch(setAlert(err.response.data, "myDanger"));
+
+      dispatch({
+        type: ERROR_NOTES,
+        payload: {
+          msg: err.response,
+          status: err.response.status
+        }
+      });
     }
 
-    dispatch({
-      type: ERROR_NOTES,
-      payload: {
-        msg: err.response,
-        status: err.response.status
-      }
-    });
+
   }
 };
 
@@ -93,40 +97,37 @@ export const editNote = (formData, text) => async dispatch => {
       data,
       config
     );
+
     dispatch({
       type: EDIT_NOTES,
       payload: res.data
     });
 
     dispatch(setAlert("Note Updated", "mySuccess"));
+
   } catch (err) {
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
+
+      dispatch({
+        type: ERROR_NOTES,
+        payload: {
+          msg: err.response,
+          status: err.response.status
+        }
+      });
     }
 
-    dispatch({
-      type: ERROR_NOTES,
-      payload: {
-        msg: err.response,
-        status: err.response.status
-      }
-    });
   }
 };
 
 // Delete profile
 export const deleteNote = formData => async dispatch => {
   try {
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
 
     const res = await axios.delete(
       `http://localhost:5000/api/secretNotes/${formData._id}`
     );
-    // console.log(res.data);
 
     dispatch({
       type: EDIT_NOTES,
@@ -134,17 +135,19 @@ export const deleteNote = formData => async dispatch => {
     });
 
     dispatch(setAlert("Note Deleted", "mySuccess"));
+
   } catch (err) {
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
+        
+      dispatch({
+        type: ERROR_NOTES,
+        payload: {
+          msg: err.response,
+          status: err.response.status
+        }
+      });
     }
 
-    dispatch({
-      type: ERROR_NOTES,
-      payload: {
-        msg: err.response,
-        status: err.response.status
-      }
-    });
   }
 };

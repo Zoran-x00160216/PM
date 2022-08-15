@@ -19,8 +19,8 @@ const SecretNoteSchema = new mongoose.Schema({
     max: 500,
   },
   category: {
-    type: String,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
   },
   favorite: {
     type: Boolean,

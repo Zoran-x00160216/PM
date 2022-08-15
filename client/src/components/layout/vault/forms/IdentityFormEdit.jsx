@@ -11,14 +11,14 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/js/src/modal";
 
 const IdentityFormEdit = ({
   editIdentity,
   deleteIdentity,
   getIdentity,
-  identity: { loading, identity },
+  identity: { loading, identity, editStatus },
   text: { txt },
+  categoryRedux: { categories },
   setOpenModalEdit,
   passId
 }) => {
@@ -62,13 +62,14 @@ const IdentityFormEdit = ({
   let account = [];
 
   useEffect(() => {
-    identity.forEach(item => {
-      if (passId === item._id) {
-        Object.keys(item).forEach(function() {
-          account.push(item);
-        });
-      }
-    });
+    Array.isArray(identity) &&
+      identity.forEach(item => {
+        if (passId === item._id) {
+          Object.keys(item).forEach(function() {
+            account.push(item);
+          });
+        }
+      });
 
     setFormData({
       _id: loading || !account[0]._id ? "" : account[0]._id,
@@ -89,12 +90,23 @@ const IdentityFormEdit = ({
       city: loading || !account[0].city ? "" : account[0].city,
       postalCode:
         loading || !account[0].postalCode ? "" : account[0].postalCode,
-      category: loading || !account[0].category ? "" : account[0].category,
+      category:
+        loading || !account[0].category._id ? "" : account[0].category._id,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       updated: formatDate(account[0].updated),
       date: formatDate(account[0].date)
     });
   }, [loading]);
+
+  const cat =
+    Array.isArray(categories) &&
+    categories.map(c => {
+      return (
+        <option key={c._id} value={c._id}>
+          {c.name}
+        </option>
+      );
+    });
 
   const onChange = e => {
     e.preventDefault();
@@ -112,6 +124,11 @@ const IdentityFormEdit = ({
     setTimeout(() => getIdentity(txt.txt), 60);
     setTimeout(() => setOpenModalEdit(false), 80);
   };
+
+  // if (editStatus.acknowledged === true || editStatus.deletedCount === 1) {
+  //   setTimeout(() => getIdentity(txt.txt), 60);
+  //   setTimeout(() => setOpenModalEdit(false), 80);
+  // }
 
   return (
     <>
@@ -304,13 +321,17 @@ const IdentityFormEdit = ({
                   <label htmlFor="recipient-name" className="col-form-label">
                     Category:
                   </label>
-                  <input
+                  <select
                     type="text"
                     className="form-control myInput"
+                    id="inputGroupSelect01"
                     name="category"
                     value={category}
                     onChange={e => onChange(e)}
-                  ></input>
+                  >
+                    <option defaultValue={""}></option>
+                    {cat}
+                  </select>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="recipient-name" className="col-form-label">
@@ -332,41 +353,50 @@ const IdentityFormEdit = ({
                 </div>
               </div>
             </div>
-            <div className="d-flex justify-content-between mb-3 mt-3">
-              <button
-                type="submit"
-                name="delete"
-                className="noBorder m-2 bg-body"
-                onClick={() => setEdit(true)}
-              >
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  className="textRed lrgIcon"
-                />
-              </button>
-              <button
-                type="button"
-                className="btn m-1 btn-outline-success shadow myBtn bgGrey"
-                onClick={() => {
-                  setOpenModalEdit(false);
-                }}
-              >
-                Close
-              </button>
-              <button
-                type="submit"
-                name="update"
-                className="btn m-1 btn-outline-success shadow myBtn primary"
-              >
-                Update
-              </button>
+            <div className="d-flex justify-content-between mb-3">
+              <div>
+                <button
+                  type="submit"
+                  name="delete"
+                  className="bgCards noBorder"
+                  onClick={() => setEdit(true)}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    className="lrgIcon deleteBtn"
+                  />
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="btn m-1 btn-outline-success shadow myBtn bgGrey"
+                  onClick={() => {
+                    setOpenModalEdit(false);
+                  }}
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  name="update"
+                  className="btn m-1 btn-outline-success shadow myBtn primary"
+                >
+                  Update
+                </button>
+              </div>
             </div>
           </form>
-          <div className="m-1 fs-6">
-            <span className="small">
-              Created: {date}
-              <br></br>Last update: {updated}
-            </span>
+          <div className="d-flex justify-content-between">
+            {date === updated ? (
+              <span className="small-text">Created: {date}</span>
+            ) : (
+              <>
+                {" "}
+                <span className="small-text">Created: {date}</span>
+                <span className="small-text">Last update: {updated}</span>{" "}
+              </>
+            )}
           </div>
         </div>
       </main>
@@ -382,13 +412,16 @@ IdentityFormEdit.propTypes = {
   setOpenModalEdit: PropTypes.func.isRequired,
   identity: PropTypes.object.isRequired,
   edit: PropTypes.bool,
-  text: PropTypes.object.isRequired
+  text: PropTypes.object.isRequired,
+  categoryRedux: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   identity: state.identity,
-  text: state.text
+  text: state.text,
+  categoryRedux: state.categoryRedux
 });
+
 export default connect(mapStateToProps, {
   editIdentity,
   deleteIdentity,

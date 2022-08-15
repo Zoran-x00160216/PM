@@ -76,11 +76,7 @@ const FavNotes = ({ getNotes, notes: { notes }, text: { txt } }) => {
       {openModalEdit && (
         <NotesFormEdit setOpenModalEdit={setOpenModalEdit} noteId={noteId} />
       )}
-      <div className="p-2 hstack gap-5 border-bottom mb-4">
-        <div className="me-auto vw-90">
-          <small>Notes</small>
-        </div>
-      </div>
+
       <div>
         <ul className="mt-3 p-1">
           <>{accounts}</>

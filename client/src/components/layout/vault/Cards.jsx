@@ -95,14 +95,14 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
         <div className="row">
           <Sidebar />
           <div className="col-sm-6 mt-3">
-            <div className="m-2 p-3 shadow-sm mb-5 bgCards myRounded">
+            <div className="p-3 shadow-sm mb-5 bgCards myRounded">
               <div className="col">
                 <div className="p-2 hstack gap-5 border-bottom mb-4">
                   <div className="me-auto vw-90">
-                    <h5>Credit Cards</h5>
+                    <p>Credit Cards</p>
                   </div>
                   <div onClick={() => setOpenModalAdd(true)} className="cursor">
-                    <span className="mr-2 small-text">Add</span>
+                    <span className="mr-2">Add</span>
                     <FontAwesomeIcon
                       icon={faPlus}
                       className="smIcon textPrimary"
