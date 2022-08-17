@@ -51,7 +51,7 @@ setInterval(() => {
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
-    window.onload = () => store.dispatch(logout());
+    // window.onload = () => store.dispatch(logout());
   }, []);
 
   return (

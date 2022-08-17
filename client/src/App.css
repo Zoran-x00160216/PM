@@ -46,7 +46,6 @@ body >* select {
   margin: 1.5rem auto;
 }
 
-
 .col-form-label{
   font-size: 13px;
 }
@@ -58,7 +57,6 @@ body >* select {
 .bgBody {
   background-color: var(--gray);
 }
-
 
 .myPr5 {
   padding-right: 3rem;
@@ -76,8 +74,6 @@ body >* select {
 .ml-5 {
   margin-left: 200px;
 }
-
-
 
 /* Reset styles on <li> and <a> tags */
 ul {
@@ -199,6 +195,7 @@ color: var(--white);
 }
 
 .bgCards {
+  border: none;
   background-color: var(--light);
 }
 .myDangerBg {
@@ -236,10 +233,10 @@ color: var(--white);
 .textLink {
   color: #0564d1;
 }
+
 .textLink:hover {
   opacity: 0.7;
 }
-
 
 .left {
   position: absolute;
@@ -286,9 +283,7 @@ color: var(--white);
 }
 .alert-link {
   color: #f4f4f4;
-
 }
-
 
 .fixedHgthCards {
   height: 250px;
@@ -327,6 +322,9 @@ background: url("./img/Untitled2.png")no-repeat center center/cover;
       }
 
 @media screen and (max-width: 985px) {
+  .navbar {
+    height: 15vh;
+  }
   .navbar ul {
     padding: 2rem;
     text-align: left;

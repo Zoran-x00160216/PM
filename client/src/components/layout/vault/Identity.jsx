@@ -123,7 +123,7 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
       );
     });
 
-  return loading && identity === null ? (
+  return loading && identity.length === 0 ? (
     <Spinner />
   ) : (
     <>

@@ -11,7 +11,7 @@ const NotesFormEdit = ({
   editNote,
   deleteNote,
   getNotes,
-  notes: { loading, notes, editStatus },
+  notes: { loading, notes },
   text: { txt },
   categoryRedux: { categories },
   setOpenModalEdit,
@@ -78,12 +78,14 @@ const NotesFormEdit = ({
   const onSubmit = e => {
     e.preventDefault();
     edit ? deleteNote(formData) : editNote(formData, txt.txt);
-  };
-
-  if (editStatus.acknowledged === true || editStatus.deletedCount === 1) {
     setTimeout(() => getNotes(txt.txt), 60);
     setTimeout(() => setOpenModalEdit(false), 80);
-  }
+  };
+
+  // if (editStatus.acknowledged === true || editStatus.deletedCount === 1) {
+  //   setTimeout(() => getNotes(txt.txt), 60);
+  //   setTimeout(() => setOpenModalEdit(false), 80);
+  // }
 
   return (
     <>

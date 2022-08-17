@@ -83,7 +83,7 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
         </div>
       );
     });
-  return loading && cards === null ? (
+  return loading && cards.length === 0 ? (
     <Spinner />
   ) : (
     <>

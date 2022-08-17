@@ -74,7 +74,7 @@ router.post("/register", async (req, res) => {
     jwt.sign(
       { _id: user._id, tier: user.tier },
       process.env.TOKEN_SECRET,
-      { expiresIn: 36000 },
+      { expiresIn: 1800 },
       (err, token) => {
         if (err) throw err;
         res.send({ token });
@@ -109,7 +109,7 @@ router.post("/login", async (req, res) => {
     jwt.sign(
       { _id: user._id, tier: user.tier },
       process.env.TOKEN_SECRET,
-      { expiresIn: 360 },
+      { expiresIn: 1800 },
       (err, token) => {
         if (err) throw err;
         res.send({ token, tier: user.tier });

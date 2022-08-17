@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import CategoryFavoritesLinks from "./CategoryFavoritesLinks";
 import VaultLinks from "./VaultLinks";
+import Hibp from "./Hibp";
 
 const Sidebar = ({ auth: { tier } }) => {
   return (
@@ -11,6 +12,7 @@ const Sidebar = ({ auth: { tier } }) => {
       <div className="col">
         <VaultLinks />
         <CategoryFavoritesLinks />
+        <Hibp />
         {tier === "basic" && (
           <div>
             <div className="m-3 mt-5 p-5 cardShadow bgCards myRounded  font-weight-bold">

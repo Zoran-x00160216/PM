@@ -90,8 +90,11 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
   );
 
   return (
-    <nav className="navbar sticky-top navbar-expand-lg navbar-light bgBody">
-      <div className="container fs-6">
+    <nav
+      id="navbar"
+      className="navbar sticky-top navbar-expand-lg navbar-light bgBody"
+    >
+      <div className="container-fluid fs-6">
         <img src={logo} className="rounded float-start" alt="PM"></img>
         <p className="navbar-brand me-auto mb-2 mb-lg-0 myPr5">
           <b>PM</b>

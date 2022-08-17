@@ -67,7 +67,7 @@ const WebAccounts = ({
         >
           <div>
             <p className="margin0">
-              Name:
+              Name:{"  "}
               <span
                 onClick={() => setIdAndOpenModalEdit(webAccount._id)}
                 className="textSecondary"
@@ -126,7 +126,7 @@ const WebAccounts = ({
         </div>
       );
     });
-  return loading && webAccounts === null ? (
+  return loading && webAccounts.length === 0 ? (
     <Spinner />
   ) : (
     <>

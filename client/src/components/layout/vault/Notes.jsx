@@ -78,7 +78,7 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
       );
     });
 
-  return loading && notes === null ? (
+  return loading && notes.length === 0 ? (
     <Spinner />
   ) : (
     <>

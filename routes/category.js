@@ -15,7 +15,6 @@ router.get("/", async (req, res) => {
         user_id: req.user._id,
         name: "no category"
       });
-      console.log(catExist)
       if(catExist === null) {   
         const category = await new Category(data);
         await category.save();
