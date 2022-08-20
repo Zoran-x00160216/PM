@@ -17,13 +17,13 @@ app.use((req, res, next) => {
 // support url encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
-// Enable CORS Requests only from localhost:3000
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-  })
+// Enable CORS Requests only from in .env
+app.use(cors()
+  // cors({
+  //   origin: process.env.DOMAIN,
+  // })
 );
-// app.options("http://localhost:3000", cors()); // include before other routes
+
 
 // Init Middleware
 app.use(express.json({ extended: false }));

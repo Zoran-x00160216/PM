@@ -6,7 +6,12 @@ import NotesFormEdit from "./forms/NotesFormEdit";
 import { connect } from "react-redux";
 import { getNotes } from "../../../actions/notes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEllipsis,
+  faPlus,
+  faMagnifyingGlass,
+  faXmark
+} from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Spinner from "../../spinner/Spinner";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,12 +21,24 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
   const [noteId, setNoteId] = useState();
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
 
   useEffect(() => {
     getNotes(txt.txt);
   }, [getNotes, txt.txt]);
-  // console.log(notes);
-  // const accountsArray = webAccounts.webAccounts;
+
+  const handleInput = e => {
+    e.preventDefault();
+    setSearchVal(e.target.value);
+  };
+
+  const handleClearBtn = () => {
+    setSearchVal("");
+  };
+
+  const filteredNotes = notes.filter(note => {
+    return note.name.includes(searchVal);
+  });
 
   const setIdAndOpenModalEdit = id => {
     setNoteId(id);
@@ -29,7 +46,7 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
   };
   const accounts =
     Array.isArray(notes) &&
-    notes.map(n => {
+    filteredNotes.map(n => {
       return (
         <div
           key={n._id}
@@ -86,23 +103,45 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
       {openModalEdit && (
         <NotesFormEdit setOpenModalEdit={setOpenModalEdit} noteId={noteId} />
       )}
-      <div className="container myVh">
+      <div className="myContainer">
         <div className="row">
           <Sidebar />
-          <div className="col-sm-6 mt-3">
+          <div className="col-md-8 mt-3">
             <div className="p-3 shadow-sm mb-5 bgCards myRounded">
+              <div className="me-auto vw-90">
+                <p>Notes</p>
+              </div>
               <div className="col">
                 <div className="p-2 hstack gap-5 border-bottom mb-4">
-                  <div className="me-auto vw-90">
-                    <p>Notes</p>
-                  </div>
-
-                  <div onClick={() => setOpenModalAdd(true)} className="cursor">
-                    <span className="mr-2">Add</span>
+                  <div
+                    onClick={() => setOpenModalAdd(true)}
+                    className="cursor me-auto vw-60"
+                  >
+                    <small className="mr-2">Add</small>
                     <FontAwesomeIcon
                       icon={faPlus}
                       className="smIcon textPrimary"
                     />
+                  </div>
+                  <div className="input-wrap shadow-sm">
+                    <FontAwesomeIcon
+                      icon={faMagnifyingGlass}
+                      className="smIcon textPrimary"
+                    ></FontAwesomeIcon>
+                    <input
+                      onChange={handleInput}
+                      value={searchVal}
+                      type="text"
+                      name="data-search"
+                      id="data-search"
+                      placeholder="Search Notes"
+                    />
+
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      className="smIcon textPrimary cursor"
+                      onClick={handleClearBtn}
+                    ></FontAwesomeIcon>
                   </div>
                 </div>
                 <div>

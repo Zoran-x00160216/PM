@@ -5,7 +5,7 @@ import { GET_CATEGORY, ERROR_CATEGORY, EDIT_CATEGORY } from "./type";
 // Get web accounts
 export const getCategories = () => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/api/category");
+    const res = await axios.get( `${process.env.REACT_APP_SERVER_URL}/api/category`);
     let data = res.data;
 
     dispatch({
@@ -32,7 +32,7 @@ export const createCategory = formData => async dispatch => {
       }
     };
     const res = await axios.post(
-      "http://localhost:5000/api/category",
+      `${process.env.REACT_APP_SERVER_URL}/api/category`,
       formData,
       config
     );
@@ -70,7 +70,7 @@ export const editCategory = formData => async dispatch => {
     };
 
     const res = await axios.put(
-      "http://localhost:5000/api/category",
+      `${process.env.REACT_APP_SERVER_URL}/api/category`,
       formData,
       config
     );
@@ -100,7 +100,7 @@ export const deleteCategory = formData => async dispatch => {
   try {
 
     const res = await axios.delete(
-      `http://localhost:5000/api/category/${formData._id}`
+      `${process.env.REACT_APP_SERVER_URL}/api/category/${formData._id}`
     );
 
     dispatch({

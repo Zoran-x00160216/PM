@@ -46,7 +46,6 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
   return (
     <main>
       <div className="imgLogin"></div>
-
       <div className="container">
         <div className="vh-100 row fs-6 d-flex flex-wrap justify-content-center align-content-center m-2">
           <div className="col-md-5 mb-3">

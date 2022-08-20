@@ -157,19 +157,6 @@ const WebAccountFormEdit = ({
 
   let passResoults = checkPassStrength(password);
 
-  // const dateDisplay = () => {
-  //   {
-  //     date === updated ? (
-  //     <span className="small">Created: {date}</span>
-  //     ) : (
-  //       <>
-  //         {" "}
-  //         <span className="small">Created: {date}</span>
-  //         <span className="small">Last update: {updated}</span>{" "}
-  //       </>
-  //     );
-  //   }
-  // };
   return (
     <>
       <main className="modalBackgroundForm">
@@ -185,9 +172,9 @@ const WebAccountFormEdit = ({
               }}
             ></button>
           </div>
-          <form onSubmit={e => onSubmit(e)}>
-            <div className="modal-body formScroll fs-6 mb-2">
-              <div className="mb-1">
+          <form onSubmit={e => onSubmit(e)} className="mb-2">
+            <div className="modal-body formScroll fs-6">
+              <div>
                 <label htmlFor="recipient-name" className="col-form-label">
                   Name:
                 </label>

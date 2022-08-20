@@ -6,16 +6,14 @@ import {
   ERROR_WEB_ACCOUNTS
 } from "./type";
 import CryptoJS from "crypto-js";
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 
 // Get web accounts
 export const getWebAccounts = text => async dispatch => {
   // console.log(text);
   try {
-    // const url = process.env.SERVER_URL;
-    // console.log(url);
-    const res = await axios.get("http://localhost:5000/api/webAccounts");
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/webAccounts`);
 
     // Decrypt
     let data = res.data;
@@ -57,7 +55,7 @@ export const createWebAccount = (formData, text) => async dispatch => {
     };
 
     const res = await axios.post(
-      "http://localhost:5000/api/webAccounts",
+      `${process.env.REACT_APP_SERVER_URL}/api/webAccounts`,
       data,
       config
     );
@@ -102,7 +100,7 @@ export const editWebAccount = (formData, text) => async dispatch => {
     // console.log(data);
 
     const res = await axios.put(
-      "http://localhost:5000/api/webAccounts",
+      `${process.env.REACT_APP_SERVER_URL}/api/webAccounts`,
       formData,
       config
     );
@@ -135,7 +133,7 @@ export const deleteWebAccount = formData => async dispatch => {
   try {
 
     const res = await axios.delete(
-      `http://localhost:5000/api/webAccounts/${formData._id}`
+      `${process.env.REACT_APP_SERVER_URL}/api/webAccounts/${formData._id}`
     );
 
     

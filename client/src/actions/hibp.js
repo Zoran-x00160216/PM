@@ -5,8 +5,7 @@ export const hibp = async email => {
 
     const response = await fetch(`https://pure-thicket-59769.herokuapp.com/https://haveibeenpwned.com/api/v3/breachedaccount/${email}?truncateResponse=false`, {
         headers: {
-            "hibp-api-key": "a36626ca66e04bd1b8e11158e89d5788"
-        }
+          "hibp-api-key": `${process.env.REACT_APP_HIBP_API_KEY}`        }
     });
     const data = await response.json();
 

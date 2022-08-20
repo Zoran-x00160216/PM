@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { hibp } from "../../../../actions/hibp";
+import { hibp } from "../../../../../actions/hibp";
 import HibpModal from "./HibpModal";
+import Spinner from "../../../../spinner/Spinner";
 
 const Hibp = () => {
   const [em, setEmail] = useState({ email: "" });
   const [openModalHibp, setOpenModalHibp] = useState(false);
   const [responseHibp, setResponseHibp] = useState();
+  const [loading, setLoading] = useState(false);
 
   const { email } = em;
 
   useEffect(() => {
     responseHibp !== undefined && setOpenModalHibp(true);
+    responseHibp !== undefined && setLoading(false);
   }, [responseHibp]);
 
   const onChange = e => {
@@ -20,6 +23,7 @@ const Hibp = () => {
   };
 
   const onSubmit = e => {
+    setLoading(true);
     e.preventDefault();
     const allEntries = hibp(email);
     Promise.all([allEntries]).then(values => {
@@ -28,7 +32,9 @@ const Hibp = () => {
     setEmail({ email: "" });
   };
 
-  return (
+  return loading === true ? (
+    <Spinner />
+  ) : (
     <>
       {openModalHibp && (
         <HibpModal

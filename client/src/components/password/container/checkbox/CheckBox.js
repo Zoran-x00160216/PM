@@ -9,7 +9,7 @@ const CheckBox = props => {
     return (
         <>
             <div className="col-sm-3">
-                <label className="container">
+                <label className="checkBoxContainer">
                     <small className='small-text'>{label}</small>
                     <input 
                         type="checkbox"

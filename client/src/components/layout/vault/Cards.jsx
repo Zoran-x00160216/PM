@@ -7,7 +7,12 @@ import Spinner from "../../spinner/Spinner";
 import { connect } from "react-redux";
 import { getCards } from "../../../actions/cards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEllipsis,
+  faPlus,
+  faMagnifyingGlass,
+  faXmark
+} from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/js/src/dropdown";
@@ -16,10 +21,24 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
   const [passId, setPassId] = useState();
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
 
   useEffect(() => {
     getCards(txt.txt);
   }, [getCards, txt.txt]);
+
+  const handleInput = e => {
+    e.preventDefault();
+    setSearchVal(e.target.value);
+  };
+
+  const handleClearBtn = () => {
+    setSearchVal("");
+  };
+
+  const filteredCards = cards.filter(card => {
+    return card.name.includes(searchVal);
+  });
 
   const setIdAndOpenModalEdit = id => {
     setPassId(id);
@@ -29,7 +48,7 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
   // const accountsArray = webAccounts.webAccounts;
   const accounts =
     Array.isArray(cards) &&
-    cards.map(card => {
+    filteredCards.map(card => {
       return (
         <div
           key={card._id}
@@ -91,22 +110,45 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
       {openModalEdit && (
         <CardsFormEdit setOpenModalEdit={setOpenModalEdit} passId={passId} />
       )}
-      <div className="container myVh">
+      <div className="myContainer">
         <div className="row">
           <Sidebar />
-          <div className="col-sm-6 mt-3">
+          <div className="col-md-8 mt-3">
             <div className="p-3 shadow-sm mb-5 bgCards myRounded">
+              <div className="me-auto vw-90">
+                <p>Credit Cards</p>
+              </div>
               <div className="col">
                 <div className="p-2 hstack gap-5 border-bottom mb-4">
-                  <div className="me-auto vw-90">
-                    <p>Credit Cards</p>
-                  </div>
-                  <div onClick={() => setOpenModalAdd(true)} className="cursor">
-                    <span className="mr-2">Add</span>
+                  <div
+                    onClick={() => setOpenModalAdd(true)}
+                    className="cursor me-auto vw-60"
+                  >
+                    <small className="mr-2">Add</small>
                     <FontAwesomeIcon
                       icon={faPlus}
                       className="smIcon textPrimary"
                     />
+                  </div>
+                  <div className="input-wrap shadow-sm">
+                    <FontAwesomeIcon
+                      icon={faMagnifyingGlass}
+                      className="smIcon textPrimary"
+                    ></FontAwesomeIcon>
+                    <input
+                      onChange={handleInput}
+                      value={searchVal}
+                      type="text"
+                      name="data-search"
+                      id="data-search"
+                      placeholder="Search Notes"
+                    />
+
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      className="smIcon textPrimary cursor"
+                      onClick={handleClearBtn}
+                    ></FontAwesomeIcon>
                   </div>
                 </div>
                 <div>

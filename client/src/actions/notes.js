@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 // Get web accounts
 export const getNotes = text => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/api/secretNotes");
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/secretNotes`);
     let data = res.data;
 
     // Decrypt
@@ -49,7 +49,7 @@ export const createNote = (formData, text) => async dispatch => {
     };
 
     const res = await axios.post(
-      "http://localhost:5000/api/secretNotes",
+      `${process.env.REACT_APP_SERVER_URL}/api/secretNotes`,
       data,
       config
     );
@@ -93,7 +93,7 @@ export const editNote = (formData, text) => async dispatch => {
     };
 
     const res = await axios.put(
-      "http://localhost:5000/api/secretNotes",
+      `${process.env.REACT_APP_SERVER_URL}/api/secretNotes`,
       data,
       config
     );
@@ -126,7 +126,7 @@ export const deleteNote = formData => async dispatch => {
   try {
 
     const res = await axios.delete(
-      `http://localhost:5000/api/secretNotes/${formData._id}`
+      `${process.env.REACT_APP_SERVER_URL}/api/secretNotes/${formData._id}`
     );
 
     dispatch({

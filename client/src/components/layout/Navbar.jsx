@@ -94,32 +94,31 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
       id="navbar"
       className="navbar sticky-top navbar-expand-lg navbar-light bgBody"
     >
-      <div className="container-fluid fs-6">
-        <img src={logo} className="rounded float-start" alt="PM"></img>
-        <p className="navbar-brand me-auto mb-2 mb-lg-0 myPr5">
+      <div className="container-fluid fs-6 myNavbar">
+        <img src={logo} className="rounded float-start navLogo" alt="PM"></img>
+        <p className="navbar-brand me-auto mb-2 mb-lg-0">
           <b>PM</b>
         </p>
         <button
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarTogglerDemo03"
-          aria-controls="navbarTogglerDemo03"
+          data-bs-target="#navbarToggler"
+          aria-controls="navbarToggler"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div
-          className="collapse navbar-collapse bgBody"
-          id="navbarTogglerDemo03"
-        >
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        <div className="collapse navbar-collapse bgBody" id="navbarToggler">
+          <ul className="navbar-nav me-auto mb-2 d-flex flex-wrap justify-content-center align-content-center">
             {!loading && (
               <Fragment>{isAuthenticated ? privateLink : publicLink}</Fragment>
             )}
           </ul>
-          <form className="d-flex">
+        </div>
+
+        {/* <form className="d-flex">
             <input
               className="form-control me-2 shadow myBtn searchWidth"
               type="search"
@@ -129,9 +128,9 @@ const NavbarComp = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
             <button className="shadow myBtn secondary" type="submit">
               Search
             </button>
-          </form>
-        </div>
+          </form> */}
       </div>
+      {/* </div> */}
     </nav>
   );
 };

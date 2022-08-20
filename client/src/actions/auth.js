@@ -25,7 +25,7 @@ export const loadUser = () => async dispatch => {
   }
 
   try {
-    const res = await axios.get("http://localhost:5000/api/auth");
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/auth`);
 
     dispatch({
       type: USER_LOADED,
@@ -53,7 +53,7 @@ export const register = ({ email, password, tier }) => async dispatch => {
     const body = JSON.stringify({ email, password, tier });
 
     const res = await axios.post(
-      "http://localhost:5000/api/auth/register",
+      `${process.env.REACT_APP_SERVER_URL}/api/auth/register`,
       body,
       config
     );
@@ -91,7 +91,7 @@ export const login = (email, password) => async dispatch => {
     const body = JSON.stringify({ email, password });
 
     const res = await axios.post(
-      "http://localhost:5000/api/auth/login",
+      `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
       body,
       config
     );
@@ -130,7 +130,7 @@ export const updateUser = ({password}) => async dispatch => {
     const body = JSON.stringify({ password });
 
     const res = await axios.put(
-      "http://localhost:5000/api/updateUser",
+      `${process.env.REACT_APP_SERVER_URL}/api/updateUser`,
       body,
       config
     );

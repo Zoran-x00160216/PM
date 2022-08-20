@@ -1,3 +1,6 @@
+const Dotenv = require('dotenv-webpack');
+
+
 module.exports = {
   //...
   resolve: {
@@ -12,4 +15,7 @@ module.exports = {
       querystring: require.resolve("querystring-es3"),
     },
   },
+  // plugins: [
+  //   new Dotenv()
+  // ]
 };

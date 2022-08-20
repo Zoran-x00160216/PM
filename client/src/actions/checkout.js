@@ -15,7 +15,7 @@ export const checkOut = async () => {
       ]
     };
     const res = await axios.post(
-      "http://localhost:5000/api/createPaymentIntent",
+      `${process.env.REACT_APP_SERVER_URL}/api/createPaymentIntent`,
       data,
       config
     );

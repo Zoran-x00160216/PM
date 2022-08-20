@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 // Get web accounts
 export const getIdentity = text => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/api/identity");
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/identity`);
 
     let data = res.data;
     // Decrypt
@@ -56,7 +56,7 @@ export const getIdentity = text => async dispatch => {
 // Create or update profile
 export const createIdentity = (formData, text) => async dispatch => {
   try {
-    // console.log(text, formData);
+
     // encrypt identity details
     let data = formData;
     // data.forEach(d => {
@@ -100,7 +100,7 @@ export const createIdentity = (formData, text) => async dispatch => {
       }
     };
     const res = await axios.post(
-      "http://localhost:5000/api/identity",
+      `${process.env.REACT_APP_SERVER_URL}/api/identity`,
       data,
       config
     );
@@ -138,7 +138,7 @@ export const editIdentity = formData => async dispatch => {
     };
 
     const res = await axios.put(
-      "http://localhost:5000/api/identity",
+      `${process.env.REACT_APP_SERVER_URL}/api/identity`,
       formData,
       config
     );
@@ -169,7 +169,7 @@ export const editIdentity = formData => async dispatch => {
 export const deleteIdentity = formData => async dispatch => {
   try {
     const res = await axios.delete(
-      `http://localhost:5000/api/identity/${formData._id}`
+      `${process.env.REACT_APP_SERVER_URL}/api/identity/${formData._id}`
     );
     // console.log(res.data);
 

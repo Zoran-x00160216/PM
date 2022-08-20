@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import Spinner from "../../../spinner/Spinner";
+import Spinner from "../../../../spinner/Spinner";
 
 const HibpModal = ({ setOpenModalHibp, responseHibp }) => {
   const [dataBreaches, setDataBreaches] = useState([]);
-  console.log("Boom", responseHibp);
+  console.log("Boom", dataBreaches[0]);
 
   useEffect(() => {
     setDataBreaches(responseHibp);
@@ -15,7 +15,6 @@ const HibpModal = ({ setOpenModalHibp, responseHibp }) => {
     Array.isArray(dataBreaches[0]) &&
     dataBreaches[0].map(item => {
       num = num + 1;
-      console.log(item.Name, num);
       return (
         <div key={num}>
           <ul>
@@ -30,7 +29,7 @@ const HibpModal = ({ setOpenModalHibp, responseHibp }) => {
             </li>
             <li>
               Data compromised:{" "}
-              <span className="fw-bold">{item.DataClasses}</span>
+              <span className="fw-bold">{`${item.DataClasses}, `}</span>
             </li>
           </ul>
         </div>
@@ -44,9 +43,15 @@ const HibpModal = ({ setOpenModalHibp, responseHibp }) => {
       <main className="modalBackgroundForm">
         <div className="modalContainerForm bgCards">
           <div className="modal-header">
-            <p className="fw-bold">
-              We found your account in some data breaches
-            </p>
+            {dataBreaches[0] === undefined ? (
+              <p className="fw-bold textSecondary">
+                We have not found data breaches for your account.
+              </p>
+            ) : (
+              <p className="fw-bold textRed">
+                {`We found your account in ${dataBreaches[0].length} different data breaches`}{" "}
+              </p>
+            )}
             <button
               type="button"
               className="btn-close"

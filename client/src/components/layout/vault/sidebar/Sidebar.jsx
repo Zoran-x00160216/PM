@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import CategoryFavoritesLinks from "./CategoryFavoritesLinks";
 import VaultLinks from "./VaultLinks";
-import Hibp from "./Hibp";
+import Hibp from "./hibs/Hibp";
 
 const Sidebar = ({ auth: { tier } }) => {
   return (
-    <div className="col-sm-4 fs-6">
+    <div className="col-md-4 fs-6">
       <div className="col">
         <VaultLinks />
         <CategoryFavoritesLinks />

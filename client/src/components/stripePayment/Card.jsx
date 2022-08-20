@@ -26,7 +26,7 @@ const CardForm = ({ updateUser }) => {
     }
 
     const { error: backendError, clientSecret } = await fetch(
-      "http://localhost:5000/api/createPaymentIntent",
+      `${process.env.REACT_APP_SERVER_URL}/api/createPaymentIntent`,
       {
         method: "POST",
         headers: {

@@ -89,7 +89,7 @@ const Footer = ({ auth: { isAuthenticated, loading, tier }, logout }) => {
     <footer className="navbar navbar-expand-lg navbar-light p-5 border-top">
       <div className="container-fluid justify-content-center">
         <div className="py-3 mt-3">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-wrap justify-content-center align-content-center">
             {!loading && (
               <Fragment>{isAuthenticated ? privateLink : publicLink}</Fragment>
             )}

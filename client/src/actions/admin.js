@@ -5,7 +5,7 @@ import { setAlert } from "./alert";
 // Load Users
 export const getUsers = () => async dispatch => {
   try {
-    const res = await axios.get("http://localhost:5000/api/admin/");
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/admin/`);
 
     dispatch({
       type: GET_USERS,
@@ -29,7 +29,7 @@ export const getUsers = () => async dispatch => {
 export const deleteUser = id => async dispatch => {
   try {
 
-    const res = await axios.delete(`http://localhost:5000/api/admin/${id}`);
+    const res = await axios.delete( `${process.env.REACT_APP_SERVER_URL}/api/admin/${id}`);
     console.log(res.data);
 
     dispatch({
@@ -58,7 +58,7 @@ export const deleteUser = id => async dispatch => {
 // Get sum of all entries per collection in db
 export const getAllEntries = () => async () => {
   try {
-    const res = await axios.get("http://localhost:5000/api/admin/count");
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/admin/count`);
     const data = JSON.stringify(res.data);
 
     return data;
@@ -70,7 +70,7 @@ export const getAllEntries = () => async () => {
 // Get sum of all basic and premium accounts in db
 export const getUsersCount = () => async () => {
   try {
-    const res = await axios.get("http://localhost:5000/api/admin/sumusers");
+    const res = await axios.get( `${process.env.REACT_APP_SERVER_URL}/api/admin/sumusers`);
     const data = JSON.stringify(res.data);
 
     return data;
@@ -82,7 +82,7 @@ export const getUsersCount = () => async () => {
 // Get sum of all entries per collection where accessLevel=premium
 export const getPremiumAllEntries = () => async () => {
   try {
-    const res = await axios.get("http://localhost:5000/api/admin/allpremium");
+    const res = await axios.get( `${process.env.REACT_APP_SERVER_URL}/api/admin/allpremium`);
     const data = JSON.stringify(res.data);
 
     return data;
@@ -94,7 +94,7 @@ export const getPremiumAllEntries = () => async () => {
 // Get sum of all entries per collection where accessLevel=basic
 export const getBasicAllEntries = () => async () => {
   try {
-    const res = await axios.get("http://localhost:5000/api/admin/allbasic");
+    const res = await axios.get( `${process.env.REACT_APP_SERVER_URL}/api/admin/allbasic`);
     const data = JSON.stringify(res.data);
 
     return data;

@@ -6,9 +6,7 @@ import Card from "./Card";
 import SepaDebit from "./SepaDebit";
 import "./Stripe.css";
 
-const PUBLIC_KEY =
-  "pk_test_51LJ1WIHnQqvtKtNqT64q951fFiHCVA1pzBh2Y9JX44meC7ZQ4mWayFtMIfOXbTyJObDXabBhwJgcS1Ln626ubADQ00q2Utd32z";
-
+const PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUB_KEY;
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
 const StripeContainer = () => {
