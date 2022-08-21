@@ -103,7 +103,7 @@ const NotesFormEdit = ({
             ></button>
           </div>
           <form onSubmit={e => onSubmit(e)}>
-            <div className="modal-body formScroll fs-6">
+            <div className="modal-body  fs-6">
               <div className="mb-1">
                 <label className="col-form-label">Name:</label>
                 <div className="d-flex">

@@ -89,7 +89,7 @@ const WebAccounts = ({
               Name:{"  "}
               <span
                 onClick={() => setIdAndOpenModalEdit(webAccount._id)}
-                className="fw-bold textSecondary cursor"
+                className="textSecondary cursor"
               >
                 {webAccount.name}
               </span>

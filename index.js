@@ -18,10 +18,10 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 
 // Enable CORS Requests only from in .env
-app.use(cors()
-  // cors({
-  //   origin: process.env.DOMAIN,
-  // })
+app.use(
+  cors({
+    origin: process.env.DOMAIN,
+  })
 );
 
 
