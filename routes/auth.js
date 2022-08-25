@@ -6,8 +6,11 @@ const {
   registerValidation,
   loginValidation,
 } = require("../services/userValidation");
+const PremiumPrice = require("../model/PremiumPrice");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config({path: "./vars/.env"})
 
 // Get a user
 router.get("/", verify, async (req, res) => {
@@ -25,27 +28,6 @@ router.post("/register", async (req, res) => {
 
 
   try {
-    //    // Check if default admin exist
-    //    const admExist = await User.findOne({
-    //  email: "admin@email.com"
-    //   });
-    //   const defaultPass = "12345678901234"
-    //      // Hasg password
-    // const saltAdm = await bcrypt.genSalt(10);
-    // const hashAdm = await bcrypt.hash(defaultPass, saltAdm);
-
-    // const admin = {
-    //   email: "admin@email.com",
-    //   password: hashAdm,
-    //   tier: "admin",
-    //   updated: new Date(),
-    // };
-
-    //   console.log(admExist)
-    //   if(admExist === null) {   
-    //     const user = await new User(admin);
-    //     await user.save();
-    //   }
   // Validate data
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -62,7 +44,7 @@ router.post("/register", async (req, res) => {
     const user = await new User({
       email: req.body.email,
       password: hash,
-      tier: req.body.tier,
+      tier: "basic",
       lastLogin: new Date(),
     });
 
@@ -120,5 +102,16 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+// Get price
+router.get("/getPremiumPrice", async (req, res) => {
+  try {
+    const priceSubscription = await PremiumPrice.findOne({price_id: 1});
+    console.log(priceSubscription.price * 100)
+    res.json(priceSubscription);
+  } catch (error) {
+    res.status(500).send("Server error");
+  }
+});
 
 module.exports = router;

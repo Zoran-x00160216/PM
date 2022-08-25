@@ -88,8 +88,8 @@ CategoryFormAdd.propTypes = {
   getCategories: PropTypes.func.isRequired,
   createCategory: PropTypes.func.isRequired
 };
-const mapStateToProps = state => ({});
+// const mapStateToProps = state => ({});
 
-export default connect(mapStateToProps, { getCategories, createCategory })(
+export default connect(null, { getCategories, createCategory })(
   CategoryFormAdd
 );

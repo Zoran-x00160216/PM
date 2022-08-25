@@ -57,7 +57,6 @@ router.delete("/:_id", async (req, res) => {
     res.json(account);
   } catch (error) {
     res.send(error);
-    console.log(error);
   }
 });
 
@@ -75,14 +74,16 @@ router.put("/", async (req, res) => {
     updated: new Date(),
   };
 
+  console.log(req.body.category)
+
   try {
     // Validate data
     const { error } = webAccountValidation(data);
     if (error) return res.status(400).send(error.details[0].message);
 
-    const account = await WebAccount.updateOne({ _id: req.body._id }, data);
+    const account = await WebAccount.updateOne({ _id: req.body._id }, { $set: data});
     res.json(account);
-    // console.log(account);
+    
   } catch (error) {
     res.send(error);
   }

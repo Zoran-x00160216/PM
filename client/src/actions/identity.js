@@ -129,8 +129,37 @@ export const createIdentity = (formData, text) => async dispatch => {
 };
 
 // Update profile
-export const editIdentity = formData => async dispatch => {
+export const editIdentity = (formData, text, alertControler)=> async dispatch => {
   try {
+    let data = formData;
+    const encryptedPPS = CryptoJS.AES.encrypt(data.PPS, text).toString();
+    const encryptedPassport = CryptoJS.AES.encrypt(
+      data.passportNum,
+      text
+    ).toString();
+    const encryptedDrivingLic = CryptoJS.AES.encrypt(
+      data.drivingLicense,
+      text
+    ).toString();
+    const encryptedPhoneHome = CryptoJS.AES.encrypt(
+      data.phoneHome,
+      text
+    ).toString();
+    const encryptedPhoneMobile = CryptoJS.AES.encrypt(
+      data.phoneMobile,
+      text
+    ).toString();
+    const encryptedAddress = CryptoJS.AES.encrypt(
+      data.addressStreet,
+      text
+    ).toString();
+
+    data.PPS = encryptedPPS;
+    data.passportNum = encryptedPassport;
+    data.drivingLicense = encryptedDrivingLic;
+    data.phoneHome = encryptedPhoneHome;
+    data.phoneMobile = encryptedPhoneMobile;
+    data.addressStreet = encryptedAddress;
     const config = {
       headers: {
         "Content-Type": "application/json"
@@ -139,7 +168,7 @@ export const editIdentity = formData => async dispatch => {
 
     const res = await axios.put(
       `${process.env.REACT_APP_SERVER_URL}/api/identity`,
-      formData,
+      data,
       config
     );
 
@@ -148,7 +177,7 @@ export const editIdentity = formData => async dispatch => {
       payload: res.data
     });
 
-    dispatch(setAlert("Account Updated", "mySuccess"));
+    (alertControler && dispatch(setAlert("Account Updated", "mySuccess")));
   } catch (err) {
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));

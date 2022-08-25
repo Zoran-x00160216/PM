@@ -9,13 +9,15 @@ import { editCard } from "../../actions/cards";
 import { editIdentity } from "../../actions/identity";
 import { setText } from "../../actions/text";
 import { setAlert } from "../../actions/alert";
-import { updateUser } from "../../actions/auth";
+import { updateUserPassword } from "../../actions/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const Settings = ({
   auth: { user },
   setText,
   webAccounts: { webAccounts },
-  notes: { notes, loading },
+  notes: { notes },
   cards: { cards },
   identity: { identity },
   editWebAccount,
@@ -23,7 +25,7 @@ const Settings = ({
   editCard,
   editIdentity,
   setAlert,
-  updateUser
+  updateUserPassword
 }) => {
   const [formData, setFormData] = useState({
     password: "",
@@ -31,7 +33,10 @@ const Settings = ({
   });
 
   const { password, password2 } = formData;
+  // state for password toggle
+  const [passwordShown, setPasswordShown] = useState(false);
 
+  const alertControler = false;
   const onSubmit = e => {
     e.preventDefault();
     if (password !== password2) {
@@ -39,7 +44,7 @@ const Settings = ({
     } else {
       setText(password);
       changeEncryptionOnDBItems(password);
-      updateUser({ password });
+      updateUserPassword(password);
       setFormData({ password: "", password2: "" });
     }
   };
@@ -52,23 +57,38 @@ const Settings = ({
   const changeEncryptionOnDBItems = () => {
     Array.isArray(webAccounts) &&
       webAccounts.forEach(webAccount => {
-        editWebAccount(webAccount, password);
+        const cat = { category: webAccount.category._id };
+        webAccount = { ...webAccount, ...cat };
+        editWebAccount(webAccount, password, alertControler);
       });
     Array.isArray(notes) &&
       notes.forEach(note => {
-        editNote(note, password);
+        const cat = { category: note.category._id };
+        note = { ...note, ...cat };
+        editNote(note, password, alertControler);
       });
     Array.isArray(cards) &&
       cards.forEach(card => {
-        editCard(card, password);
+        const cat = { category: card.category._id };
+        card = { ...card, ...cat };
+        editCard(card, password, alertControler);
       });
     Array.isArray(identity) &&
       identity.forEach(idn => {
-        editIdentity(idn, password);
+        const cat = { category: idn.category._id };
+        idn = { ...idn, ...cat };
+        editIdentity(idn, password, alertControler);
       });
   };
 
   let passResoults = checkPassStrength(password);
+
+  // Password toggle handler
+  const togglePassword = () => {
+    // When the handler is invoked
+    // inverse the boolean state of passwordShown
+    setPasswordShown(!passwordShown);
+  };
 
   return (
     <>
@@ -87,8 +107,7 @@ const Settings = ({
                   </p>
                   <p>
                     <small>
-                      Account permission:{" "}
-                      <span className="textPrimary">{user.tier}</span>
+                      Account: <span className="textPrimary">{user.tier}</span>
                     </small>
                   </p>
                 </div>
@@ -101,55 +120,61 @@ const Settings = ({
                 </div>
 
                 <form onSubmit={e => onSubmit(e)}>
-                  <div className="fs-6">
-                    <div className="mb-1">
-                      <label
-                        htmlFor="recipient-name"
-                        className="col-form-label"
-                      >
-                        New Master Password:
-                      </label>
-                      <div className="d-flex">
+                  <div className="d-flex">
+                    <div className="mb-3">
+                      <div className="mr-1 d-flex">
                         <input
-                          type="text"
-                          className="form-control myInput vw50p"
+                          type={passwordShown ? "text" : "password"}
+                          autoComplete="current-password"
+                          className="form-control myRounded searchWidth mr-2"
+                          id="exampleInputPassword1"
                           name="password"
                           value={password}
                           onChange={e => onChange(e)}
                           minLength="14"
                           required
+                          placeholder="Master Password"
                         ></input>
+
+                        <FontAwesomeIcon
+                          icon={faEye}
+                          onClick={togglePassword}
+                          className="lrgIcon cursor mt-2 textPrimary"
+                        />
                       </div>
                     </div>
-                    <small className={passResoults[1]}>{passResoults[0]}</small>
-                    <div className="mb-1">
-                      <label
-                        htmlFor="recipient-name"
-                        className="col-form-label"
-                      >
-                        Confirm New Master Password:
-                      </label>
-                      <div className="d-flex">
-                        <input
-                          type="text"
-                          className="form-control myInput vw50p"
-                          name="password2"
-                          value={password2}
-                          onChange={e => onChange(e)}
-                          minLength="14"
-                          required
-                        ></input>
-                      </div>
+                  </div>
+                  <small className={passResoults[1]}>{passResoults[0]}</small>
+                  <div className="mb-3">
+                    <div className="mr-1 d-flex">
+                      <input
+                        type={passwordShown ? "text" : "password"}
+                        autoComplete="current-password"
+                        className="form-control myRounded searchWidth mr-2"
+                        id="exampleInputPassword2"
+                        name="password2"
+                        value={password2}
+                        onChange={e => onChange(e)}
+                        minLength="14"
+                        required
+                        placeholder="Confirm Master Password"
+                      ></input>
+
+                      <FontAwesomeIcon
+                        icon={faEye}
+                        onClick={togglePassword}
+                        className="lrgIcon cursor mt-2 textPrimary"
+                      />
                     </div>
-                    <div className="d-flex justify-content-center vw50p">
-                      <button
-                        type="submit"
-                        name="update"
-                        className="btn m-1 btn-outline-success shadow myBtn primary"
-                      >
-                        Save
-                      </button>
-                    </div>
+                  </div>
+                  <div className="d-flex justify-content-center vw50p">
+                    <button
+                      type="submit"
+                      name="update"
+                      className="btn m-1 btn-outline-success shadow myBtn primary"
+                    >
+                      Save
+                    </button>
                   </div>
                 </form>
               </div>
@@ -173,7 +198,7 @@ Settings.propTypes = {
   editIdentity: PropTypes.func.isRequired,
   setText: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
-  updateUser: PropTypes.func.isRequired
+  updateUserPassword: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -191,5 +216,5 @@ export default connect(mapStateToProps, {
   editIdentity,
   setText,
   setAlert,
-  updateUser
+  updateUserPassword
 })(Settings);

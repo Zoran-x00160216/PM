@@ -222,7 +222,7 @@ const WebAccountFormAdd = ({
               <small className={passResoults[1]}>{passResoults[0]}</small>
               <div>
                 <label htmlFor="recipient-name" className="col-form-label">
-                  URI:
+                  Web Address:
                 </label>
                 <div className="d-flex">
                   <div className="mr-1 flex-grow-1">
@@ -234,14 +234,6 @@ const WebAccountFormAdd = ({
                       onChange={e => onChange(e)}
                     ></input>
                   </div>
-                  {/* <div className="cursor">
-                          <CopyToClipboard text={uri}>
-                            <FontAwesomeIcon
-                              icon={faCopy}
-                              className="lrgIcon textPrimary"
-                            />
-                          </CopyToClipboard>
-                        </div> */}
                 </div>
               </div>
               <div className="row">

@@ -1,16 +1,15 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import AddAdmin from "./AddAdmin";
+import SetPremiumPrice from "./SetPremiumPrice";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faChartPie } from "@fortawesome/free-solid-svg-icons";
 
 const AdminSidebar = () => {
-  // const { handleLink } = props;
-
   return (
-    <div className="col-sm-3 mt-2 fs-6">
+    <div className="col-md-4">
       <div className="col">
-        <div className="m-3 mt-5 shadow-sm bgCards myRounded">
+        <div className="m-3 shadow-sm bgCards myRounded">
           <ul className="pt-4 pb-4">
             <li className="pb-3">
               <Link to="/admin/users">
@@ -32,13 +31,11 @@ const AdminSidebar = () => {
             </li>
           </ul>
         </div>
+        <AddAdmin />
+        <SetPremiumPrice />
       </div>
     </div>
   );
 };
-
-// AdminSidebar.protoTypes = {
-//   handleLink: PropTypes.string
-// };
 
 export default AdminSidebar;

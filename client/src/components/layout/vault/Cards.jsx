@@ -55,14 +55,12 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
           className="d-flex justify-content-between border-bottom mb-3"
         >
           <div>
-            <p className="margin0 fs-6">
+            <p
+              className="margin0 cursor"
+              onClick={() => setIdAndOpenModalEdit(card._id)}
+            >
               Name:
-              <span
-                onClick={() => setIdAndOpenModalEdit(card._id)}
-                className="textSecondary"
-              >
-                {card.name}
-              </span>
+              <span className="textSecondary">{card.name}</span>
             </p>
           </div>
           <div className="dropdown">
@@ -141,7 +139,7 @@ const Cards = ({ getCards, cards: { loading, cards }, text: { txt } }) => {
                       type="text"
                       name="data-search"
                       id="data-search"
-                      placeholder="Search Notes"
+                      placeholder="Search Cards"
                     />
 
                     <FontAwesomeIcon

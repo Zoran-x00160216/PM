@@ -79,7 +79,7 @@ export const createNote = (formData, text) => async dispatch => {
 };
 
 // Update profile
-export const editNote = (formData, text) => async dispatch => {
+export const editNote = (formData, text, alertControler) => async dispatch => {
   try {
     // encrypt note
     let data = formData;
@@ -103,7 +103,7 @@ export const editNote = (formData, text) => async dispatch => {
       payload: res.data
     });
 
-    dispatch(setAlert("Note Updated", "mySuccess"));
+    (alertControler && dispatch(setAlert("Note Updated", "mySuccess")));
 
   } catch (err) {
     if (err) {

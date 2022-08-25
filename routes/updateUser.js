@@ -30,4 +30,18 @@ router.put("/", async (req, res) => {
   }
 });
 
+// Edit to change master password
+router.put("/tier", async (req, res) => {
+  console.log(req.body.tier)
+
+  try {
+    const updateTier = await User.updateOne({ _id: req.user._id }, { $set: { tier: req.body.tier } });
+    console.log(updateTier);
+    res.json(updateTier);
+
+  } catch (error) {
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

@@ -3,7 +3,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "./Card";
-import SepaDebit from "./SepaDebit";
 import "./Stripe.css";
 
 const PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUB_KEY;
@@ -12,11 +11,10 @@ const stripeTestPromise = loadStripe(PUBLIC_KEY);
 const StripeContainer = () => {
   const navigate = useNavigate();
   const [openPayment, setOpenPayment] = useState({
-    card: true,
-    sepaDebit: false
+    card: true
   });
 
-  const { card, sepaDebit } = openPayment;
+  const { card } = openPayment;
   return (
     <>
       <div className="stripeContainer">
@@ -31,23 +29,14 @@ const StripeContainer = () => {
                 Close
               </button>
               <button
-                className="col-md-5 shadow  primary p-2 text-light"
-                onClick={() => setOpenPayment({ card: true, sepaDebit: false })}
+                className="col-md-10 shadow  primary p-2 text-light"
+                onClick={() => setOpenPayment({ card: true })}
               >
                 Card payment
               </button>
-              <button
-                className="col-md-5 shadow secondary p-2 text-light"
-                onClick={() => setOpenPayment({ card: false, sepaDebit: true })}
-              >
-                Sepa debit payment
-              </button>
             </div>
 
-            <Elements stripe={stripeTestPromise}>
-              {card && <Card />}
-              {sepaDebit && <SepaDebit />}
-            </Elements>
+            <Elements stripe={stripeTestPromise}>{card && <Card />}</Elements>
           </div>
         </div>
       </div>

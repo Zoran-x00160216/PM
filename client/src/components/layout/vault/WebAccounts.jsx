@@ -77,7 +77,7 @@ const WebAccounts = ({
   };
 
   const accounts =
-    // Array.isArray(webAccounts) &&
+    Array.isArray(webAccounts) &&
     filteredAccounts.map(webAccount => {
       return (
         <div
@@ -85,14 +85,12 @@ const WebAccounts = ({
           className="d-flex justify-content-between border-bottom mb-3"
         >
           <div>
-            <p className="margin0">
+            <p
+              className="margin0 cursor"
+              onClick={() => setIdAndOpenModalEdit(webAccount._id)}
+            >
               Name:{"  "}
-              <span
-                onClick={() => setIdAndOpenModalEdit(webAccount._id)}
-                className="textSecondary cursor"
-              >
-                {webAccount.name}
-              </span>
+              <span className="textSecondary">{webAccount.name}</span>
             </p>
             <p className="margin0">Username: {webAccount.username}</p>
           </div>

@@ -2,14 +2,19 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { updateUser } from "../../actions/auth";
+import { updateUserTier } from "../../actions/auth";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import StatusMessages, { useMessages } from "./StatusMessages";
+import { sendEmaiConformationPayment } from "../../actions/sendEmail";
+import { setAlert } from "../../actions/alert";
 
-const CardForm = ({ updateUser }) => {
+const CardForm = ({
+  updateUserTier,
+  setAlert,
+  sendEmaiConformationPayment,
+  auth: { user }
+}) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [messages, addMessage] = useMessages("");
   const [fullname, setFullname] = useState("");
   const navigate = useNavigate();
 
@@ -21,7 +26,7 @@ const CardForm = ({ updateUser }) => {
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
-      addMessage("Stripe.js has not yet loaded.");
+      setAlert("Stripe.js has not yet loaded.", "mySuccess");
       return;
     }
 
@@ -34,17 +39,17 @@ const CardForm = ({ updateUser }) => {
         },
         body: JSON.stringify({
           paymentMethodType: "card",
-          currency: "usd"
+          currency: "eur"
         })
       }
     ).then(r => r.json());
 
     if (backendError) {
-      addMessage(backendError.message);
+      setAlert(backendError.message, "myDanger");
       return;
     }
 
-    addMessage("Processing your payment...");
+    setAlert("Processing your payment...", "mySuccess");
 
     const {
       error: stripeError,
@@ -60,21 +65,19 @@ const CardForm = ({ updateUser }) => {
 
     if (stripeError) {
       // Show error to your customer (e.g., insufficient funds)
-      addMessage(stripeError.message);
+      setAlert(stripeError.message, "myDanger");
       return;
     }
     if (paymentIntent.status === "succeeded") {
-      updateUser("premium");
+      updateUserTier("premium");
+      sendEmaiConformationPayment(user.email);
       // setAlert("Congratulations, you upgraded to premium account", "mySuccess");
-      setTimeout(() => navigate("/webAccounts"), 2000);
+      setTimeout(() => navigate("/webAccounts"), 2500);
     }
-    // Show a success message to your customer
-    // There's a risk of the customer closing the window before callback
-    // execution. Set up a webhook or plugin to listen for the
+    // Show a success message to your customere
     // payment_intent.succeeded event that handles any business critical
     // post-payment actions.
-    // addMessage(`Payment ${paymentIntent.status}: ${paymentIntent.id}`);
-    addMessage(`Payment ${paymentIntent.status}, id: ${paymentIntent.id}`);
+    setAlert(`Payment ${paymentIntent.status}`, "mySuccess");
     // addPaymentStatus(paymentIntent.status);
   };
 
@@ -139,17 +142,22 @@ const CardForm = ({ updateUser }) => {
             Pay
           </button>
         </form>
-        <StatusMessages messages={messages} />
       </div>
     </>
   );
 };
 CardForm.propTypes = {
-  updateUser: PropTypes.func.isRequired
+  updateUserTier: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  sendEmaiConformationPayment: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { updateUser })(CardForm);
+export default connect(mapStateToProps, {
+  updateUserTier,
+  setAlert,
+  sendEmaiConformationPayment
+})(CardForm);

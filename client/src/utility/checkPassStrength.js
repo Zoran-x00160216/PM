@@ -7,7 +7,7 @@ const scorePassword = pass => {
     let letters = {};
     for (let i=0; i<pass.length; i++) {
         letters[pass[i]] = (letters[pass[i]] || 0) + 1;
-        score += 10 / letters[pass[i]];
+        score += 6 / letters[pass[i]];
     }
 
     // bonus points for mixing it up
@@ -21,7 +21,7 @@ const scorePassword = pass => {
     for (let check in variations) {
         variationCount += (variations[check] === true) ? 1 : 0;
     }
-    score += (variationCount - 1) * 6;
+    score += (variationCount - 1) * 5;
 
     return parseInt(score);
 };

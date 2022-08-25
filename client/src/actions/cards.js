@@ -74,7 +74,7 @@ export const createCard = (formData, text) => async dispatch => {
 };
 
 // Update profile
-export const editCard = (formData, text) => async dispatch => {
+export const editCard = (formData, text, alertControler) => async dispatch => {
   try {
     // encrypt card number
     let data = formData;
@@ -98,7 +98,7 @@ export const editCard = (formData, text) => async dispatch => {
       payload: res.data
     });
 
-    dispatch(setAlert("Account Updated", "mySuccess"));
+    (alertControler && dispatch(setAlert("Card Updated", "mySuccess")));
     
   } catch (err) {
     if (err) {

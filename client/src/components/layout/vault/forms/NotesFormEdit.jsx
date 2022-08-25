@@ -31,7 +31,6 @@ const NotesFormEdit = ({
   });
 
   const { name, note, category, favorite, updated, date } = formData;
-
   let account = [];
 
   useEffect(() => {
@@ -77,7 +76,9 @@ const NotesFormEdit = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    edit ? deleteNote(formData) : editNote(formData, txt.txt);
+    edit
+      ? deleteNote(formData)
+      : editNote(formData, txt.txt, { alertControler: true });
     setTimeout(() => getNotes(txt.txt), 60);
     setTimeout(() => setOpenModalEdit(false), 80);
   };
@@ -103,7 +104,7 @@ const NotesFormEdit = ({
             ></button>
           </div>
           <form onSubmit={e => onSubmit(e)}>
-            <div className="modal-body  fs-6">
+            <div className="modal-body formScroll fs-6">
               <div className="mb-1">
                 <label className="col-form-label">Name:</label>
                 <div className="d-flex">

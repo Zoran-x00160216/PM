@@ -4,7 +4,6 @@ import Spinner from "../../../../spinner/Spinner";
 
 const HibpModal = ({ setOpenModalHibp, responseHibp }) => {
   const [dataBreaches, setDataBreaches] = useState([]);
-  console.log("Boom", dataBreaches[0]);
 
   useEffect(() => {
     setDataBreaches(responseHibp);

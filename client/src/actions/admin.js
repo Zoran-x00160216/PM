@@ -25,12 +25,12 @@ export const getUsers = () => async dispatch => {
 };
 }
 
+
 // Delete profile
 export const deleteUser = id => async dispatch => {
   try {
 
     const res = await axios.delete( `${process.env.REACT_APP_SERVER_URL}/api/admin/${id}`);
-    console.log(res.data);
 
     dispatch({
       type: EDIT_USERS,
@@ -55,6 +55,102 @@ export const deleteUser = id => async dispatch => {
   }
 };
 
+
+// Add Admin
+export const createAdmin = ({ email, password }) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const body = JSON.stringify({ email, password });
+
+    const res = await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/api/admin/createAdmin`,
+      body,
+      config
+    );
+    
+    dispatch(setAlert(res.data, "mySuccess"));  
+    dispatch(getUsers());
+
+  } catch (err) {
+    if (err) {
+      dispatch(setAlert(err.response.data, "myDanger"));
+    }
+  }
+};
+
+
+// call API to send a email warning to user
+export const sendEmailWarning = email => async dispatch => {
+  try {
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    
+    const body = JSON.stringify({ email });
+
+    const res = await axios.post( `${process.env.REACT_APP_SERVER_URL}/api/admin/warningEmail`,     body,
+    config);
+   
+    (res.status === 200 &&
+    dispatch(setAlert("Email Sent", "mySuccess")));
+
+
+  } catch (err) {
+    if (err) {
+      dispatch(setAlert(err.response.data, "myDanger"));
+    }
+  }
+};
+
+
+// Load Users
+export const getPremiumPrice = () => async () => {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/auth/getPremiumPrice`);
+
+    return res.data;
+
+  } catch (err) {
+    if(err) {
+    return err.response
+  }
+};
+}
+// Delete profile
+export const setPremiumPrice = price => async dispatch  => {
+
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    
+    const body = JSON.stringify({ price });
+
+    const res = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/admin/updatePremiumPrice`,
+    body,
+    config);
+    
+    (res.status === 200 &&
+    dispatch(setAlert("Price Set", "mySuccess")));
+
+  } catch (err) {
+    if (err) {
+      dispatch(setAlert(err.response.data, "myDanger"));
+    }
+  }
+};
+
+
 // Get sum of all entries per collection in db
 export const getAllEntries = () => async () => {
   try {
@@ -66,6 +162,7 @@ export const getAllEntries = () => async () => {
     return err.response;
   }
 };
+
 
 // Get sum of all basic and premium accounts in db
 export const getUsersCount = () => async () => {
@@ -79,6 +176,7 @@ export const getUsersCount = () => async () => {
   }
 };
 
+
 // Get sum of all entries per collection where accessLevel=premium
 export const getPremiumAllEntries = () => async () => {
   try {
@@ -90,6 +188,7 @@ export const getPremiumAllEntries = () => async () => {
     return err.response;
   }
 };
+
 
 // Get sum of all entries per collection where accessLevel=basic
 export const getBasicAllEntries = () => async () => {

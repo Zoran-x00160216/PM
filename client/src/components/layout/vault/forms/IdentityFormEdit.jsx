@@ -120,7 +120,9 @@ const IdentityFormEdit = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    edit ? deleteIdentity(formData) : editIdentity(formData, txt.txt);
+    edit
+      ? deleteIdentity(formData)
+      : editIdentity(formData, txt.txt, { alertControler: true });
     setTimeout(() => getIdentity(txt.txt), 60);
     setTimeout(() => setOpenModalEdit(false), 80);
   };

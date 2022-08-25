@@ -294,9 +294,10 @@ color: var(--white);
   padding: 1rem;
   right: 5%;
   max-width: 30%;
-  top: 15vh;
+  bottom: 20vh;
   z-index: 102;
 }
+
 .alert-link {
   color: #f4f4f4;
 }
@@ -308,12 +309,13 @@ color: var(--white);
 /* search bar  */
 .input-wrap {
   width: 50%;
-  height: 2rem;
+  /* height: 2.5rem; */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 1rem 0 1rem;
-  border-radius: 0.8rem;
+  padding: 10px 1rem;
+  border: var(--secondary) 1px solid;
+  border-radius: 20px;
   background: var(--gray);
   box-sizing: border-box;
 }

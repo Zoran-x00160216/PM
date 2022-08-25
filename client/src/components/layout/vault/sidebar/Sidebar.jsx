@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import CategoryFavoritesLinks from "./CategoryFavoritesLinks";
+import { getPremiumPrice } from "../../../../actions/admin";
 import VaultLinks from "./VaultLinks";
 import Hibp from "./hibs/Hibp";
 
-const Sidebar = ({ auth: { tier } }) => {
+const Sidebar = ({ auth: { tier }, getPremiumPrice }) => {
+  const [currentPrice, setCurrentPrice] = useState();
+
+  useEffect(() => {
+    const pp = getPremiumPrice();
+    Promise.all([pp]).then(values => {
+      setCurrentPrice(values[0].price);
+    });
+  }, [currentPrice]);
+
   return (
     <div className="col-md-4 fs-6">
       <div className="col">
@@ -18,7 +28,7 @@ const Sidebar = ({ auth: { tier } }) => {
             <div className="m-3 mt-5 p-5 cardShadow bgCards myRounded  font-weight-bold">
               <b>
                 <p>Get Premium account</p>
-                <p> only 4.99eur</p>
+                <p> only {currentPrice} eur</p>
               </b>
               <Link to="/stripeContainer">
                 <button
@@ -37,11 +47,12 @@ const Sidebar = ({ auth: { tier } }) => {
 };
 
 Sidebar.protoType = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  getPremiumPrice: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps, { getPremiumPrice })(Sidebar);

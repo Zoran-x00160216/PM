@@ -1,26 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { resolve } = require("path");
-// Replace if using a different env file or config
-// const env = require("dotenv").config({ path: "./.env" });
+const PremiumPrice = require("../model/PremiumPrice");
+const dotenv = require("dotenv");
+dotenv.config({path: "./vars/.env"})
 
 const stripe = require("stripe")(
   process.env.STRIPE_SECRET_KEY
-  //   {
-  //   apiVersion: "2020-08-27",
-  //   appInfo: {
-  //     // For sample support and debugging, not required for production:
-  //     name: "stripe-samples/accept-a-payment/custom-payment-flow",
-  //     version: "0.0.2",
-  //     url: "https://github.com/stripe-samples",
-  //   },
-  // }
 );
 
-// router.get('/', (req, res) => {
-//   const path = resolve(process.env.STATIC_DIR + '/index.html');
-//   res.sendFile(path);
-// });
 
 router.get("/config", (req, res) => {
   res.send({
@@ -30,7 +17,9 @@ router.get("/config", (req, res) => {
 
 router.post("/", async (req, res) => {
   const { paymentMethodType, currency, paymentMethodOptions } = req.body;
-
+  
+  const priceSubscription = await PremiumPrice.findOne({price_id: 1});
+  const convertTo = priceSubscription.price * 100 
   // Each payment method type has support for different currencies. In order to
   // support many payment method types and several currencies, this server
   // endpoint accepts both the payment method type and the currency as
@@ -39,7 +28,7 @@ router.post("/", async (req, res) => {
   // Some example payment method types include `card`, `ideal`, and `alipay`.
   const params = {
     payment_method_types: [paymentMethodType],
-    amount: 499,
+    amount: convertTo,
     description: "Premium account subscription",
     currency: "EUR",
   };
@@ -104,42 +93,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// router.post('/webhook', async (req, res) => {
-//   let data, eventType;
 
-//   // Check if webhook signing is configured.
-//   if (process.env.STRIPE_WEBHOOK_SECRET) {
-//     // Retrieve the event by verifying the signature using the raw body and secret.
-//     let event;
-//     let signature = req.headers['stripe-signature'];
-//     try {
-//       event = stripe.webhooks.constructEvent(
-//         req.rawBody,
-//         signature,
-//         process.env.STRIPE_WEBHOOK_SECRET
-//       );
-//     } catch (err) {
-//       console.log(`⚠️  Webhook signature verification failed.`);
-//       return res.sendStatus(400);
-//     }
-//     data = event.data;
-//     eventType = event.type;
-//   } else {
-//     // Webhook signing is recommended, but if the secret is not configured in `config.js`,
-//     // we can retrieve the event data directly from the request body.
-//     data = req.body.data;
-//     eventType = req.body.type;
-//   }
-
-//   if (eventType === 'payment_intent.succeeded') {
-//     // Funds have been captured
-//     // Fulfill any orders, e-mail receipts, etc
-//     // To cancel the payment after capture you will need to issue a Refund (https://stripe.com/docs/api/refunds)
-//     console.log('💰 Payment captured!');
-//   } else if (eventType === 'payment_intent.payment_failed') {
-//     console.log('❌ Payment failed.');
-//   }
-//   res.sendStatus(200);
-// })
 
 module.exports = router;

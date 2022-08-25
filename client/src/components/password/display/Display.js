@@ -1,11 +1,9 @@
 import React, { useState, useRef } from "react";
 import "./Display.css";
 import { Container } from "../container/Container";
-// import Button from "../container/button/Button";
-// import Tooltip from "../container/tooltip/Tooltip";
+import checkPassStrength  from "../../../utility/checkPassStrength"
 import {
   generatePassword
-  // copyToClipBoard
 } from "../../../utility/passwordGenerator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,8 +16,7 @@ const Display = ({ setPassInput, setModal }) => {
   const [password, setPassword] = useState("");
   const [rangeValue, setRange] = useState();
   const [passwordProps, setPasswordProps] = useState();
-  // const [tooltip, setTooltip] = useState(false);
-  // const [type, setType] = useState("password");
+
   const passwordRef = useRef(null);
   let pwdDescription = "";
 
@@ -32,11 +29,12 @@ const Display = ({ setPassInput, setModal }) => {
   };
 
   const setBackgroundColor = password => {
-    if (password && password.length >= 14 && password.length <= 20) {
-      pwdDescription = "Strong password";
+    let strengthPass =  checkPassStrength(password)
+    if (strengthPass[0] === "good") {
+      pwdDescription = "Good password";
       return "#059bffd7";
-    } else if (password && password.length > 20) {
-      pwdDescription = "Super strong password";
+    } else if (strengthPass[0] === "strong") {
+      pwdDescription = "Strong password";
       return "#1fbb8c";
     } else {
       pwdDescription = "Bad password";

@@ -33,7 +33,6 @@ const WebAccountFormEdit = ({
   categoryRedux: { categories }
 }) => {
   const [openModal, setOpenModal] = useState(false);
-
   // state for edit or delete toggle if true delete
   const [edit, setEdit] = useState(false);
 
@@ -128,7 +127,9 @@ const WebAccountFormEdit = ({
   // check if edit is false or true and submit accordingly true=delete
   const onSubmit = e => {
     e.preventDefault();
-    edit ? deleteWebAccount(formData) : editWebAccount(formData, txt.txt);
+    edit
+      ? deleteWebAccount(formData)
+      : editWebAccount(formData, txt.txt, { alertControler: true });
     setTimeout(() => getWebAccounts(txt.txt), 60);
     setTimeout(() => setOpenModalEdit(false), 80);
   };
@@ -267,7 +268,7 @@ const WebAccountFormEdit = ({
               </div>
               <div className="mb-1">
                 <label htmlFor="recipient-name" className="col-form-label">
-                  URI:
+                  Web Address:
                 </label>
                 <div className="d-flex">
                   <div className="mr-1 flex-grow-1">

@@ -31,34 +31,36 @@ const PieChartComponent = ({ setText, data, colors }) => {
     return null;
   };
   return (
-    <div className="col-sm-6 mt-3 mr-auto">
-      <div className="m-3 p-5 shadow-sm mb-1 bgCards myRounded">
-        <div className="text-center border-bottom">
-          <h5>{setText}</h5>
+    <>
+      <div className="col-sm-6 mt-3 mr-auto">
+        <div className="m-3 p-5 shadow-sm mb-1 bgCards myRounded">
+          <div className="text-center border-bottom">
+            <p>{setText}</p>
+          </div>
+          <PieChart width={200} height={200}>
+            <Pie
+              data={pieData}
+              color="#000000"
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={60}
+              fill="#8884d8"
+            >
+              {pieData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+          </PieChart>
         </div>
-        <PieChart width={300} height={300}>
-          <Pie
-            data={pieData}
-            color="#000000"
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={100}
-            fill="#8884d8"
-          >
-            {pieData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-        </PieChart>
       </div>
-    </div>
+    </>
   );
 };
 

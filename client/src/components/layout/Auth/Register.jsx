@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAlert } from "../../../actions/alert";
@@ -14,32 +14,33 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    password2: "",
-    tier: "basic"
+    password2: ""
   });
 
   // state for password toggle
   const [passwordShown, setPasswordShown] = useState(false);
 
-  const { email, password, password2, tier } = formData;
+  const { email, password, password2 } = formData;
+
+  useEffect(() => {
+    // Navigate to if register in
+    if (isAuthenticated) {
+      navigate("/webAccounts");
+    }
+  }, [isAuthenticated]);
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = async e => {
+  const onSubmit = e => {
     e.preventDefault();
     if (password !== password2) {
       setAlert("Passwords do not match", "myDanger");
     } else {
       setText(password);
-      register({ email, password, tier });
+      register({ email, password });
     }
   };
-
-  // Navigate to if register in
-  if (isAuthenticated) {
-    navigate("/webAccounts");
-  }
 
   // Password toggle handler
   const togglePassword = () => {

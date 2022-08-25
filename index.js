@@ -4,6 +4,8 @@ const app = express();
 const verify = require("./middleware/jwtVerify");
 const verifyAdmin = require("./middleware/jwtVerify");
 const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config({path: "./vars/.env"})
 
 connectDB();
 
@@ -39,7 +41,7 @@ app.use("/api/creditCards", verify, require("./routes/creditCards"));
 app.use("/api/identity", verify, require("./routes/identity"));
 app.use("/api/category", verify, require("./routes/category"));
 app.use("/api/secretNotes", verify, require("./routes/secretNotes"));
-app.use("/api/shareLink", verify, require("./routes/shareLink"));
+app.use("/api/email", verify, require("./routes/email"));
 app.use("/api/admin", verifyAdmin, require("./routes/admin"));
 
 // catch 404 and forward to error handler

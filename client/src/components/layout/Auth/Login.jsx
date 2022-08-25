@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { login } from "../../../actions/auth";
@@ -18,6 +18,19 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
 
   const { email, password } = formData;
 
+  useEffect(() => {
+    // Navigate to if register in
+    // Navigate to dashboard, vault for user or admin dashboard for admin
+    if (isAuthenticated) {
+      setText(password);
+      if (tier === "admin") {
+        navigate("/adminDashboard");
+      } else {
+        navigate("/webAccounts");
+      }
+    }
+  }, [isAuthenticated]);
+
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -25,16 +38,6 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
     e.preventDefault();
     login(email, password);
   };
-
-  // Navigate to dashboard, vault for user or admin dashboard for admin
-  if (isAuthenticated) {
-    setText(password);
-    if (tier === "admin") {
-      navigate("/adminDashboard");
-    } else {
-      navigate("/webAccounts");
-    }
-  }
 
   // Password toggle handler
   const togglePassword = () => {

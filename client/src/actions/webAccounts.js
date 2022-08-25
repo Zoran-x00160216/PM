@@ -40,7 +40,7 @@ export const getWebAccounts = text => async dispatch => {
   }
 };
 
-// Create or update profile
+// Create webAccount and dispatch res to redux store
 export const createWebAccount = (formData, text) => async dispatch => {
   try {
     // encrypt password
@@ -59,14 +59,14 @@ export const createWebAccount = (formData, text) => async dispatch => {
       data,
       config
     );
-
+    
     dispatch({
       type: EDIT_WEB_ACCOUNTS,
       payload: res.data
     });
 
     dispatch(setAlert("Account Created", "mySuccess"));
-
+    
   } catch (err) {
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
@@ -83,21 +83,20 @@ export const createWebAccount = (formData, text) => async dispatch => {
   }
 };
 
-// Update profile
-export const editWebAccount = (formData, text) => async dispatch => {
+// Update webAccount and dispatch res to redux store
+export const editWebAccount = (formData, text, alertControler) => async dispatch => {
   try {
     
     // encrypt password
     let data = formData;
     const encrypted = CryptoJS.AES.encrypt(data.password, text).toString();
-    data.password = encrypted;
+    data.password = encrypted;  
 
     const config = {
       headers: {
         "Content-Type": "application/json"
       }
-    };
-    // console.log(data);
+    }; 
 
     const res = await axios.put(
       `${process.env.REACT_APP_SERVER_URL}/api/webAccounts`,
@@ -110,7 +109,8 @@ export const editWebAccount = (formData, text) => async dispatch => {
       payload: res.data
     });
 
-    dispatch(setAlert("Account Updated", "mySuccess"));
+
+    (alertControler && dispatch(setAlert("Account Updated", "mySuccess")));
 
   } catch (err) {
     if (err) {

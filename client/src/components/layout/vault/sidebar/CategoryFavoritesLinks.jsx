@@ -74,7 +74,7 @@ const CategoryFavoritesLinks = ({
             <div>
               <FontAwesomeIcon
                 icon={faAngleDown}
-                className="lrgIcon textPrimary mr-1"
+                className="lrgIcon textPrimary mr-1 cursor"
                 onClick={() => setToggleCategories(!toggleCategories)}
               />
               Category

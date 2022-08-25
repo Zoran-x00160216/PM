@@ -53,15 +53,12 @@ const Identity = ({ getIdentity, identity: { loading, identity } }) => {
           className="d-flex justify-content-between border-bottom mb-3"
         >
           <div>
-            <p className="margin0 fs-6">
+            <p
+              className="margin0 cursor"
+              onClick={() => setIdAndOpenModalEdit(i._id)}
+            >
               Name:
-              <span
-                onClick={() => setIdAndOpenModalEdit(i._id)}
-                className="textSecondary"
-              >
-                {" "}
-                {i.name}
-              </span>
+              <span className="textSecondary"> {i.name}</span>
             </p>
             <p className="margin0 fs-6">Email: {i.email}</p>
           </div>

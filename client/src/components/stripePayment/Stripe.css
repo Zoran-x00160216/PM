@@ -21,16 +21,6 @@
   margin: 20px 0;
 }
 
-#messages {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
-  background-color: #0a253c;
-  color: #00d924;
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: var(--radius);
-  font-size: 0.7em;
-}
-
 .myP-2 {
   padding: 10px;
 }

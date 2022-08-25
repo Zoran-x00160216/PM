@@ -21,7 +21,7 @@ const AdminDashboard = ({
   const [allUsers, setAllUsers] = useState();
   const [allEntriesPremium, setAllEntriesPremium] = useState(null);
   const [allEntriesBasic, setAllEntriesBasic] = useState(null);
-  console.log(allEntriesBasic);
+
   // call a functions to get db summary per category, users and access priviledge
   useEffect(() => {
     try {
@@ -54,15 +54,15 @@ const AdminDashboard = ({
   }, []);
   // console.log(allEntriesBasic, allEntriesPremium);
 
-  return allEntriesPremium === null && getBasicAllEntries === null ? (
+  return allEntriesPremium === null || getBasicAllEntries === null ? (
     <Spinner />
   ) : (
     <Fragment>
-      <div className="container">
+      <div className="myContainer mt-5">
         <div className="row">
           <AdminSidebar handleLink={"adminDashboard"} />
 
-          <div className="col-sm-9 mt-1">
+          <div className="col-sm-8">
             <div className="row">
               <PieChartComponent
                 setText={"Basic vs Premium"}
@@ -75,12 +75,12 @@ const AdminDashboard = ({
                 colors={["#059bffd7", "#1fbb8c", "#e66969", "#ff7f50"]}
               />
               <PieChartComponent
-                setText={"Basic - all entries per category"}
+                setText={"Basic - per collection"}
                 data={allEntriesBasic}
                 colors={["#059bffd7", "#1fbb8c", "#e66969", "#ff7f50"]}
               />
               <PieChartComponent
-                setText={"Premium - all entries per category"}
+                setText={"Premium - per collection"}
                 data={allEntriesPremium}
                 colors={["#059bffd7", "#1fbb8c", "#e66969", "#ff7f50"]}
               />

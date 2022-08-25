@@ -80,8 +80,18 @@ const categoryValidation = (data) => {
   return ValidationSchema.validate(data);
 };
 
+const premiumPriceValidation = (data) => {
+  const ValidationSchema = Joi.object().keys({
+    price: Joi.number().required(),
+    price_id: Joi.number().empty(""),
+    updated: Joi.date().empty(""),
+  });
+  return ValidationSchema.validate(data);
+};
+
 module.exports.webAccountValidation = webAccountValidation;
 module.exports.crediCardValidation = crediCardValidation;
 module.exports.identityValidation = identityValidation;
 module.exports.secretNoteValidation = secretNoteValidation;
 module.exports.categoryValidation = categoryValidation;
+module.exports.premiumPriceValidation = premiumPriceValidation;

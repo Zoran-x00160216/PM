@@ -53,14 +53,12 @@ const Notes = ({ getNotes, notes: { loading, notes }, text: { txt } }) => {
           className="d-flex justify-content-between border-bottom mb-3"
         >
           <div>
-            <p className="margin0 fs-6">
+            <p
+              className="margin0 fs-6 cursor"
+              onClick={() => setIdAndOpenModalEdit(n._id)}
+            >
               Name:
-              <span
-                onClick={() => setIdAndOpenModalEdit(n._id)}
-                className="textSecondary"
-              >
-                {n.name}
-              </span>
+              <span className="textSecondary">{n.name}</span>
             </p>
             {/* <p className="margin0">Note: {note.note}</p> */}
           </div>

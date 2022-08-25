@@ -35,18 +35,17 @@ const CHECKBOX_LIST = [
   }
 ];
 
-const Container = props => {
-  const {
-    setModal,
-    setPassInput,
-    setPassword,
-    setRange,
-    setPasswordProps,
-    passwordRef,
-    type
-  } = props;
+const Container = ({
+  setModal,
+  setPassInput,
+  setPassword,
+  setRange,
+  setPasswordProps,
+  passwordRef,
+  type
+}) => {
 
-  const [rangeValue, setRangeValue] = useState();
+  const [rangeValue, setRangeValue] = useState("");
   const [checkbox, setCheckBox] = useState({
     uppercase: true,
     lowercase: true,
@@ -144,7 +143,7 @@ const Container = props => {
   };
 
   const onChangeCheckBox = e => {
-    if (type !== "pin") {
+    // if (type !== "pin") {
       let { name, checked } = e.target;
       CHECKBOX_LIST.map(checkbox => {
         if (checkbox.name === name) {
@@ -159,7 +158,7 @@ const Container = props => {
 
         return "";
       });
-    }
+    
   };
 
   const copyClipBoard = elementRef => e => {
@@ -206,7 +205,7 @@ const Container = props => {
       </div>
       <br />
 
-      <div className="text-center">
+      <div className="text-center mt-5">
         <div className="row">
           <div className="col-sm-4">
             <Button

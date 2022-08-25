@@ -42,7 +42,7 @@ export const loadUser = () => async dispatch => {
 };
 
 // Reg User
-export const register = ({ email, password, tier }) => async dispatch => {
+export const register = ({ email, password }) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -50,7 +50,7 @@ export const register = ({ email, password, tier }) => async dispatch => {
       }
     };
 
-    const body = JSON.stringify({ email, password, tier });
+    const body = JSON.stringify({ email, password });
 
     const res = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}/api/auth/register`,
@@ -110,7 +110,6 @@ export const login = (email, password) => async dispatch => {
   } catch (err) {
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
-
       dispatch({
         type: LOGIN_FAIL
       });
@@ -119,23 +118,24 @@ export const login = (email, password) => async dispatch => {
   }
 };
 
-// Update user account
-export const updateUser = ({password}) => async dispatch => {
+// Update user master password
+export const updateUserPassword = (password) => async dispatch => {
   try {
     const config = {
       headers: {
         "Content-Type": "application/json"
       }
     };
+    console.log(password);
     const body = JSON.stringify({ password });
 
-    const res = await axios.put(
+    await axios.put(
       `${process.env.REACT_APP_SERVER_URL}/api/updateUser`,
       body,
       config
     );
     
-    setTimeout(() => dispatch(setAlert(res.data.message, "mySuccess")), 2000);
+   dispatch(setAlert("Master Password Updated", "mySuccess"))
 
     dispatch(loadUser());
   } catch (err) {
@@ -145,6 +145,34 @@ export const updateUser = ({password}) => async dispatch => {
     }
   }
 };
+
+// Update user master password
+export const updateUserTier = (tier) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    const body = JSON.stringify({ tier });
+
+    await axios.put(
+      `${process.env.REACT_APP_SERVER_URL}/api/updateUser/tier`,
+     body,
+      config 
+    );
+    
+    setTimeout(() => dispatch(setAlert("Premium Account Enabled", "mySuccess")), 2000);
+
+    dispatch(loadUser());
+  } catch (err) {
+    if (err) {
+      // console.log(err.response.data);
+      dispatch(setAlert(err.response.data, "myDanger"));
+    }
+  }
+};
+
 
 // Logout user
 export const logout = () => dispatch => {

@@ -24,7 +24,6 @@ router.post("/", async (req, res) => {
   };
 
   // Validate Data
-  console.log(data)
   const { error } = secretNoteValidation(data);
   if (error) return res.status(400).send(error.details[0].message);
   // console.log(req.user._id, req.body);
@@ -66,7 +65,6 @@ router.put("/", async (req, res) => {
     updated: new Date(),
   };
 
-  console.log(data);
   // Validate Data
   const { error } = secretNoteValidation(data);
   if (error) return res.status(400).send(error.details[0].message);
@@ -77,6 +75,7 @@ router.put("/", async (req, res) => {
       { $set: data }
     );
     res.json(secretNote);
+    
   } catch (error) {
     res.send(error);
   }

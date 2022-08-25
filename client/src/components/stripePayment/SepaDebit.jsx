@@ -3,16 +3,15 @@ import { IbanElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { updateUser } from "../../actions/auth";
-import StatusMessages, { useMessages } from "./StatusMessages";
+import { updateUserTier } from "../../actions/auth";
 import ReadMoreReadLess from "./ReadMoreReadLess";
+import { setAlert } from "../../actions/alert";
 
-const SepaDebitForm = ({ updateUser }) => {
+const SepaDebitForm = ({ updateUserTier, setAlert }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [messages, addMessage] = useMessages();
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
@@ -23,7 +22,7 @@ const SepaDebitForm = ({ updateUser }) => {
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
-      addMessage("Stripe.js has not yet loaded.");
+      setAlert("Stripe.js has not yet loaded.");
       return;
     }
 
@@ -42,11 +41,11 @@ const SepaDebitForm = ({ updateUser }) => {
     ).then(r => r.json());
 
     if (backendError) {
-      addMessage(backendError.message);
+      setAlert(backendError.message);
       return;
     }
 
-    addMessage("Client secret returned");
+    setAlert("Processing your payment...", "mySuccess");
 
     const {
       error: stripeError,
@@ -63,7 +62,7 @@ const SepaDebitForm = ({ updateUser }) => {
 
     if (stripeError) {
       // Show error to your customer (e.g., insufficient funds)
-      addMessage(stripeError.message);
+      setAlert(stripeError.message, "myDanger");
       return;
     }
 
@@ -73,23 +72,33 @@ const SepaDebitForm = ({ updateUser }) => {
     //
     // In practice, you should use webhook notifications for fulfillment.
     if (paymentIntent.status === "processing") {
-      addMessage(
-        `Payment processing: ${paymentIntent.id} check webhook events for fulfillment.`
-      );
-      addMessage("Refetching payment intent in 5s.");
+      // addMessage(
+      //   `Payment processing: ${paymentIntent.id} check webhook events for fulfillment.`
+      // );
+      // addMessage("Refetching payment intent in 5s.");
       setTimeout(async () => {
         const { paymentIntent } = await stripe.retrievePaymentIntent(
           clientSecret
         );
-        addMessage(`Payment ${paymentIntent.status}, id: ${paymentIntent.id}`);
-      }, 5000);
+        setAlert(`Payment ${paymentIntent.status}`, "mySuccess");
+      }, 3000);
+      console.log(paymentIntent.status);
+      if (paymentIntent.status === "succeeded") {
+        updateUserTier("premium");
+        setTimeout(() => navigate("/webAccounts"), 2500);
+      }
     } else {
-      addMessage(`Payment ${paymentIntent.status}, id: ${paymentIntent.id}`);
+      setAlert(`Payment ${paymentIntent.status}`, "mySuccess");
+      console.log(paymentIntent.status);
+      if (paymentIntent.status === "succeeded") {
+        updateUserTier("premium");
+        setTimeout(() => navigate("/webAccounts"), 2500);
+      }
     }
+    console.log(paymentIntent.status);
     if (paymentIntent.status === "succeeded") {
-      updateUser("premium");
-      // setAlert("Congratulations, you upgraded to premium account", "mySuccess");
-      setTimeout(() => navigate("/vault"), 2000);
+      updateUserTier("premium");
+      setTimeout(() => navigate("/webAccounts"), 2500);
     }
   };
 
@@ -161,18 +170,20 @@ const SepaDebitForm = ({ updateUser }) => {
           receive notifications for future debits up to 2 days before they
           occur.
         </ReadMoreReadLess>
-        <StatusMessages messages={messages} />
       </div>
     </>
   );
 };
 
 SepaDebitForm.propTypes = {
-  updateUser: PropTypes.func.isRequired
+  updateUserTier: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { updateUser })(SepaDebitForm);
+export default connect(mapStateToProps, { updateUserTier, setAlert })(
+  SepaDebitForm
+);

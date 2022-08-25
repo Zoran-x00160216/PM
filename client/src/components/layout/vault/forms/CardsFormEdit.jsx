@@ -96,7 +96,9 @@ const CardsFormEdit = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    edit ? deleteCard(formData) : editCard(formData, txt.txt);
+    edit
+      ? deleteCard(formData)
+      : editCard(formData, txt.txt, { alertControler: true });
     setTimeout(() => getCards(txt.txt), 60);
     setTimeout(() => setOpenModalEdit(false), 80);
   };
