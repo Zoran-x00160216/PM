@@ -4,7 +4,7 @@ const app = express();
 const verify = require("./middleware/jwtVerify");
 const verifyAdmin = require("./middleware/jwtVerify");
 const path = require("path")
-const cors = require("cors");
+// const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config({path: "./vars/.env"})
 
@@ -21,11 +21,11 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 
 // Enable CORS Requests only from in .env
-app.use(
-  cors({
-    origin: process.env.DOMAIN,
-  })
-);
+// app.use(
+//   cors({
+//     origin: process.env.DOMAIN,
+//   })
+// );
 
 
 // Init Middleware
