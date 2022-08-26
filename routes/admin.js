@@ -209,8 +209,8 @@ router.get("/sumusers", async (req, res) => {
       },
     ];
 
-    // console.log(allCount);
     res.json(allCount);
+    
   } catch (error) {
     res.status(500).send("Server error");
   }

@@ -107,7 +107,6 @@ router.post("/login", async (req, res) => {
 router.get("/getPremiumPrice", async (req, res) => {
   try {
     const priceSubscription = await PremiumPrice.findOne({price_id: 1});
-    console.log(priceSubscription.price * 100)
     res.json(priceSubscription);
   } catch (error) {
     res.status(500).send("Server error");

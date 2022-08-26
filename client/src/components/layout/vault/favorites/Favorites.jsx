@@ -58,13 +58,13 @@ const Favorites = ({ webAccounts: { webAccounts }, auth: { tier } }) => {
           edit={openPayment}
         />
       )}
-      <div className="container myVh">
+      <div className="myContainer myVh">
         <div className="row">
           <Sidebar />
-          <div className="col-sm-6 mt-3">
+          <div className="col-sm-8 mt-3">
             <div className="m-2 p-3 shadow-sm mb-2 small-text bgCards myRounded">
               <div className="mb-2">
-              <span>Add </span>
+                <span>Add </span>
                 <FontAwesomeIcon
                   icon={faPlus}
                   className="textPrimary smIcon"

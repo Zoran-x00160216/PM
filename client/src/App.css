@@ -167,7 +167,8 @@ color: var(--white);
 }
 
 .navbar {
-  height: 60px;
+  height: auto;
+  width: 100vw;
 }
 
 .navbar img {
@@ -181,7 +182,10 @@ color: var(--white);
 }
 
 .myNavbar {
-  padding-left: 100px;
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  justify-items: center;
 }
 
 .navbar-nav {

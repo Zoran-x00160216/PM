@@ -71,7 +71,7 @@ const Container = ({
     checkBoxCount();
 
     // eslint-disable-next-line
-  }, [uppercase, lowercase, symbols, numbers]);
+  }, [uppercase, lowercase, symbols, numbers, checkbox, rangeValue]);
 
   const checkBoxCount = () => {
     const checkedCount = Object.keys(checkbox).filter(key => checkbox[key]);

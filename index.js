@@ -3,6 +3,7 @@ const connectDB = require("./database/db");
 const app = express();
 const verify = require("./middleware/jwtVerify");
 const verifyAdmin = require("./middleware/jwtVerify");
+const path = require("path")
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config({path: "./vars/.env"})
@@ -43,6 +44,16 @@ app.use("/api/category", verify, require("./routes/category"));
 app.use("/api/secretNotes", verify, require("./routes/secretNotes"));
 app.use("/api/email", verify, require("./routes/email"));
 app.use("/api/admin", verifyAdmin, require("./routes/admin"));
+
+// Serve static assets in production
+if(process.env.NODE_ENV === 'production' ){
+  // static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  })
+}
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
