@@ -12,21 +12,21 @@ const SetPremiumPrice = ({ setPremiumPrice, getPremiumPrice }) => {
 
   useEffect(() => {
     const pp = getPremiumPrice();
-    Promise.all([pp]).then(values => {
+    Promise.all([pp]).then((values) => {
       setCurrentPrice(values[0].price);
     });
-  }, [currentPrice]);
+  }, [currentPrice, getPremiumPrice]);
 
-  const onChange = e => {
+  const onChange = (e) => {
     e.preventDefault();
     setPremPrice({ [e.target.name]: e.target.value });
   };
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     setPremiumPrice(price);
     setPremPrice({ price: "" });
     const pp = getPremiumPrice();
-    Promise.all([pp]).then(values => {
+    Promise.all([pp]).then((values) => {
       setCurrentPrice(values[0].price);
     });
     navigate("/adminDashboard");
@@ -39,7 +39,7 @@ const SetPremiumPrice = ({ setPremiumPrice, getPremiumPrice }) => {
           Here you can change the price for a premium subscription, current
           price {currentPrice} eur
         </p>
-        <form onSubmit={e => onSubmit(e)}>
+        <form onSubmit={(e) => onSubmit(e)}>
           <div className="modal-body  fs-6">
             <div className="mb-3">
               <label
@@ -54,7 +54,7 @@ const SetPremiumPrice = ({ setPremiumPrice, getPremiumPrice }) => {
                   className="form-control myInput bgCards myRounded"
                   name="price"
                   value={price}
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                   required
                 ></input>
               </div>
@@ -76,10 +76,10 @@ const SetPremiumPrice = ({ setPremiumPrice, getPremiumPrice }) => {
 
 SetPremiumPrice.propType = {
   setPremiumPrice: PropTypes.func.isRequired,
-  getPremiumPrice: PropTypes.func.isRequired
+  getPremiumPrice: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   setPremiumPrice,
-  getPremiumPrice
+  getPremiumPrice,
 })(SetPremiumPrice);

@@ -2,10 +2,10 @@
   "name": "passwd_manage_app",
   "version": "1.0.0",
   "description": "Password Manager",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node server",
-    "server": "nodemon server",
+    "start": "nodemon server.js",
+    "server": "nodemon server", 
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run start\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"

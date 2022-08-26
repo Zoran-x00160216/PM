@@ -13,15 +13,15 @@ const CatNotes = ({ getNotes, notes: { notes }, text: { txt }, c }) => {
 
   useEffect(() => {
     getNotes(txt.txt);
-  }, []);
+  }, [getNotes, txt.txt]);
 
-  const setIdAndOpenModalEdit = id => {
+  const setIdAndOpenModalEdit = (id) => {
     setNoteId(id);
     setOpenModalEdit(true);
   };
   const accounts =
     Array.isArray(notes) &&
-    notes.map(n => {
+    notes.map((n) => {
       return n.category._id !== c ? null : (
         <div
           key={n._id}
@@ -88,12 +88,12 @@ CatNotes.propTypes = {
   getNotes: PropTypes.func.isRequired,
   notes: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired,
-  c: PropTypes.string.isRequired
+  c: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   notes: state.notes,
-  text: state.text
+  text: state.text,
 });
 
 export default connect(mapStateToProps, { getNotes })(CatNotes);

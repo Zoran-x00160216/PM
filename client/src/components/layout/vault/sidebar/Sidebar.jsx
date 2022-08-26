@@ -12,10 +12,10 @@ const Sidebar = ({ auth: { tier }, getPremiumPrice }) => {
 
   useEffect(() => {
     const pp = getPremiumPrice();
-    Promise.all([pp]).then(values => {
+    Promise.all([pp]).then((values) => {
       setCurrentPrice(values[0].price);
     });
-  }, [currentPrice]);
+  }, [currentPrice, getPremiumPrice]);
 
   return (
     <div className="col-md-4 fs-6">
@@ -48,11 +48,11 @@ const Sidebar = ({ auth: { tier }, getPremiumPrice }) => {
 
 Sidebar.protoType = {
   auth: PropTypes.object.isRequired,
-  getPremiumPrice: PropTypes.func.isRequired
+  getPremiumPrice: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getPremiumPrice })(Sidebar);

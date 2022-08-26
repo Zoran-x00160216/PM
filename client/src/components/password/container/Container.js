@@ -124,7 +124,7 @@ const Container = ({
     setRange(length);
   };
 
-  useMemo(updateCheckBoxes, [type]);
+  useMemo(updateCheckBoxes, [type, updateCheckBoxes]);
 
   const passwordGenerated = (checkbox, rangeValue) => {
     const pwd =

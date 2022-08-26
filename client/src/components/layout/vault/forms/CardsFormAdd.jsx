@@ -10,7 +10,7 @@ const CardsFormAdd = ({
   getCards,
   setOpenModalAdd,
   text: { txt },
-  categoryRedux: { categories }
+  categoryRedux: { categories },
 }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -18,22 +18,16 @@ const CardsFormAdd = ({
     expiryMonth: "",
     expiryYear: "",
     category: "",
-    favorite: false
+    favorite: false,
   });
 
-  const {
-    name,
-    number,
-    expiryMonth,
-    expiryYear,
-    category,
-    favorite
-  } = formData;
+  const { name, number, expiryMonth, expiryYear, category, favorite } =
+    formData;
 
   let catId = "";
   const cat =
     Array.isArray(categories) &&
-    categories.map(c => {
+    categories.map((c) => {
       if (c.name === "no category") {
         catId = c._id;
       }
@@ -49,19 +43,19 @@ const CardsFormAdd = ({
     if (category === "") {
       setFormData({ ...formData, category: catId });
     }
-  }, []);
+  }, [category, formData, catId]);
 
-  const onChange = e => {
+  const onChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = e => {
+  const handleSwitch = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     createCard(formData, txt.txt);
     setTimeout(() => getCards(txt.txt), 60);
@@ -88,7 +82,7 @@ const CardsFormAdd = ({
               }}
             ></button>
           </div>
-          <form onSubmit={e => onSubmit(e)}>
+          <form onSubmit={(e) => onSubmit(e)}>
             <div className="modal-body formScroll fs-6">
               <div className="mb-1">
                 <label htmlFor="recipient-name" className="col-form-label">
@@ -100,7 +94,7 @@ const CardsFormAdd = ({
                     className="form-control myInput"
                     name="name"
                     value={name}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   ></input>
                 </div>
@@ -115,7 +109,7 @@ const CardsFormAdd = ({
                     className="form-control myInput"
                     name="number"
                     value={number}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     minLength="14"
                     maxLength="14"
                     required
@@ -133,7 +127,7 @@ const CardsFormAdd = ({
                     id="inputGroupSelect01"
                     name="expiryMonth"
                     value={expiryMonth}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   >
                     <option defaultValue={""}></option>
@@ -161,7 +155,7 @@ const CardsFormAdd = ({
                     id="inputGroupSelect02"
                     name="expiryYear"
                     value={expiryYear}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   >
                     <option defaultValue={""}></option>
@@ -185,7 +179,7 @@ const CardsFormAdd = ({
                     id="inputGroupSelect01"
                     name="category"
                     value={category}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   >
                     {cat}
                   </select>
@@ -201,7 +195,7 @@ const CardsFormAdd = ({
                       // role="switch"
                       name="favorite"
                       value={favorite}
-                      onChange={e => {
+                      onChange={(e) => {
                         handleSwitch(e);
                       }}
                       checked={favorite}
@@ -240,15 +234,15 @@ CardsFormAdd.propType = {
   getCards: PropTypes.func.isRequired,
   text: PropTypes.object.isRequired,
   setOpenModalAdd: PropTypes.func.isRequired,
-  categoryRedux: PropTypes.object.isRequired
+  categoryRedux: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   text: state.text,
-  categoryRedux: state.categoryRedux
+  categoryRedux: state.categoryRedux,
 });
 
 export default connect(mapStateToProps, {
   createCard,
-  getCards
+  getCards,
 })(CardsFormAdd);

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import {
   deleteWebAccount,
   editWebAccount,
-  getWebAccounts
+  getWebAccounts,
 } from "../../../../actions/webAccounts";
 import { generatePassword } from "../../../../utility/passwordGenerator";
 import { formatDate } from "../../../../utility/formatDate";
@@ -17,7 +17,7 @@ import {
   faTrashCan,
   faArrowRotateLeft,
   faEye,
-  faGear
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./FormModal.css";
@@ -30,7 +30,7 @@ const WebAccountFormEdit = ({
   text: { txt },
   setOpenModalEdit,
   loginId,
-  categoryRedux: { categories }
+  categoryRedux: { categories },
 }) => {
   const [openModal, setOpenModal] = useState(false);
   // state for edit or delete toggle if true delete
@@ -43,7 +43,7 @@ const WebAccountFormEdit = ({
     uppercase: true,
     lowercase: true,
     symbols: true,
-    numbers: true
+    numbers: true,
   };
 
   // state for data
@@ -58,7 +58,7 @@ const WebAccountFormEdit = ({
     favorite: false,
     note: "",
     updated: "",
-    date: ""
+    date: "",
   });
 
   const {
@@ -70,17 +70,17 @@ const WebAccountFormEdit = ({
     favorite,
     note,
     updated,
-    date
+    date,
   } = formData;
 
   // loop over all login accounts and store in var one matching param id
-  let account = [];
 
   useEffect(() => {
+    let account = [];
     Array.isArray(webAccounts) &&
-      webAccounts.forEach(webAccount => {
+      webAccounts.forEach((webAccount) => {
         if (loginId === webAccount._id) {
-          Object.keys(webAccount).forEach(function() {
+          Object.keys(webAccount).forEach(function () {
             account.push(webAccount);
           });
         }
@@ -98,13 +98,13 @@ const WebAccountFormEdit = ({
       note: loading || !account[0].note ? "" : account[0].note,
       updated:
         loading || !account[0].updated ? "" : formatDate(account[0].updated),
-      date: loading || !account[0].date ? "" : formatDate(account[0].date)
+      date: loading || !account[0].date ? "" : formatDate(account[0].date),
     });
-  }, [loading]);
+  }, [loading, loginId, webAccounts]);
 
   const cat =
     Array.isArray(categories) &&
-    categories.map(c => {
+    categories.map((c) => {
       return (
         <option key={c._id} value={c._id}>
           {c.name}
@@ -113,19 +113,19 @@ const WebAccountFormEdit = ({
     });
 
   // save input in the formdata state
-  const onChange = e => {
+  const onChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // handles switch state
-  const handleSwitch = e => {
+  const handleSwitch = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
   // check if edit is false or true and submit accordingly true=delete
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     edit
       ? deleteWebAccount(formData)
@@ -173,7 +173,7 @@ const WebAccountFormEdit = ({
               }}
             ></button>
           </div>
-          <form onSubmit={e => onSubmit(e)} className="mb-2">
+          <form onSubmit={(e) => onSubmit(e)} className="mb-2">
             <div className="modal-body formScroll fs-6">
               <div>
                 <label htmlFor="recipient-name" className="col-form-label">
@@ -185,7 +185,7 @@ const WebAccountFormEdit = ({
                     className="form-control myInput"
                     name="name"
                     value={name}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   ></input>
                 </div>
@@ -203,7 +203,7 @@ const WebAccountFormEdit = ({
                       autoComplete="username"
                       name="username"
                       value={username}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                       required
                     ></input>
                   </div>
@@ -229,7 +229,7 @@ const WebAccountFormEdit = ({
                       autoComplete="current-password"
                       name="password"
                       value={password}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                       minLength="14"
                       required
                     ></input>
@@ -242,7 +242,7 @@ const WebAccountFormEdit = ({
                   <FontAwesomeIcon
                     icon={faArrowRotateLeft}
                     className="lrgIcon cursor mr-1 textPrimary"
-                    onClick={e => getPassword(e)}
+                    onClick={(e) => getPassword(e)}
                   />
                   <FontAwesomeIcon
                     icon={faGear}
@@ -277,7 +277,7 @@ const WebAccountFormEdit = ({
                       className="form-control myInput"
                       name="uri"
                       value={uri}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                     ></input>
                   </div>
                   <div className="cursor">
@@ -301,7 +301,7 @@ const WebAccountFormEdit = ({
                     id="inputGroupSelect01"
                     name="category"
                     value={category}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   >
                     <option defaultValue={""}></option>
                     {cat}
@@ -321,7 +321,7 @@ const WebAccountFormEdit = ({
                       // role="switch"
                       name="favorite"
                       value={favorite}
-                      onChange={e => {
+                      onChange={(e) => {
                         handleSwitch(e);
                       }}
                       checked={favorite}
@@ -338,7 +338,7 @@ const WebAccountFormEdit = ({
                   id="message-text"
                   name="note"
                   value={note}
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                 ></textarea>
               </div>
             </div>
@@ -402,17 +402,17 @@ WebAccountFormEdit.propTypes = {
   loginId: PropTypes.string.isRequired,
   edit: PropTypes.bool,
   text: PropTypes.object.isRequired,
-  categoryRedux: PropTypes.object.isRequired
+  categoryRedux: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   webAccounts: state.webAccounts,
   text: state.text,
-  categoryRedux: state.categoryRedux
+  categoryRedux: state.categoryRedux,
 });
 
 export default connect(mapStateToProps, {
   editWebAccount,
   deleteWebAccount,
-  getWebAccounts
+  getWebAccounts,
 })(WebAccountFormEdit);

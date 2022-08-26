@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   deleteIdentity,
   editIdentity,
-  getIdentity
+  getIdentity,
 } from "../../../../actions/identity";
 import { formatDate } from "../../../../utility/formatDate";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -20,7 +20,7 @@ const IdentityFormEdit = ({
   text: { txt },
   categoryRedux: { categories },
   setOpenModalEdit,
-  passId
+  passId,
 }) => {
   const [edit, setEdit] = useState(false);
 
@@ -39,7 +39,7 @@ const IdentityFormEdit = ({
     category: "",
     favorite: false,
     updated: "",
-    date: ""
+    date: "",
   });
   const {
     name,
@@ -56,16 +56,15 @@ const IdentityFormEdit = ({
     category,
     favorite,
     updated,
-    date
+    date,
   } = formData;
 
-  let account = [];
-
   useEffect(() => {
+    let account = [];
     Array.isArray(identity) &&
-      identity.forEach(item => {
+      identity.forEach((item) => {
         if (passId === item._id) {
-          Object.keys(item).forEach(function() {
+          Object.keys(item).forEach(function () {
             account.push(item);
           });
         }
@@ -94,13 +93,13 @@ const IdentityFormEdit = ({
         loading || !account[0].category._id ? "" : account[0].category._id,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       updated: formatDate(account[0].updated),
-      date: formatDate(account[0].date)
+      date: formatDate(account[0].date),
     });
-  }, [loading]);
+  }, [loading, identity, passId]);
 
   const cat =
     Array.isArray(categories) &&
-    categories.map(c => {
+    categories.map((c) => {
       return (
         <option key={c._id} value={c._id}>
           {c.name}
@@ -108,17 +107,17 @@ const IdentityFormEdit = ({
       );
     });
 
-  const onChange = e => {
+  const onChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = e => {
+  const handleSwitch = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     edit
       ? deleteIdentity(formData)
@@ -147,7 +146,7 @@ const IdentityFormEdit = ({
               }}
             ></button>
           </div>
-          <form onSubmit={e => onSubmit(e)}>
+          <form onSubmit={(e) => onSubmit(e)}>
             <div className="modal-body formScroll fs-6">
               <div className="row">
                 <div className="col-md-6">
@@ -159,7 +158,7 @@ const IdentityFormEdit = ({
                     className="form-control myInput"
                     name="name"
                     value={name}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   ></input>
                 </div>
@@ -172,7 +171,7 @@ const IdentityFormEdit = ({
                     className="form-control myInput"
                     name="email"
                     value={email}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
               </div>
@@ -187,7 +186,7 @@ const IdentityFormEdit = ({
                       className="form-control myInput vw-90"
                       name="PPS"
                       value={PPS}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                     ></input>
                   </div>
                   <CopyToClipboard text={PPS}>
@@ -209,7 +208,7 @@ const IdentityFormEdit = ({
                       className="form-control myInput vw-90"
                       name="passportNum"
                       value={passportNum}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                     ></input>
                   </div>
                   <CopyToClipboard text={passportNum}>
@@ -231,7 +230,7 @@ const IdentityFormEdit = ({
                       className="form-control myInput vw-90"
                       name="drivingLicense"
                       value={drivingLicense}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                     ></input>
                   </div>
                   <CopyToClipboard text={drivingLicense}>
@@ -252,7 +251,7 @@ const IdentityFormEdit = ({
                     className="form-control myInput"
                     name="phoneHome"
                     value={phoneHome}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
                 <div className="col-md-6">
@@ -264,7 +263,7 @@ const IdentityFormEdit = ({
                     className="form-control myInput"
                     name="phoneMobile"
                     value={phoneMobile}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
               </div>
@@ -277,7 +276,7 @@ const IdentityFormEdit = ({
                   className="form-control myInput"
                   name="addressStreet"
                   value={addressStreet}
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                 ></input>
               </div>
               <div className="row">
@@ -290,7 +289,7 @@ const IdentityFormEdit = ({
                     className="form-control myInput"
                     name="country"
                     value={country}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
                 <div className="col-md-4">
@@ -302,7 +301,7 @@ const IdentityFormEdit = ({
                     className="form-control myInput"
                     name="city"
                     value={city}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
                 <div className="col-md-4">
@@ -314,7 +313,7 @@ const IdentityFormEdit = ({
                     className="form-control myInput"
                     name="postalCode"
                     value={postalCode}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
               </div>
@@ -329,7 +328,7 @@ const IdentityFormEdit = ({
                     id="inputGroupSelect01"
                     name="category"
                     value={category}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   >
                     <option defaultValue={""}></option>
                     {cat}
@@ -346,7 +345,7 @@ const IdentityFormEdit = ({
                       // role="switch"
                       name="favorite"
                       value={favorite}
-                      onChange={e => {
+                      onChange={(e) => {
                         handleSwitch(e);
                       }}
                       checked={favorite}
@@ -415,17 +414,17 @@ IdentityFormEdit.propTypes = {
   identity: PropTypes.object.isRequired,
   edit: PropTypes.bool,
   text: PropTypes.object.isRequired,
-  categoryRedux: PropTypes.object.isRequired
+  categoryRedux: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   identity: state.identity,
   text: state.text,
-  categoryRedux: state.categoryRedux
+  categoryRedux: state.categoryRedux,
 });
 
 export default connect(mapStateToProps, {
   editIdentity,
   deleteIdentity,
-  getIdentity
+  getIdentity,
 })(IdentityFormEdit);

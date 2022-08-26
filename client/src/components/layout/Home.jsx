@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 const Home = ({ isAuthenticated }) => {
+  const navigate = useNavigate();
   if (isAuthenticated) {
-    useNavigate("/vault");
+    navigate("/vault");
   }
   return (
     <>
@@ -119,11 +120,11 @@ const Home = ({ isAuthenticated }) => {
 };
 
 Home.propTypes = {
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps)(Home);

@@ -31,7 +31,6 @@ app.use(
 // Init Middleware
 app.use(express.json({ extended: false }));
 
-// app.get("/", (req, res) => res.send("API Running"));
 
 // Route Middlewares
 app.use("/api/auth", require("./routes/auth"));
@@ -56,11 +55,11 @@ if(process.env.NODE_ENV === 'production' ){
 }
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  var err = new Error("Not Found: " + req.method + ":" + req.originalUrl);
-  err.status = 404;
-  next(err);
-});
+// app.use((req, res, next) => {
+//   var err = new Error("Not Found: " + req.method + ":" + req.originalUrl);
+//   err.status = 404;
+//   next(err);
+// });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server up and running..."));

@@ -15,7 +15,7 @@ const NotesFormEdit = ({
   text: { txt },
   categoryRedux: { categories },
   setOpenModalEdit,
-  noteId
+  noteId,
 }) => {
   const [edit, setEdit] = useState(false);
 
@@ -27,15 +27,15 @@ const NotesFormEdit = ({
     category: "",
     favorite: false,
     updated: "",
-    date: ""
+    date: "",
   });
 
   const { name, note, category, favorite, updated, date } = formData;
-  let account = [];
 
   useEffect(() => {
+    let account = [];
     Array.isArray(notes) &&
-      notes.forEach(note => {
+      notes.forEach((note) => {
         if (noteId === note._id) {
           return account.push(note);
         }
@@ -50,13 +50,13 @@ const NotesFormEdit = ({
         loading || !account[0].category._id ? "" : account[0].category._id,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       updated: formatDate(account[0].updated),
-      date: formatDate(account[0].date)
+      date: formatDate(account[0].date),
     });
-  }, [loading]);
+  }, [loading, notes, noteId]);
 
   const cat =
     Array.isArray(categories) &&
-    categories.map(c => {
+    categories.map((c) => {
       return (
         <option key={c._id} value={c._id}>
           {c.name}
@@ -64,17 +64,17 @@ const NotesFormEdit = ({
       );
     });
 
-  const onChange = e => {
+  const onChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = e => {
+  const handleSwitch = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     edit
       ? deleteNote(formData)
@@ -103,7 +103,7 @@ const NotesFormEdit = ({
               }}
             ></button>
           </div>
-          <form onSubmit={e => onSubmit(e)}>
+          <form onSubmit={(e) => onSubmit(e)}>
             <div className="modal-body formScroll fs-6">
               <div className="mb-1">
                 <label className="col-form-label">Name:</label>
@@ -113,7 +113,7 @@ const NotesFormEdit = ({
                     className="form-control myInput"
                     name="name"
                     value={name}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   ></input>
                 </div>
@@ -128,7 +128,7 @@ const NotesFormEdit = ({
                   id="message-text"
                   name="note"
                   value={note}
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                 ></textarea>
               </div>
               <div className="row">
@@ -142,7 +142,7 @@ const NotesFormEdit = ({
                     id="inputGroupSelect01"
                     name="category"
                     value={category}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   >
                     <option defaultValue={""}></option>
                     {cat}
@@ -157,7 +157,7 @@ const NotesFormEdit = ({
                       // role="switch"
                       name="favorite"
                       value={favorite}
-                      onChange={e => {
+                      onChange={(e) => {
                         handleSwitch(e);
                       }}
                       checked={favorite}
@@ -226,13 +226,13 @@ NotesFormEdit.propTypes = {
   noteId: PropTypes.string.isRequired,
   edit: PropTypes.bool,
   text: PropTypes.object.isRequired,
-  categoryRedux: PropTypes.object.isRequired
+  categoryRedux: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   notes: state.notes,
   text: state.text,
-  categoryRedux: state.categoryRedux
+  categoryRedux: state.categoryRedux,
 });
 
 export default connect(mapStateToProps, { editNote, deleteNote, getNotes })(

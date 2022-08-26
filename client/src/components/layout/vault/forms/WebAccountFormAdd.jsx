@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { generatePassword } from "../../../../utility/passwordGenerator";
 import {
   createWebAccount,
-  getWebAccounts
+  getWebAccounts,
 } from "../../../../actions/webAccounts";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,7 +14,7 @@ import {
   faCopy,
   faEye,
   faArrowRotateLeft,
-  faGear
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 import "./FormModal.css";
 
@@ -23,7 +23,7 @@ const WebAccountFormAdd = ({
   getWebAccounts,
   text: { txt },
   setOpenModalAdd,
-  categoryRedux: { categories }
+  categoryRedux: { categories },
 }) => {
   // const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -33,7 +33,7 @@ const WebAccountFormAdd = ({
     uri: "",
     category: "",
     favorite: false,
-    note: ""
+    note: "",
   });
 
   const { name, username, password, uri, category, favorite, note } = formData;
@@ -46,13 +46,13 @@ const WebAccountFormAdd = ({
     uppercase: true,
     lowercase: true,
     symbols: true,
-    numbers: true
+    numbers: true,
   };
 
   let catId = "";
   const cat =
     Array.isArray(categories) &&
-    categories.map(c => {
+    categories.map((c) => {
       if (c.name === "no category") {
         catId = c._id;
       }
@@ -68,19 +68,19 @@ const WebAccountFormAdd = ({
     if (category === "") {
       setFormData({ ...formData, category: catId });
     }
-  }, []);
+  }, [catId, category, formData]);
 
-  const onChange = e => {
+  const onChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = e => {
+  const handleSwitch = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     createWebAccount(formData, txt.txt);
     setTimeout(() => getWebAccounts(txt.txt), 60);
@@ -129,7 +129,7 @@ const WebAccountFormAdd = ({
               }}
             ></button>
           </div>
-          <form onSubmit={e => onSubmit(e)} className="mb-2">
+          <form onSubmit={(e) => onSubmit(e)} className="mb-2">
             <div className="modal-body formScroll fs-6">
               <div>
                 <label
@@ -144,7 +144,7 @@ const WebAccountFormAdd = ({
                     className="form-control myInput"
                     name="name"
                     value={name}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   ></input>
                 </div>
@@ -162,7 +162,7 @@ const WebAccountFormAdd = ({
                       autoComplete="username"
                       name="username"
                       value={username}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                       required
                     ></input>
                   </div>
@@ -188,7 +188,7 @@ const WebAccountFormAdd = ({
                       name="password"
                       autoComplete="current-password"
                       value={password}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                       minLength="14"
                       required
                     ></input>
@@ -201,7 +201,7 @@ const WebAccountFormAdd = ({
                   <FontAwesomeIcon
                     icon={faArrowRotateLeft}
                     className="lrgIcon cursor mr-1 textPrimary"
-                    onClick={e => getPassword(e)}
+                    onClick={(e) => getPassword(e)}
                   />
                   <FontAwesomeIcon
                     icon={faGear}
@@ -231,7 +231,7 @@ const WebAccountFormAdd = ({
                       className="form-control myInput"
                       name="uri"
                       value={uri}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                     ></input>
                   </div>
                 </div>
@@ -247,7 +247,7 @@ const WebAccountFormAdd = ({
                     id="inputGroupSelect01"
                     name="category"
                     value={category}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   >
                     {cat}
                   </select>
@@ -263,7 +263,7 @@ const WebAccountFormAdd = ({
                       // role="switch"
                       name="favorite"
                       value={favorite}
-                      onChange={e => {
+                      onChange={(e) => {
                         handleSwitch(e);
                       }}
                       checked={favorite}
@@ -280,7 +280,7 @@ const WebAccountFormAdd = ({
                   id="message-text"
                   name="note"
                   value={note}
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                 ></textarea>
               </div>
             </div>
@@ -314,14 +314,14 @@ WebAccountFormAdd.propType = {
   getWebAccounts: PropTypes.func.isRequired,
   text: PropTypes.object.isRequired,
   setOpenModalAdd: PropTypes.func.isRequired,
-  categoryRedux: PropTypes.object.isRequired
+  categoryRedux: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   text: state.text,
-  categoryRedux: state.categoryRedux
+  categoryRedux: state.categoryRedux,
 });
 export default connect(mapStateToProps, {
   createWebAccount,
-  getWebAccounts
+  getWebAccounts,
 })(WebAccountFormAdd);

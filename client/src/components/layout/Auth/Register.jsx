@@ -14,7 +14,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    password2: ""
+    password2: "",
   });
 
   // state for password toggle
@@ -27,12 +27,12 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
     if (isAuthenticated) {
       navigate("/webAccounts");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
       setAlert("Passwords do not match", "myDanger");
@@ -63,7 +63,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
           </div>
           <div className="col-md-10 d-flex justify-content-center align-content-center ">
             <div className="shadow-sm p-5 bg-body myRounded">
-              <form className="myForm" onSubmit={e => onSubmit(e)}>
+              <form className="myForm" onSubmit={(e) => onSubmit(e)}>
                 <div className="mb-3">
                   <input
                     type="email"
@@ -74,7 +74,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
                     aria-describedby="emailHelp"
                     name="email"
                     value={email}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   ></input>
                   <div id="emailHelp" className="form-text">
@@ -90,7 +90,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
                       // id="exampleInputPassword1"
                       name="password"
                       value={password}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                       required
                       placeholder="Master Password"
                     ></input>
@@ -111,7 +111,7 @@ const Register = ({ setAlert, register, isAuthenticated, setText }) => {
                       // id="exampleInputPassword1"
                       name="password2"
                       value={password2}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                       required
                       placeholder="Confirm Master Password"
                     ></input>
@@ -149,11 +149,11 @@ Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   setText: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { setAlert, register, setText })(

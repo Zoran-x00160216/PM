@@ -11,7 +11,7 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   // state for password toggle
   const [passwordShown, setPasswordShown] = useState(false);
@@ -29,12 +29,12 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
         navigate("/webAccounts");
       }
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate, password, setText, tier]);
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     login(email, password);
   };
@@ -58,7 +58,7 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
           </div>
           <div className="col-md-10 d-flex justify-content-center align-content-center ">
             <div className="shadow-sm p-5 bg-body myRounded">
-              <form onSubmit={e => onSubmit(e)}>
+              <form onSubmit={(e) => onSubmit(e)}>
                 <div className="mb-3">
                   <input
                     type="email"
@@ -69,7 +69,7 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
                     name="email"
                     value={email}
                     placeholder="Email"
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   ></input>
                   <div id="emailHelp" className="form-text">
@@ -85,7 +85,7 @@ const Login = ({ login, isAuthenticated, tier, setText }) => {
                       id="exampleInputPassword1"
                       name="password"
                       value={password}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                       required
                       placeholder="Master Password"
                     ></input>
@@ -123,12 +123,12 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
   setText: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-  tier: PropTypes.string.isRequired
+  tier: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  tier: state.auth.tier
+  tier: state.auth.tier,
 });
 
 export default connect(mapStateToProps, { login, setText })(Login);

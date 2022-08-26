@@ -10,7 +10,7 @@ const IdentityFormAdd = ({
   getIdentity,
   setOpenModalAdd,
   text: { txt },
-  categoryRedux: { categories }
+  categoryRedux: { categories },
 }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -25,7 +25,7 @@ const IdentityFormAdd = ({
     city: "",
     postalCode: "",
     category: "",
-    favorite: false
+    favorite: false,
   });
 
   const {
@@ -41,13 +41,13 @@ const IdentityFormAdd = ({
     city,
     postalCode,
     category,
-    favorite
+    favorite,
   } = formData;
 
   let catId = "";
   const cat =
     Array.isArray(categories) &&
-    categories.map(c => {
+    categories.map((c) => {
       if (c.name === "no category") {
         catId = c._id;
       }
@@ -63,19 +63,19 @@ const IdentityFormAdd = ({
     if (category === "") {
       setFormData({ ...formData, category: catId });
     }
-  }, []);
+  }, [category, formData, catId]);
 
-  const onChange = e => {
+  const onChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = e => {
+  const handleSwitch = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     createIdentity(formData, txt.txt);
     setTimeout(() => getIdentity(txt.txt), 60);
@@ -102,7 +102,7 @@ const IdentityFormAdd = ({
               }}
             ></button>
           </div>
-          <form onSubmit={e => onSubmit(e)}>
+          <form onSubmit={(e) => onSubmit(e)}>
             <div className="modal-body formScroll fs-6">
               <div className="row">
                 <div className="col-md-6">
@@ -114,7 +114,7 @@ const IdentityFormAdd = ({
                     className="form-control myInput"
                     name="name"
                     value={name}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   ></input>
                 </div>
@@ -127,7 +127,7 @@ const IdentityFormAdd = ({
                     className="form-control myInput"
                     name="email"
                     value={email}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
               </div>
@@ -141,7 +141,7 @@ const IdentityFormAdd = ({
                     className="form-control myInput"
                     name="PPS"
                     value={PPS}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
                 <div className="col-md-6">
@@ -153,7 +153,7 @@ const IdentityFormAdd = ({
                     className="form-control myInput"
                     name="passportNum"
                     value={passportNum}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
               </div>
@@ -166,7 +166,7 @@ const IdentityFormAdd = ({
                   className="form-control myInput"
                   name="drivingLicense"
                   value={drivingLicense}
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                 ></input>
               </div>
               <div className="row">
@@ -179,7 +179,7 @@ const IdentityFormAdd = ({
                     className="form-control myInput"
                     name="phoneHome"
                     value={phoneHome}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
                 <div className="col-md-6">
@@ -191,7 +191,7 @@ const IdentityFormAdd = ({
                     className="form-control myInput"
                     name="phoneMobile"
                     value={phoneMobile}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
               </div>
@@ -204,7 +204,7 @@ const IdentityFormAdd = ({
                   className="form-control myInput"
                   name="addressStreet"
                   value={addressStreet}
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                 ></input>
               </div>
               <div className="row">
@@ -217,7 +217,7 @@ const IdentityFormAdd = ({
                     className="form-control myInput"
                     name="country"
                     value={country}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
                 <div className="col-md-4">
@@ -229,7 +229,7 @@ const IdentityFormAdd = ({
                     className="form-control myInput"
                     name="city"
                     value={city}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
                 <div className="col-md-4">
@@ -241,7 +241,7 @@ const IdentityFormAdd = ({
                     className="form-control myInput"
                     name="postalCode"
                     value={postalCode}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   ></input>
                 </div>
               </div>
@@ -256,7 +256,7 @@ const IdentityFormAdd = ({
                     id="inputGroupSelect01"
                     name="category"
                     value={category}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   >
                     {cat}
                   </select>
@@ -272,7 +272,7 @@ const IdentityFormAdd = ({
                       // role="switch"
                       name="favorite"
                       value={favorite}
-                      onChange={e => {
+                      onChange={(e) => {
                         handleSwitch(e);
                       }}
                       checked={favorite}
@@ -311,15 +311,15 @@ IdentityFormAdd.propType = {
   getIdentity: PropTypes.func.isRequired,
   text: PropTypes.object.isRequired,
   setOpenModalAdd: PropTypes.func.isRequired,
-  categoryRedux: PropTypes.object.isRequired
+  categoryRedux: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   text: state.text,
-  categoryRedux: state.categoryRedux
+  categoryRedux: state.categoryRedux,
 });
 
 export default connect(mapStateToProps, {
   createIdentity,
-  getIdentity
+  getIdentity,
 })(IdentityFormAdd);

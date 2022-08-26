@@ -13,16 +13,16 @@ const CatCards = ({ getCards, cards: { cards }, text: { txt }, c }) => {
 
   useEffect(() => {
     getCards(txt.txt);
-  }, []);
+  }, [getCards, txt.txt]);
 
-  const setIdAndOpenModalEdit = id => {
+  const setIdAndOpenModalEdit = (id) => {
     setPassId(id);
     setOpenModalEdit(true);
   };
 
   const accounts =
     Array.isArray(cards) &&
-    cards.map(card => {
+    cards.map((card) => {
       return (
         card.category._id === c && (
           <div
@@ -97,12 +97,12 @@ CatCards.propTypes = {
   getCards: PropTypes.func.isRequired,
   cards: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired,
-  c: PropTypes.string.isRequired
+  c: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   cards: state.cards,
-  text: state.text
+  text: state.text,
 });
 
 export default connect(mapStateToProps, { getCards })(CatCards);

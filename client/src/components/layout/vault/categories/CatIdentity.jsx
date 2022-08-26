@@ -8,22 +8,27 @@ import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const CatIdentity = ({ getIdentity, identity: { identity }, c }) => {
+const CatIdentity = ({
+  getIdentity,
+  identity: { identity },
+  text: { txt },
+  c,
+}) => {
   const [passId, setPassId] = useState();
   const [openModalEdit, setOpenModalEdit] = useState(false);
 
   useEffect(() => {
-    getIdentity();
-  }, []);
+    getIdentity(txt.txt);
+  }, [getIdentity, txt.txt]);
 
-  const setIdAndOpenModalEdit = id => {
+  const setIdAndOpenModalEdit = (id) => {
     setPassId(id);
     setOpenModalEdit(true);
   };
 
   const accounts =
     Array.isArray(identity) &&
-    identity.map(i => {
+    identity.map((i) => {
       return i.category._id !== c ? null : (
         <div
           key={i._id}
@@ -138,13 +143,13 @@ CatIdentity.propTypes = {
   auth: PropTypes.object.isRequired,
   identity: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired,
-  c: PropTypes.string.isRequired
+  c: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   identity: state.identity,
-  text: state.text
+  text: state.text,
 });
 
 export default connect(mapStateToProps, { getIdentity })(CatIdentity);

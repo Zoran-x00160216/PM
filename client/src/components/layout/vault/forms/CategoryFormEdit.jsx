@@ -6,7 +6,7 @@ import {
   editCategory,
   getCategories,
   createCategory,
-  deleteCategory
+  deleteCategory,
 } from "../../../../actions/category";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -18,44 +18,44 @@ const CategoryFormEdit = ({
   editCategory,
   getCategories,
   deleteCategory,
-  categoryRedux: { loading, categories }
+  categoryRedux: { loading, categories },
 }) => {
   const [formData, setFormData] = useState({
     _id: "",
     user_id: "",
-    name: ""
+    name: "",
   });
   const { name, updated, date } = formData;
 
   const [edit, setEdit] = useState(false);
 
-  let account = [];
-  Array.isArray(categories) &&
-    categories.map(category => {
-      if (passId === category._id) {
-        Object.keys(category).forEach(function() {
-          account.push(category);
-        });
-      }
-      return category;
-    });
-
   useEffect(() => {
-    // console.log(account);
+    let account = [];
+    Array.isArray(categories) &&
+      categories.map((category) => {
+        if (passId === category._id) {
+          Object.keys(category).forEach(function () {
+            account.push(category);
+          });
+        }
+        return category;
+      });
+
     setFormData({
       _id: loading || !account[0]._id ? "" : account[0]._id,
       user_id: loading || !account[0].user_id ? "" : account[0].user_id,
       name: loading || !account[0].name ? "" : account[0].name,
       updated: formatDate(account[0].updated),
-      date: formatDate(account[0].date)
+      date: formatDate(account[0].date),
     });
-  }, [loading]);
-  const onChange = e => {
+  }, [loading, categories, passId]);
+
+  const onChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     edit ? deleteCategory(formData) : editCategory(formData);
     setTimeout(() => getCategories(), 50);
@@ -76,7 +76,7 @@ const CategoryFormEdit = ({
               }}
             ></button>
           </div>
-          <form onSubmit={e => onSubmit(e)}>
+          <form onSubmit={(e) => onSubmit(e)}>
             <div className="modal-body fs-6">
               <div>
                 <label htmlFor="recipient-name" className="col-form-label">
@@ -88,7 +88,7 @@ const CategoryFormEdit = ({
                     className="form-control myInput"
                     name="name"
                     value={name}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   ></input>
                 </div>
@@ -151,15 +151,15 @@ CategoryFormEdit.propTypes = {
   editCategory: PropTypes.func.isRequired,
   deleteCategory: PropTypes.func.isRequired,
   createCategory: PropTypes.func.isRequired,
-  passId: PropTypes.string.isRequired
+  passId: PropTypes.string.isRequired,
 };
-const mapStateToProps = state => ({
-  categoryRedux: state.categoryRedux
+const mapStateToProps = (state) => ({
+  categoryRedux: state.categoryRedux,
 });
 
 export default connect(mapStateToProps, {
   editCategory,
   getCategories,
   createCategory,
-  deleteCategory
+  deleteCategory,
 })(CategoryFormEdit);

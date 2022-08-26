@@ -11,22 +11,22 @@ const CatWebAccounts = ({
   getWebAccounts,
   webAccounts: { webAccounts },
   text: { txt },
-  c
+  c,
 }) => {
   const [loginId, setLoginId] = useState();
   const [openModalEdit, setOpenModalEdit] = useState(false);
 
   useEffect(() => {
     getWebAccounts(txt.txt);
-  }, []);
+  }, [getWebAccounts, txt.txt]);
 
-  const setIdAndOpenModalEdit = id => {
+  const setIdAndOpenModalEdit = (id) => {
     setLoginId(id);
     setOpenModalEdit(true);
   };
   const accounts =
     Array.isArray(webAccounts) &&
-    webAccounts.map(webAccount => {
+    webAccounts.map((webAccount) => {
       return webAccount.category._id !== c ? null : (
         <div
           key={webAccount._id}
@@ -116,13 +116,13 @@ CatWebAccounts.propTypes = {
   auth: PropTypes.object.isRequired,
   webAccounts: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired,
-  c: PropTypes.string.isRequired
+  c: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
   webAccounts: state.webAccounts,
-  text: state.text
+  text: state.text,
 });
 
 export default connect(mapStateToProps, { getWebAccounts })(CatWebAccounts);

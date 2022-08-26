@@ -8,14 +8,14 @@ import {
   getAllEntries,
   getUsersCount,
   getPremiumAllEntries,
-  getBasicAllEntries
+  getBasicAllEntries,
 } from "../../../actions/admin";
 
 const AdminDashboard = ({
   getAllEntries,
   getUsersCount,
   getPremiumAllEntries,
-  getBasicAllEntries
+  getBasicAllEntries,
 }) => {
   const [allEntries, setAllEntries] = useState();
   const [allUsers, setAllUsers] = useState();
@@ -26,32 +26,32 @@ const AdminDashboard = ({
   useEffect(() => {
     try {
       const allEntries = getAllEntries();
-      Promise.all([allEntries]).then(values => {
+      Promise.all([allEntries]).then((values) => {
         const e = JSON.parse(values);
         setAllEntries(e);
       });
 
       const userSum = getUsersCount();
-      Promise.all([userSum]).then(values => {
+      Promise.all([userSum]).then((values) => {
         const u = JSON.parse(values);
         setAllUsers(u);
       });
 
       const premiumAllEntries = getPremiumAllEntries();
-      Promise.all([premiumAllEntries]).then(values => {
+      Promise.all([premiumAllEntries]).then((values) => {
         const p = JSON.parse(values);
         setAllEntriesPremium(p);
       });
 
       const basicAllEntries = getBasicAllEntries();
-      Promise.all([basicAllEntries]).then(values => {
+      Promise.all([basicAllEntries]).then((values) => {
         const b = JSON.parse(values);
         setAllEntriesBasic(b);
       });
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [getAllEntries, getUsersCount, getPremiumAllEntries, getBasicAllEntries]);
   // console.log(allEntriesBasic, allEntriesPremium);
 
   return allEntriesPremium === null || getBasicAllEntries === null ? (
@@ -98,17 +98,17 @@ AdminDashboard.propTypes = {
   getPremiumAllEntries: PropTypes.func.isRequired,
   getBasicAllEntries: PropTypes.func.isRequired,
   users: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   users: state.users,
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {
   getAllEntries,
   getUsersCount,
   getPremiumAllEntries,
-  getBasicAllEntries
+  getBasicAllEntries,
 })(AdminDashboard);

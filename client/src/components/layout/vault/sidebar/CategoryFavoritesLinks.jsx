@@ -10,12 +10,12 @@ import {
   faStar,
   faAngleDown,
   faPlus,
-  faPencil
+  faPencil,
 } from "@fortawesome/free-solid-svg-icons";
 
 const CategoryFavoritesLinks = ({
   getCategories,
-  categoryRedux: { categories }
+  categoryRedux: { categories },
 }) => {
   const [passId, setpassId] = useState();
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -24,9 +24,9 @@ const CategoryFavoritesLinks = ({
 
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [getCategories]);
 
-  const setIdAndOpenModalEdit = id => {
+  const setIdAndOpenModalEdit = (id) => {
     setpassId(id);
     setOpenModalEdit(true);
   };
@@ -34,7 +34,7 @@ const CategoryFavoritesLinks = ({
   // console.log(categories);
   const categoriesArray =
     Array.isArray(categories) &&
-    categories.map(category => {
+    categories.map((category) => {
       const linkWithParam = `/category/${category._id}`;
       return category.name === "no category" ? (
         <div key={category._id} className="d-flex justify-content-between">
@@ -96,11 +96,11 @@ const CategoryFavoritesLinks = ({
 
 CategoryFavoritesLinks.propTypes = {
   getCategories: PropTypes.func.isRequired,
-  categoryRedux: PropTypes.object.isRequired
+  categoryRedux: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  categoryRedux: state.categoryRedux
+const mapStateToProps = (state) => ({
+  categoryRedux: state.categoryRedux,
 });
 
 export default connect(mapStateToProps, { getCategories })(

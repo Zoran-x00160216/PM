@@ -16,7 +16,7 @@ const CardsFormEdit = ({
   text: { txt },
   categoryRedux: { categories },
   setOpenModalEdit,
-  passId
+  passId,
 }) => {
   const [edit, setEdit] = useState(false);
 
@@ -28,7 +28,7 @@ const CardsFormEdit = ({
     expiryMonth: "",
     expiryYear: "",
     category: "",
-    favorite: false
+    favorite: false,
   });
 
   const {
@@ -39,19 +39,18 @@ const CardsFormEdit = ({
     category,
     favorite,
     updated,
-    date
+    date,
   } = formData;
 
   // state for password toggle
   const [passwordShown, setPasswordShown] = useState(false);
 
-  let account = [];
-
   useEffect(() => {
+    let account = [];
     Array.isArray(cards) &&
-      cards.forEach(card => {
+      cards.forEach((card) => {
         if (passId === card._id) {
-          Object.keys(card).forEach(function() {
+          Object.keys(card).forEach(function () {
             account.push(card);
           });
         }
@@ -70,13 +69,13 @@ const CardsFormEdit = ({
         loading || !account[0].category._id ? "" : account[0].category._id,
       favorite: loading || !account[0].favorite ? false : account[0].favorite,
       updated: formatDate(account[0].updated),
-      date: formatDate(account[0].date)
+      date: formatDate(account[0].date),
     });
-  }, [loading]);
+  }, [loading, passId, cards]);
 
   const cat =
     Array.isArray(categories) &&
-    categories.map(c => {
+    categories.map((c) => {
       return (
         <option key={c._id} value={c._id}>
           {c.name}
@@ -84,17 +83,17 @@ const CardsFormEdit = ({
       );
     });
 
-  const onChange = e => {
+  const onChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSwitch = e => {
+  const handleSwitch = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.currentTarget.checked });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     edit
       ? deleteCard(formData)
@@ -130,7 +129,7 @@ const CardsFormEdit = ({
               }}
             ></button>
           </div>
-          <form onSubmit={e => onSubmit(e)}>
+          <form onSubmit={(e) => onSubmit(e)}>
             <div className="modal-body formScroll fs-6">
               <div className="mb-1">
                 <label htmlFor="recipient-name" className="col-form-label">
@@ -142,7 +141,7 @@ const CardsFormEdit = ({
                     className="form-control myInput"
                     name="name"
                     value={name}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   ></input>
                 </div>
@@ -159,7 +158,7 @@ const CardsFormEdit = ({
                       id="recipient-username"
                       name="number"
                       value={number}
-                      onChange={e => onChange(e)}
+                      onChange={(e) => onChange(e)}
                       required
                     ></input>
                   </div>
@@ -187,7 +186,7 @@ const CardsFormEdit = ({
                     id="inputGroupSelect01"
                     name="expiryMonth"
                     value={expiryMonth}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   >
                     <option defaultValue={""}></option>
@@ -215,7 +214,7 @@ const CardsFormEdit = ({
                     id="inputGroupSelect02"
                     name="expiryYear"
                     value={expiryYear}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                     required
                   >
                     <option defaultValue={""}></option>
@@ -239,7 +238,7 @@ const CardsFormEdit = ({
                     id="inputGroupSelect01"
                     name="category"
                     value={category}
-                    onChange={e => onChange(e)}
+                    onChange={(e) => onChange(e)}
                   >
                     <option defaultValue={""}></option>
                     {cat}
@@ -259,7 +258,7 @@ const CardsFormEdit = ({
                       // role="switch"
                       name="favorite"
                       value={favorite}
-                      onChange={e => {
+                      onChange={(e) => {
                         handleSwitch(e);
                       }}
                       checked={favorite}
@@ -328,13 +327,13 @@ CardsFormEdit.propTypes = {
   passId: PropTypes.string.isRequired,
   edit: PropTypes.bool,
   text: PropTypes.object.isRequired,
-  categoryRedux: PropTypes.object.isRequired
+  categoryRedux: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   cards: state.cards,
   text: state.text,
-  categoryRedux: state.categoryRedux
+  categoryRedux: state.categoryRedux,
 });
 
 export default connect(mapStateToProps, { editCard, deleteCard, getCards })(
