@@ -45,21 +45,21 @@ app.use("/api/email", verify, require("./routes/email"));
 app.use("/api/admin", verifyAdmin, require("./routes/admin"));
 
 // Serve static assets in production
-// if(process.env.NODE_ENV === 'production' ){
+//  if(process.env.NODE_ENV === 'production' ){
   // static folder
   app.use(express.static("client/build"));
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
   })
-// }
+//  }
 
 // catch 404 and forward to error handler
-// app.use((req, res, next) => {
-//   var err = new Error("Not Found: " + req.method + ":" + req.originalUrl);
-//   err.status = 404;
-//   next(err);
-// });
+app.use((req, res, next) => {
+  var err = new Error("Not Found: " + req.method + ":" + req.originalUrl);
+  err.status = 404;
+  next(err);
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log("Server up and running..."));
