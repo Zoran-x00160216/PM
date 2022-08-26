@@ -13,7 +13,7 @@ const {
   registerValidation,
 } = require("../services/userValidation");
 const { premiumPriceValidation } = require("../services/entriesValidation");
-dotenv.config({path: "./vars/.env"})
+dotenv.config({path: "./.env"})
 
 
 // Get users

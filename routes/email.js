@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const nodeMailer = require('nodemailer');
 const dotenv = require("dotenv");
-dotenv.config({path: "./vars/.env"})
+dotenv.config({path: "./.env"})
 
 router.post("/sendEmaiConformationPayment", async (req, res) => {
   try {

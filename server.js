@@ -6,7 +6,7 @@ const verifyAdmin = require("./middleware/jwtVerify");
 const path = require("path")
 // const cors = require("cors");
 const dotenv = require("dotenv");
-dotenv.config({path: "./vars/.env"})
+dotenv.config({path: "./.env"})
 
 connectDB();
 

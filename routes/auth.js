@@ -10,7 +10,7 @@ const PremiumPrice = require("../model/PremiumPrice");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-dotenv.config({path: "./vars/.env"})
+dotenv.config({path: "./.env"})
 
 // Get a user
 router.get("/", verify, async (req, res) => {
