@@ -14,7 +14,7 @@ export const sendEmaiConformationPayment = email => async dispatch => {
     
     const body = JSON.stringify({ email });
 
-    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/email/sendEmaiConformationPayment`, 
+    const res = await axios.post(`/api/email/sendEmaiConformationPayment`, 
     body,
     config);
 

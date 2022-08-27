@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 // Get web accounts
 export const getCards = text => async dispatch => {
   try {
-    const res = await axios.get( `${process.env.REACT_APP_SERVER_URL}/api/creditCards`);
+    const res = await axios.get( `/api/creditCards`);
 
     let data = res.data;
     // Decrypt
@@ -47,7 +47,7 @@ export const createCard = (formData, text) => async dispatch => {
       }
     };
     const res = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/api/creditCards`,
+      `/api/creditCards`,
       data,
       config
     );
@@ -88,7 +88,7 @@ export const editCard = (formData, text, alertControler) => async dispatch => {
     };
 
     const res = await axios.put(
-      `${process.env.REACT_APP_SERVER_URL}/api/creditCards`,
+      `/api/creditCards`,
       data,
       config
     );
@@ -119,7 +119,7 @@ export const editCard = (formData, text, alertControler) => async dispatch => {
 export const deleteCard = formData => async dispatch => {
   try {
     const res = await axios.delete(
-      `${process.env.REACT_APP_SERVER_URL}/api/creditCards/${formData._id}`
+      `/api/creditCards/${formData._id}`
     );
 
     dispatch({

@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js";
 // Get web accounts
 export const getIdentity = text => async dispatch => {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/identity`);
+    const res = await axios.get(`/api/identity`);
 
     let data = res.data;
     // Decrypt
@@ -100,7 +100,7 @@ export const createIdentity = (formData, text) => async dispatch => {
       }
     };
     const res = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/api/identity`,
+      `/api/identity`,
       data,
       config
     );
@@ -167,7 +167,7 @@ export const editIdentity = (formData, text, alertControler)=> async dispatch =>
     };
 
     const res = await axios.put(
-      `${process.env.REACT_APP_SERVER_URL}/api/identity`,
+      `/api/identity`,
       data,
       config
     );
@@ -198,7 +198,7 @@ export const editIdentity = (formData, text, alertControler)=> async dispatch =>
 export const deleteIdentity = formData => async dispatch => {
   try {
     const res = await axios.delete(
-      `${process.env.REACT_APP_SERVER_URL}/api/identity/${formData._id}`
+      `/api/identity/${formData._id}`
     );
     // console.log(res.data);
 

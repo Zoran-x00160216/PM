@@ -11,14 +11,14 @@ const CardForm = ({
   updateUserTier,
   setAlert,
   sendEmaiConformationPayment,
-  auth: { user }
+  auth: { user },
 }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [fullname, setFullname] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
     e.preventDefault();
@@ -31,18 +31,18 @@ const CardForm = ({
     }
 
     const { error: backendError, clientSecret } = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/api/createPaymentIntent`,
+      `/api/createPaymentIntent`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           paymentMethodType: "card",
-          currency: "eur"
-        })
+          currency: "eur",
+        }),
       }
-    ).then(r => r.json());
+    ).then((r) => r.json());
 
     if (backendError) {
       setAlert(backendError.message, "myDanger");
@@ -51,17 +51,15 @@ const CardForm = ({
 
     setAlert("Processing your payment...", "mySuccess");
 
-    const {
-      error: stripeError,
-      paymentIntent
-    } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: fullname
-        }
-      }
-    });
+    const { error: stripeError, paymentIntent } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: fullname,
+          },
+        },
+      });
 
     if (stripeError) {
       // Show error to your customer (e.g., insufficient funds)
@@ -81,7 +79,7 @@ const CardForm = ({
     // addPaymentStatus(paymentIntent.status);
   };
 
-  const onChange = e => {
+  const onChange = (e) => {
     e.preventDefault();
     setFullname(e.target.value);
   };
@@ -134,7 +132,7 @@ const CardForm = ({
             name="fullname"
             placeholder="name"
             value={fullname}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
             className="form-control myRounded vw-90 myP-2 small-text"
           />
 
@@ -149,15 +147,15 @@ const CardForm = ({
 CardForm.propTypes = {
   updateUserTier: PropTypes.func.isRequired,
   setAlert: PropTypes.func.isRequired,
-  sendEmaiConformationPayment: PropTypes.func.isRequired
+  sendEmaiConformationPayment: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {
   updateUserTier,
   setAlert,
-  sendEmaiConformationPayment
+  sendEmaiConformationPayment,
 })(CardForm);

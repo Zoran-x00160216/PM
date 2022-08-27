@@ -5,7 +5,7 @@ import { setAlert } from "./alert";
 // Load Users
 export const getUsers = () => async dispatch => {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/admin/`);
+    const res = await axios.get(`/api/admin/`);
 
     dispatch({
       type: GET_USERS,
@@ -30,7 +30,7 @@ export const getUsers = () => async dispatch => {
 export const deleteUser = id => async dispatch => {
   try {
 
-    const res = await axios.delete( `${process.env.REACT_APP_SERVER_URL}/api/admin/${id}`);
+    const res = await axios.delete( `/api/admin/${id}`);
 
     dispatch({
       type: EDIT_USERS,
@@ -68,7 +68,7 @@ export const createAdmin = ({ email, password }) => async dispatch => {
     const body = JSON.stringify({ email, password });
 
     const res = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/api/admin/createAdmin`,
+      `/api/admin/createAdmin`,
       body,
       config
     );
@@ -96,7 +96,7 @@ export const sendEmailWarning = email => async dispatch => {
     
     const body = JSON.stringify({ email });
 
-    const res = await axios.post( `${process.env.REACT_APP_SERVER_URL}/api/admin/warningEmail`,     body,
+    const res = await axios.post( `/api/admin/warningEmail`,     body,
     config);
    
     (res.status === 200 &&
@@ -114,7 +114,7 @@ export const sendEmailWarning = email => async dispatch => {
 // Load Users
 export const getPremiumPrice = () => async () => {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/auth/getPremiumPrice`);
+    const res = await axios.get(`/api/auth/getPremiumPrice`);
 
     return res.data;
 
@@ -136,7 +136,7 @@ export const setPremiumPrice = price => async dispatch  => {
     
     const body = JSON.stringify({ price });
 
-    const res = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/admin/updatePremiumPrice`,
+    const res = await axios.put(`/api/admin/updatePremiumPrice`,
     body,
     config);
     
@@ -154,7 +154,7 @@ export const setPremiumPrice = price => async dispatch  => {
 // Get sum of all entries per collection in db
 export const getAllEntries = () => async () => {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/admin/count`);
+    const res = await axios.get(`/api/admin/count`);
     const data = JSON.stringify(res.data);
 
     return data;
@@ -167,7 +167,7 @@ export const getAllEntries = () => async () => {
 // Get sum of all basic and premium accounts in db
 export const getUsersCount = () => async () => {
   try {
-    const res = await axios.get( `${process.env.REACT_APP_SERVER_URL}/api/admin/sumusers`);
+    const res = await axios.get( `/api/admin/sumusers`);
     const data = JSON.stringify(res.data);
 
     return data;
@@ -180,7 +180,7 @@ export const getUsersCount = () => async () => {
 // Get sum of all entries per collection where accessLevel=premium
 export const getPremiumAllEntries = () => async () => {
   try {
-    const res = await axios.get( `${process.env.REACT_APP_SERVER_URL}/api/admin/allpremium`);
+    const res = await axios.get( `/api/admin/allpremium`);
     const data = JSON.stringify(res.data);
 
     return data;
@@ -193,7 +193,7 @@ export const getPremiumAllEntries = () => async () => {
 // Get sum of all entries per collection where accessLevel=basic
 export const getBasicAllEntries = () => async () => {
   try {
-    const res = await axios.get( `${process.env.REACT_APP_SERVER_URL}/api/admin/allbasic`);
+    const res = await axios.get( `/api/admin/allbasic`);
     const data = JSON.stringify(res.data);
 
     return data;

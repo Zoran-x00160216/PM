@@ -13,7 +13,7 @@ import CryptoJS from "crypto-js";
 export const getWebAccounts = text => async dispatch => {
   // console.log(text);
   try {
-    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/webAccounts`);
+    const res = await axios.get(`/api/webAccounts`);
 
     // Decrypt
     let data = res.data;
@@ -55,7 +55,7 @@ export const createWebAccount = (formData, text) => async dispatch => {
     };
 
     const res = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/api/webAccounts`,
+      `/api/webAccounts`,
       data,
       config
     );
@@ -99,7 +99,7 @@ export const editWebAccount = (formData, text, alertControler) => async dispatch
     }; 
 
     const res = await axios.put(
-      `${process.env.REACT_APP_SERVER_URL}/api/webAccounts`,
+      `/api/webAccounts`,
       formData,
       config
     );
@@ -133,7 +133,7 @@ export const deleteWebAccount = formData => async dispatch => {
   try {
 
     const res = await axios.delete(
-      `${process.env.REACT_APP_SERVER_URL}/api/webAccounts/${formData._id}`
+      `/api/webAccounts/${formData._id}`
     );
 
     

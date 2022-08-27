@@ -25,7 +25,7 @@ export const loadUser = () => async dispatch => {
   }
 
   try {
-    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/auth`);
+    const res = await axios.get(`/api/auth`);
 
     dispatch({
       type: USER_LOADED,
@@ -53,7 +53,7 @@ export const register = ({ email, password }) => async dispatch => {
     const body = JSON.stringify({ email, password });
 
     const res = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/api/auth/register`,
+      `/api/auth/register`,
       body,
       config
     );
@@ -91,7 +91,7 @@ export const login = (email, password) => async dispatch => {
     const body = JSON.stringify({ email, password });
 
     const res = await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
+      `/api/auth/login`,
       body,
       config
     );
@@ -130,7 +130,7 @@ export const updateUserPassword = (password) => async dispatch => {
     const body = JSON.stringify({ password });
 
     await axios.put(
-      `${process.env.REACT_APP_SERVER_URL}/api/updateUser`,
+      `/api/updateUser`,
       body,
       config
     );
@@ -157,7 +157,7 @@ export const updateUserTier = (tier) => async dispatch => {
     const body = JSON.stringify({ tier });
 
     await axios.put(
-      `${process.env.REACT_APP_SERVER_URL}/api/updateUser/tier`,
+      `/api/updateUser/tier`,
      body,
       config 
     );
