@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e45537bb.css",
+    "main.js": "/static/js/main.1d7f0c35.js",
+    "static/media/keyboard.jpg": "/static/media/keyboard.a68792bc9152345cdb48.jpg",
+    "static/media/loginBg.png": "/static/media/loginBg.e6b6ac6d00c45fd6201c.png",
+    "static/media/helpBg.png": "/static/media/helpBg.6922cd7aaf5f40deda69.png",
+    "static/media/Untitled2.png": "/static/media/Untitled2.dad118f7afe231ed1674.png",
+    "index.html": "/index.html",
+    "main.e45537bb.css.map": "/static/css/main.e45537bb.css.map",
+    "main.1d7f0c35.js.map": "/static/js/main.1d7f0c35.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e45537bb.css",
+    "static/js/main.1d7f0c35.js"
+  ]
+}
