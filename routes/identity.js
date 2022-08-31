@@ -37,12 +37,6 @@ router.post("/", async (req, res) => {
     // Validate data
     const { error } = identityValidation(data);
     if (error) return res.status(400).send(error.details[0].message);
-    // Check if indentity details are is already in DB
-    // const identityExist = await PersonalDetails.findOne({
-    //   name: req.body.name,
-    // });
-    // if (identityExist)
-    //   return res.status(400).send("Details are already in database.");
 
     const identity = await new Identity(data);
 

@@ -21,7 +21,7 @@ const PieChartComponent = ({ setText, data, colors }) => {
           style={{
             backgroundColor: "#ffff",
             padding: "5px",
-            border: "1px solid #cccc"
+            border: "1px solid #cccc",
           }}
         >
           <label>{`${payload[0].name} : ${payload[0].value}`}</label>
@@ -33,7 +33,7 @@ const PieChartComponent = ({ setText, data, colors }) => {
   return (
     <>
       <div className="col-sm-6 mt-3 mr-auto">
-        <div className="m-3 p-5 shadow-sm mb-1 bgCards myRounded">
+        <div className="m-3 p-4 shadow-sm mb-1 bgCards myRounded">
           <div className="text-center border-bottom">
             <p>{setText}</p>
           </div>
@@ -67,6 +67,6 @@ const PieChartComponent = ({ setText, data, colors }) => {
 PieChartComponent.protoTypes = {
   setText: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
-  color: PropTypes.object.isRequired
+  color: PropTypes.object.isRequired,
 };
 export default PieChartComponent;

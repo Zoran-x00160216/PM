@@ -9,19 +9,21 @@ export const getCards = text => async dispatch => {
     const res = await axios.get( `/api/creditCards`);
 
     let data = res.data;
-    // Decrypt
+    // Decrypt cards data
     for (let d = 0; d < data.length; d++) {
       let bytes = CryptoJS.AES.decrypt(data[d].number, text);
       let originalText = bytes.toString(CryptoJS.enc.Utf8);
       data[d].number = originalText;
     }
 
+    // dispatch to redux store
     dispatch({
       type: GET_CARDS,
       payload: data
     });
 
   } catch (err) {
+    // if err dispatch to redux store
     if(err) {
       dispatch({
         type: ERROR_CARDS,
@@ -36,7 +38,7 @@ export const getCards = text => async dispatch => {
 // Create or update profile
 export const createCard = (formData, text) => async dispatch => {
   try {
-    // encrypt password
+    // encrypt card data
     let data = formData;
     const encrypted = CryptoJS.AES.encrypt(data.number, text).toString();
     data.number = encrypted;
@@ -51,14 +53,16 @@ export const createCard = (formData, text) => async dispatch => {
       data,
       config
     );
-
+    // dispatch to redux store
     dispatch({
       type: EDIT_CARDS,
       payload: res.data
     });
 
+    // dispaly status 
     dispatch(setAlert("Account Created", "mySuccess"));
   } catch (err) {
+    // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
 
@@ -73,7 +77,7 @@ export const createCard = (formData, text) => async dispatch => {
   }
 };
 
-// Update profile
+// Update card details
 export const editCard = (formData, text, alertControler) => async dispatch => {
   try {
     // encrypt card number
@@ -92,15 +96,17 @@ export const editCard = (formData, text, alertControler) => async dispatch => {
       data,
       config
     );
-
+    // dispatch to redux store
     dispatch({
       type: EDIT_CARDS,
       payload: res.data
     });
 
+    // dispaly status 
     (alertControler && dispatch(setAlert("Card Updated", "mySuccess")));
     
   } catch (err) {
+    // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
 
@@ -122,6 +128,7 @@ export const deleteCard = formData => async dispatch => {
       `/api/creditCards/${formData._id}`
     );
 
+    // dispatch to redux store
     dispatch({
       type: EDIT_CARDS,
       payload: res.data
@@ -130,6 +137,7 @@ export const deleteCard = formData => async dispatch => {
     dispatch(setAlert("Account Deleted", "mySuccess"));
 
   } catch (err) {
+    // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
 

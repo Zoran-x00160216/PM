@@ -11,22 +11,26 @@ dotenv.config({path: "./.env"})
 connectDB();
 
 // Application settings
-app.use((req, res, next) => {
-  // Globally set Content-Type header for the application
-  res.setHeader("Content-Type", "application/json");
-  next();
-});
+// app.use((req, res, next) => {
+//   // Globally set Content-Type header for the application
+//   res.setHeader("Content-Type", "application/json");
+//   next();
+// });
 
-// support url encoded bodies
-app.use(express.urlencoded({ extended: true }));
+// // support url encoded bodies
+// app.use(express.urlencoded({ extended: true }));
 
-// Enable CORS Requests only from in .env
+// Enable CORS 
 app.use(cors());
 
 
 // Init Middleware
 app.use(express.json({ extended: false }));
+app.use(express.static("./client/build"));
 
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+// })
 
 // Route Middlewares
 app.use("/api/auth", require("./routes/auth"));
@@ -40,17 +44,17 @@ app.use("/api/secretNotes", verify, require("./routes/secretNotes"));
 app.use("/api/email", verify, require("./routes/email"));
 app.use("/api/admin", verifyAdmin, require("./routes/admin"));
 
-// Serve static assets in production
- if(process.env.NODE_ENV === 'production' ){
-  // static folder
-  app.use(express.static(path.join(__dirname,"./client/build")));
+// // Serve static assets in production
+//  if(process.env.NODE_ENV === 'production' ){
+//   // static folder
+//   app.use(express.static(path.join(__dirname, "client/build")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./client/build/index.html"))
-  })
- }
-
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+//   })
+//  }
 // catch 404 and forward to error handler
+
 app.use((req, res, next) => {
   var err = new Error("Not Found: " + req.method + ":" + req.originalUrl);
   err.status = 404;

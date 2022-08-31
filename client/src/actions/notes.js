@@ -3,7 +3,7 @@ import { setAlert } from "./alert";
 import { GET_NOTES, ERROR_NOTES, EDIT_NOTES } from "./type";
 import CryptoJS from "crypto-js";
 
-// Get web accounts
+// Get Notes
 export const getNotes = text => async dispatch => {
   try {
     const res = await axios.get(`/api/secretNotes`);
@@ -34,7 +34,7 @@ export const getNotes = text => async dispatch => {
   }
 };
 
-// Create or update profile
+// Create Notes
 export const createNote = (formData, text) => async dispatch => {
   try {
     // encrypt note
@@ -78,7 +78,7 @@ export const createNote = (formData, text) => async dispatch => {
   }
 };
 
-// Update profile
+// Update Notes
 export const editNote = (formData, text, alertControler) => async dispatch => {
   try {
     // encrypt note
@@ -121,19 +121,19 @@ export const editNote = (formData, text, alertControler) => async dispatch => {
   }
 };
 
-// Delete profile
+// Delete Notes
 export const deleteNote = formData => async dispatch => {
   try {
 
     const res = await axios.delete(
       `/api/secretNotes/${formData._id}`
     );
-
+    // dispatch to redux store
     dispatch({
       type: EDIT_NOTES,
       payload: res.data
     });
-
+    // dispaly status 
     dispatch(setAlert("Note Deleted", "mySuccess"));
 
   } catch (err) {

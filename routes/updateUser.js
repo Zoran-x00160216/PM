@@ -9,7 +9,6 @@ const bcrypt = require("bcryptjs");
 
 // Edit to change master password
 router.put("/", async (req, res) => {
-  console.log(req.body, req.user)
   // Validate data
   const { error } = updateUserValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -19,10 +18,8 @@ router.put("/", async (req, res) => {
     // Hasg password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(req.body.password, salt);
-    console.log(hash)
 
     const updatePassword = await User.updateOne({ _id: req.user._id }, { $set: { password: hash } });
-    console.log(updatePassword);
     res.json(updatePassword);
 
   } catch (error) {
@@ -30,13 +27,12 @@ router.put("/", async (req, res) => {
   }
 });
 
-// Edit to change master password
+// Edit to change subscription
 router.put("/tier", async (req, res) => {
   console.log(req.body.tier)
 
   try {
     const updateTier = await User.updateOne({ _id: req.user._id }, { $set: { tier: req.body.tier } });
-    console.log(updateTier);
     res.json(updateTier);
 
   } catch (error) {

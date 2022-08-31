@@ -27,12 +27,14 @@ export const loadUser = () => async dispatch => {
   try {
     const res = await axios.get(`/api/auth`);
 
+        // dispatch to redux store
     dispatch({
       type: USER_LOADED,
       payload: res.data
     });
 
   } catch (err) {
+        // if err dispatch to redux store
     if(err) {
       dispatch({
         type: AUTH_ERROR
@@ -58,18 +60,20 @@ export const register = ({ email, password }) => async dispatch => {
       config
     );
 
+    // decrypt token and dispatch to redux 
     const token = res.data.token;
     const tokenData = jwtDecode(token);
     const data = { token, tokenData };
-
     dispatch({
       type: REGISTER_SUCCESS,
       payload: data
     });
+    
 
     dispatch(loadUser());
 
   } catch (err) {
+        // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
 
@@ -80,7 +84,7 @@ export const register = ({ email, password }) => async dispatch => {
   }
 };
 
-// Reg User
+//  User login
 export const login = (email, password) => async dispatch => {
   try {
     const config = {
@@ -96,10 +100,12 @@ export const login = (email, password) => async dispatch => {
       config
     );
 
+    // decrypt token and dispatch to redux 
     const token = res.data.token;
     const tokenData = jwtDecode(token);
     const data = { token, tokenData };
 
+        // dispatch to redux store
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data
@@ -108,6 +114,8 @@ export const login = (email, password) => async dispatch => {
     dispatch(loadUser());
 
   } catch (err) {
+        // if err dispatch to redux store
+
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
       dispatch({
@@ -126,7 +134,6 @@ export const updateUserPassword = (password) => async dispatch => {
         "Content-Type": "application/json"
       }
     };
-    console.log(password);
     const body = JSON.stringify({ password });
 
     await axios.put(
@@ -134,19 +141,20 @@ export const updateUserPassword = (password) => async dispatch => {
       body,
       config
     );
-    
-   dispatch(setAlert("Master Password Updated", "mySuccess"))
-
+   
+    // dispatch to redux store
+    dispatch(setAlert("Master Password Updated", "mySuccess"))
     dispatch(loadUser());
+
   } catch (err) {
     if (err) {
-      // console.log(err.response.data);
+      // if err dispatch to redux store
       dispatch(setAlert(err.response.data, "myDanger"));
     }
   }
 };
 
-// Update user master password
+// Update user access subscription tier
 export const updateUserTier = (tier) => async dispatch => {
   try {
     const config = {
@@ -162,7 +170,8 @@ export const updateUserTier = (tier) => async dispatch => {
       config 
     );
     
-    setTimeout(() => dispatch(setAlert("Premium Account Enabled", "mySuccess")), 2000);
+    // dispatch to redux store
+     dispatch(setAlert("Premium Account Enabled", "mySuccess"));
 
     dispatch(loadUser());
   } catch (err) {

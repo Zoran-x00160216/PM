@@ -7,12 +7,14 @@ export const getUsers = () => async dispatch => {
   try {
     const res = await axios.get(`/api/admin/`);
 
+    // dispatch to redux store
     dispatch({
       type: GET_USERS,
       payload: res.data
     });
 
   } catch (err) {
+    // if err dispatch to redux store
     if(err) {
     dispatch({
       type: ERROR_USERS,
@@ -32,14 +34,17 @@ export const deleteUser = id => async dispatch => {
 
     const res = await axios.delete( `/api/admin/${id}`);
 
+        // dispatch to redux store
     dispatch({
       type: EDIT_USERS,
       payload: res.data
     });
 
+    // dispaly status 
     dispatch(setAlert("Account Deleted", "mySuccess"));
 
   } catch (err) {
+        // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
 
@@ -72,8 +77,9 @@ export const createAdmin = ({ email, password }) => async dispatch => {
       body,
       config
     );
-    
+        // dispaly status 
     dispatch(setAlert(res.data, "mySuccess"));  
+    // call getUser fun to fetch new user 
     dispatch(getUsers());
 
   } catch (err) {
@@ -99,11 +105,13 @@ export const sendEmailWarning = email => async dispatch => {
     const res = await axios.post( `/api/admin/warningEmail`,     body,
     config);
    
+    // dispaly status 
     (res.status === 200 &&
     dispatch(setAlert("Email Sent", "mySuccess")));
 
 
   } catch (err) {
+            // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
     }
@@ -111,7 +119,7 @@ export const sendEmailWarning = email => async dispatch => {
 };
 
 
-// Load Users
+// fetch a price for premium subscriptiom
 export const getPremiumPrice = () => async () => {
   try {
     const res = await axios.get(`/api/auth/getPremiumPrice`);
@@ -124,7 +132,8 @@ export const getPremiumPrice = () => async () => {
   }
 };
 }
-// Delete profile
+
+// set a new a price for premium subscriptiom
 export const setPremiumPrice = price => async dispatch  => {
 
   try {

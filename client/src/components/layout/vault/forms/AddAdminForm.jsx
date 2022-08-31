@@ -22,7 +22,6 @@ const AddAdminForm = ({ setOpenModalAdd, createAdmin, getUsers, setAlert }) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  console.log(email, password);
   const onSubmit = e => {
     e.preventDefault();
     if (password !== password2) {

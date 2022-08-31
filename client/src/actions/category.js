@@ -2,18 +2,20 @@ import axios from "axios";
 import { setAlert } from "./alert";
 import { GET_CATEGORY, ERROR_CATEGORY, EDIT_CATEGORY } from "./type";
 
-// Get web accounts
+// Get categories
 export const getCategories = () => async dispatch => {
   try {
     const res = await axios.get( `/api/category`);
     let data = res.data;
 
+    // dispatch to redux store
     dispatch({
       type: GET_CATEGORY,
       payload: data
     });
 
   } catch (err) {
+    // if err dispatch to redux store
     dispatch({
       type: ERROR_CATEGORY,
       payload: {
@@ -36,17 +38,19 @@ export const createCategory = formData => async dispatch => {
       formData,
       config
     );
-    console.log(res);
 
+    // dispatch to redux store
     dispatch({
       type: EDIT_CATEGORY,
       payload: res.data
     });
 
+    // dispaly status 
     dispatch(setAlert("Category Created", "mySuccess"));
+
   } catch (err) {
     if (err) {
-      console.log(err);
+      // if err dispatch to redux store
       dispatch(setAlert(err.response.data, "myDanger"));
     }
 
@@ -60,7 +64,7 @@ export const createCategory = formData => async dispatch => {
   }
 };
 
-// Update profile
+// Update category
 export const editCategory = formData => async dispatch => {
   try {
     const config = {
@@ -74,13 +78,17 @@ export const editCategory = formData => async dispatch => {
       formData,
       config
     );
+
+    // dispatch to redux store
     dispatch({
       type: EDIT_CATEGORY,
       payload: res.data
     });
 
+    // dispaly status 
     dispatch(setAlert("Category Updated", "mySuccess"));
   } catch (err) {
+    // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
     }
@@ -95,7 +103,7 @@ export const editCategory = formData => async dispatch => {
   }
 };
 
-// Delete profile
+// Delete category
 export const deleteCategory = formData => async dispatch => {
   try {
 
@@ -103,14 +111,17 @@ export const deleteCategory = formData => async dispatch => {
       `/api/category/${formData._id}`
     );
 
+    // dispatch to redux store
     dispatch({
       type: EDIT_CATEGORY,
       payload: res.data
     });
 
+    // dispaly status
     dispatch(setAlert("Note Deleted", "mySuccess"));
 
   } catch (err) {
+    // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
 

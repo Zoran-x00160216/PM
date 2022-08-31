@@ -34,6 +34,8 @@ import store from "./store";
 // Css
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import "../src/components/layout/vault/forms/FormModal.css";
+
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -51,7 +53,7 @@ setInterval(() => {
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
-    // window.onload = () => store.dispatch(logout());
+    window.onload = () => store.dispatch(logout());
   }, []);
 
   return (

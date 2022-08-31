@@ -71,7 +71,7 @@ const Container = ({
     checkBoxCount();
 
     // eslint-disable-next-line
-  }, [uppercase, lowercase, symbols, numbers, checkbox, rangeValue]);
+  }, [uppercase, lowercase, symbols, numbers, checkbox, rangeValue ]);
 
   const checkBoxCount = () => {
     const checkedCount = Object.keys(checkbox).filter(key => checkbox[key]);
@@ -123,8 +123,11 @@ const Container = ({
     setRangeValue(length);
     setRange(length);
   };
-
-  useMemo(updateCheckBoxes, [type, updateCheckBoxes]);
+  
+  // eslint-disable-next-line
+  useMemo(updateCheckBoxes, [
+    
+  ]);
 
   const passwordGenerated = (checkbox, rangeValue) => {
     const pwd =
@@ -205,7 +208,7 @@ const Container = ({
       </div>
       <br />
 
-      <div className="text-center mt-5">
+      <div className="text-center mt-1">
         <div className="row">
           <div className="col-sm-4">
             <Button

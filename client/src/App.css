@@ -156,6 +156,7 @@ color: var(--white);
   background-color: inherit;
   height: 30px;
   font-size: 13px;
+  overflow-x: hidden;
 }
 
 .myRounded {

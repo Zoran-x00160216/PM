@@ -1,6 +1,7 @@
 import { SET_TEXT, ERROR_TEXT } from "./type";
 import { v4 } from "uuid";
 
+
 export const setText = (txt) => (dispatch) => {
   const id = v4();
   try {

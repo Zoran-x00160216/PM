@@ -52,7 +52,6 @@ const AdminDashboard = ({
       console.log(error);
     }
   }, [getAllEntries, getUsersCount, getPremiumAllEntries, getBasicAllEntries]);
-  // console.log(allEntriesBasic, allEntriesPremium);
 
   return allEntriesPremium === null || getBasicAllEntries === null ? (
     <Spinner />

@@ -1,3 +1,4 @@
+import { setAlert } from "./alert";
 
 // Get hibp
 export const hibp = async email => {
@@ -13,7 +14,7 @@ export const hibp = async email => {
 
   } catch (err) {
     if(err) {
-    console.log(err)
+      dispatch(setAlert(err.response.data, "myDanger"));
       }
   }
 };

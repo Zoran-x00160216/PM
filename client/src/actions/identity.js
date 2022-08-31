@@ -3,13 +3,13 @@ import { setAlert } from "./alert";
 import { GET_IDENTITY, ERROR_IDENTITY, EDIT_IDENTITY } from "./type";
 import CryptoJS from "crypto-js";
 
-// Get web accounts
+// Get Identity
 export const getIdentity = text => async dispatch => {
   try {
     const res = await axios.get(`/api/identity`);
 
     let data = res.data;
-    // Decrypt
+    // Decrypt 
     for (let d = 0; d < data.length; d++) {
       let bytes1 = CryptoJS.AES.decrypt(data[d].PPS, text);
       let originalText1 = bytes1.toString(CryptoJS.enc.Utf8);
@@ -36,12 +36,14 @@ export const getIdentity = text => async dispatch => {
       data[d].addressStreet = originalText6;
     }
 
+    // dispatch to redux store
     dispatch({
       type: GET_IDENTITY,
       payload: res.data
     });
 
   } catch (err) {
+    // if err dispatch to redux store
     if(err) {
     dispatch({
       type: ERROR_IDENTITY,
@@ -53,18 +55,12 @@ export const getIdentity = text => async dispatch => {
   }
 };
 
-// Create or update profile
+// Create identity
 export const createIdentity = (formData, text) => async dispatch => {
   try {
 
     // encrypt identity details
     let data = formData;
-    // data.forEach(d => {
-    //   console.log(data[d]);
-    //   let encrypt = CryptoJS.AES.encrypt(data[d], text).toString();
-    //   console.log(data[d], encrypt);
-    //   data[d] = encrypt;
-    // });
     const encryptedPPS = CryptoJS.AES.encrypt(data.PPS, text).toString();
     const encryptedPassport = CryptoJS.AES.encrypt(
       data.passportNum,
@@ -104,15 +100,17 @@ export const createIdentity = (formData, text) => async dispatch => {
       data,
       config
     );
-
+    // dispatch to redux store
     dispatch({
       type: EDIT_IDENTITY,
       payload: res.data
     });
 
+    // dispaly status 
     dispatch(setAlert("Account Created", "mySuccess"));
 
   } catch (err) {
+    // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
       dispatch({
@@ -128,7 +126,7 @@ export const createIdentity = (formData, text) => async dispatch => {
   }
 };
 
-// Update profile
+// Update Identity
 export const editIdentity = (formData, text, alertControler)=> async dispatch => {
   try {
     let data = formData;
@@ -171,7 +169,7 @@ export const editIdentity = (formData, text, alertControler)=> async dispatch =>
       data,
       config
     );
-
+    // dispatch to redux store
     dispatch({
       type: EDIT_IDENTITY,
       payload: res.data
@@ -179,6 +177,7 @@ export const editIdentity = (formData, text, alertControler)=> async dispatch =>
 
     (alertControler && dispatch(setAlert("Account Updated", "mySuccess")));
   } catch (err) {
+    // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
       dispatch({
@@ -194,21 +193,23 @@ export const editIdentity = (formData, text, alertControler)=> async dispatch =>
   }
 };
 
-// Delete profile
+// Delete identity
 export const deleteIdentity = formData => async dispatch => {
   try {
     const res = await axios.delete(
       `/api/identity/${formData._id}`
     );
-    // console.log(res.data);
 
+    // dispatch to redux store
     dispatch({
       type: EDIT_IDENTITY,
       payload: res.data
     });
 
+    // dispaly status 
     dispatch(setAlert("Account Deleted", "mySuccess"));
   } catch (err) {
+  // if err dispatch to redux store
     if (err) {
       dispatch(setAlert(err.response.data, "myDanger"));
       dispatch({

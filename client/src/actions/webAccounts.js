@@ -6,12 +6,10 @@ import {
   ERROR_WEB_ACCOUNTS
 } from "./type";
 import CryptoJS from "crypto-js";
-// import dotenv from "dotenv";
-// dotenv.config();
+g();
 
 // Get web accounts
 export const getWebAccounts = text => async dispatch => {
-  // console.log(text);
   try {
     const res = await axios.get(`/api/webAccounts`);
 
@@ -40,7 +38,7 @@ export const getWebAccounts = text => async dispatch => {
   }
 };
 
-// Create webAccount and dispatch res to redux store
+// Create webAccount and dispatch data to redux store
 export const createWebAccount = (formData, text) => async dispatch => {
   try {
     // encrypt password
@@ -83,7 +81,7 @@ export const createWebAccount = (formData, text) => async dispatch => {
   }
 };
 
-// Update webAccount and dispatch res to redux store
+// Update webAccount and dispatch data to redux store
 export const editWebAccount = (formData, text, alertControler) => async dispatch => {
   try {
     
@@ -128,7 +126,7 @@ export const editWebAccount = (formData, text, alertControler) => async dispatch
   }
 };
 
-// Delete profile
+// Delete account
 export const deleteWebAccount = formData => async dispatch => {
   try {
 
